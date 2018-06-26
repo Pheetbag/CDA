@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve" width="512px" height="512px" class=""><g><g>
+	<g>
+		<path d="M472,16H8c-4.418,0-8,3.582-8,8v336c0,4.418,3.582,8,8,8h182.936l-6,48H96c-4.418,0-8,3.582-8,8v32c0,4.418,3.582,8,8,8    h288c4.418,0,8-3.582,8-8v-32c0-4.418-3.582-8-8-8h-88.936l-6-48H472c4.418,0,8-3.582,8-8V24C480,19.582,476.418,16,472,16z     M376,432v16H104v-16H376z M201.064,416l6-48h65.872l6,48H201.064z M464,352H280H16v-24h448V352z M464,312H16V32h448V312z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M272,216c3.672-0.001,6.871-2.501,7.76-6.064l16-64c1.069-4.287-1.539-8.629-5.826-9.698    C289.301,136.08,288.652,136,288,136h-94.24l-1.92-9.6c-0.76-3.725-4.038-6.401-7.84-6.4h-24v16h17.44l14.72,73.6    c0.76,3.725,4.038,6.401,7.84,6.4v24c0,4.418,3.582,8,8,8h72v-16h-64v-16H272z M206.552,200l-9.6-48h80.8l-12,48H206.552z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<circle cx="208" cy="272" r="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<circle cx="264" cy="272" r="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M267.2,81.6L248,96V56h-16v40l-19.2-14.4l-9.6,12.8l32,24c1.385,1.039,3.069,1.6,4.8,1.6s3.415-0.561,4.8-1.6l32-24    L267.2,81.6z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M96,48H40c-4.418,0-8,3.582-8,8v56c0,4.418,3.582,8,8,8h56c4.418,0,8-3.582,8-8V56C104,51.582,100.418,48,96,48z M88,104    H48V64h40V104z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M96,136H40c-4.418,0-8,3.582-8,8v56c0,4.418,3.582,8,8,8h56c4.418,0,8-3.582,8-8v-56C104,139.582,100.418,136,96,136z     M88,192H48v-40h40V192z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M96,224H40c-4.418,0-8,3.582-8,8v56c0,4.418,3.582,8,8,8h56c4.418,0,8-3.582,8-8v-56C104,227.582,100.418,224,96,224z     M88,280H48v-40h40V280z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M440,48h-56c-4.418,0-8,3.582-8,8v56c0,4.418,3.582,8,8,8h56c4.418,0,8-3.582,8-8V56C448,51.582,444.418,48,440,48z     M432,104h-40V64h40V104z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M440,136h-56c-4.418,0-8,3.582-8,8v56c0,4.418,3.582,8,8,8h56c4.418,0,8-3.582,8-8v-56C448,139.582,444.418,136,440,136z     M432,192h-40v-40h40V192z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M440,224h-56c-4.418,0-8,3.582-8,8v56c0,4.418,3.582,8,8,8h56c4.418,0,8-3.582,8-8v-56C448,227.582,444.418,224,440,224z     M432,280h-40v-40h40V280z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="120" y="56" width="32" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="120" y="88" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="120" y="144" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="120" y="176" width="40" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="120" y="232" width="24" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="120" y="264" width="40" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="328" y="56" width="32" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="336" y="88" width="24" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="328" y="144" width="32" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="344" y="168" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="328" y="232" width="32" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="336" y="264" width="24" height="16" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>
+	</g>
+</g></g> </svg>

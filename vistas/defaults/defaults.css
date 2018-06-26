@@ -1,0 +1,436 @@
+body, html{
+    min-width: 400px;
+    background-color: rgb(240,248,255);
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    min-height: 100%;
+    padding-bottom: 50px; 
+}
+
+.nav-spaced{
+
+    padding-left: 15px;
+}
+
+.full-screen {
+    
+    min-width: 100%;
+    min-height: 100%;
+}
+
+nav{
+
+    z-index: 999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;    
+    -ms-user-select: none;     
+    user-select: none;  
+
+    width: 50px;
+    height: 100%;
+
+    padding: 10px 0;
+
+    position: absolute;
+    left: 10px;
+}
+
+nav > a:link{
+    text-decoration:none;
+}
+
+nav > .body{
+    
+    width: 100%;
+    height: 50px;
+
+    overflow: hidden;
+
+    border-radius: 5px;
+
+    background-color: rgb(52, 66, 88); 
+}
+
+nav > .body.transition{
+
+    transition: height .4s;
+}
+
+/*
+
+ESTILO GENERAL DE TODOS LOS ITEMS DEL MENU
+
+*/
+
+nav > .body .item {
+
+    cursor: pointer;
+    
+    width: 50px;
+    height: 60px;
+}
+
+nav >.body .item > div{
+
+    width: 100%;
+    height: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px; 
+}
+
+nav > .body .item:hover > div{
+
+    box-shadow: inset 0px 5px 8px 0px rgba(0,0,0,0.3);
+    border-left: 3px solid rgba(255,255,255, .3);
+    background-color: rgba(0, 0, 0, .1); 
+}
+
+nav > .body .item:active > div{
+
+    background-size: 28px;
+
+    border-color: rgba(255,255,255, .8);
+    background-color: rgba(0, 0, 0, .2); 
+}
+
+/*
+
+ESTILO GENERAL DE EL ITEM ACTIVO
+
+*/
+
+nav > .body .item.activo > div{
+
+    border: none; 
+    border-left: 3px solid rgba(0,81,255,1);
+
+    box-shadow: inset 0px 5px 8px 0px rgba(0,0,0,0.3);
+
+    background-color: rgba(0, 0, 0, .2); 
+}
+
+nav > .body .item.activo:active > div{
+
+    background-size: 30px;
+}
+
+
+/*
+
+DIFERENTES ICONOS
+
+*/
+
+nav > .body .item.inventario > div{
+
+    background-image: url(../../recursos/codigo-de-barras.svg); 
+}
+
+nav > .body .item.factura > div{
+
+    background-image: url(../../recursos/factura.svg); 
+}
+
+nav > .body .item.pedidos > div{
+
+    background-image: url(../../recursos/pantalla-principal.svg); 
+}
+
+nav > .body .item.reportes > div{
+
+    background-image: url(../../recursos/reporte.svg); 
+}
+
+nav > .body .item.crear > div{
+
+    background-image: url(../../recursos/nuevos.svg); 
+}
+
+/* 
+
+ITEM PRINCIPAL, LOGO, DIRIJE AL SITIO DE INICIO.
+
+*/
+
+nav > .body .item.main{
+
+    height: 50px;
+
+    background: rgba(0,81,255,1);
+    background: linear-gradient(135deg, rgba(0,81,255,1) 0%, rgba(21,138,255,1) 100%);
+}
+
+nav >.body .item.main > div{
+
+    width: 100%;
+    height: 100%;
+
+    background-image: url(../../recursos/cda-logosmall-white.png); 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 25px; 
+
+    border-top: 3px solid rgba(255,255,255, .3);
+}
+
+nav >.body .item.main:hover > div{
+
+    border-left: none;
+    background-color: rgba(0, 0, 0, .1); 
+}
+
+nav >.body .item.main:active > div{
+
+    background-size: 23px;
+    background-color: rgba(0, 0, 0, .2); 
+}
+
+
+/*
+*
+*
+*
+*
+*
+*
+/////////
+CABECERA
+////////
+*
+*
+*
+*
+*
+*
+*/
+
+
+header{
+
+    width: 100%;
+    height: 70px;
+
+    padding: 0 15px;
+    padding-left: 70px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header > .title > *{
+
+    display: inline-block;
+
+    margin: 0;
+    
+}
+
+header > .title > h4{
+    margin-right: 10px;
+}
+
+header > .usuario{
+
+    display: flex;
+    justify-content: flex-end;
+
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;    
+    -ms-user-select: none;     
+    user-select: none;  
+
+    align-items: flex-start;
+
+    width: 150px;
+    height: 40px;
+
+}
+
+header > .usuario > .menu{
+
+    flex-shrink: 0;
+
+    z-index: 998;
+    width: 150px;
+    height: 40px;
+
+    overflow: hidden;
+
+    box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.12);
+    background-color: white;
+
+    border-radius: 50px;
+
+    transition: width .1s ease-in-out, background-color .1s ease-in-out, height .1s ease-in-out, border-radius .05s ease-in-out .08s; 
+}
+
+header > .usuario > .menu > .title{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    margin: auto;
+    padding: 0 5px;
+    width: 90%;
+    height: 40px;
+    
+}
+
+header > .usuario > .menu > .title > .cerrar{
+
+    display: none;
+    cursor: pointer;
+
+    align-items: center;
+    justify-content: space-around;
+
+    width: 23px;
+    height: 23px; 
+
+    border-radius: 50%;
+
+    background-color: white; 
+    background-position: center;
+    background-size: 40%;
+    background-image: url(../../recursos/cancel.svg);
+    background-repeat: no-repeat;
+}
+
+header > .usuario > .menu > .title > .cerrar:hover{
+
+    background-image: url(../../recursos/cancel-red.svg);
+}
+
+header > .usuario > .menu > .title > .cerrar:active{
+
+    background-image: url(../../recursos/cancel-white.svg);
+    background-color: rgb(220,52,68);
+}
+
+header > .usuario > .menu > .contenido{
+
+    display: none;
+    width: 100%;
+}
+
+header > .usuario > .menu > .contenido > a:link{
+    text-decoration:none;
+}
+
+header > .usuario > .menu > .contenido .item{
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
+    color: rgb(149, 156, 166);
+
+    padding: 0 20px;
+
+    height: 50px;   
+    width: 100%;
+}
+
+header > .usuario > .menu > .contenido .item:hover{
+
+    box-shadow: inset 0px 3px 5px 2px rgba(0,0,0,0.1);
+    background-color: rgb(43, 54, 73); 
+}
+
+header > .usuario > .menu > .contenido .item:active{
+
+    background-color: rgb(37, 48, 66); 
+    color: white;
+}
+
+header > .usuario > .menu > .contenido .item.salir{
+
+    background-color: rgb(220,52,68);
+    color: white;
+
+    justify-content: space-around;
+}
+
+header > .usuario > .menu > .contenido .item.salir:hover{
+
+    background-color: rgb(201, 48, 64);
+}
+
+header > .usuario > .menu > .contenido .item.salir:active{
+
+    color: rgb(220,52,68);
+    background-color: white;
+    box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+header > .usuario.abierto > .menu {
+
+    cursor: auto;
+
+    border-radius: 10px;
+
+    background-color: rgb(52, 66, 88); 
+    
+    color: white;
+}
+
+header > .usuario.abierto > .menu > .title{
+
+    padding-bottom: 5px;
+    margin-top: 5px;
+
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(37, 46, 63); 
+}
+
+header > .usuario.abierto > .menu > .title > .cerrar{
+
+    display: block;
+}
+
+header > .usuario.abierto > .menu > .contenido {
+
+    display: block;
+}
+
+
+.ico-no-resultados{
+
+    width: 50px;
+    height: 50px;
+    background-image: url(../../recursos/caja-vacia.svg); 
+
+    margin: auto;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; 
+}

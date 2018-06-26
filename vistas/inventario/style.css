@@ -1,0 +1,13 @@
+
+
+.left, .right{
+    display: flex;
+    flex-direction: column; 
+
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.row{
+    justify-content: center;
+}

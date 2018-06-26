@@ -1,0 +1,41 @@
+
+body{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.contenedor{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo{
+    background-image: url(../../recursos/cda-logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 90px;
+    width: 100%;
+}
+
+.alerta{
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    top: 20px; 
+    left: 20px; 
+}
+
+.alerta.is-invalid{
+    display: block;
+}
+
+#login{
+    text-align: center;
+}
+
+#usuarioHelp{
+    text-align: left;
+}
