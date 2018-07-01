@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-//Librerias y archivos importantes  
+//Librerias y archivos importantes
 date_default_timezone_set('America/Caracas');
 
 require 'libs/path.php';
@@ -18,15 +18,24 @@ HTTP contiene el host con el protocolo http, e incluyendo el fichero en el que v
 
 HTTP_PHP se utiliza para generar redirecciones a través de los archivos del codigo, es una variante de HTTP pues php no soporta el protocolo http para navegar a través de arhivos.
 */
-define ("HOST", $_SERVER['HTTP_HOST']);
+define ("HOST", $_SERVER['HTTP_HOST'] . '/cda');
 define ("HTTP", 'http://' . HOST);
-define ("HTTP_PHP", $_SERVER['DOCUMENT_ROOT']. '/'); 
+define ("HTTP_PHP", $_SERVER['DOCUMENT_ROOT']. '/');
+
+/*
+IMPORTANTE!
+
+En caso de que el sistema se esté ejecutando en el directorio raiz del localhost o en un virtual host, se puede dejar estas variables
+tal como están.
+
+Si el sistema en cambio se esta ejecutando desde una subcarpeta de el servidor, (por ejemplo una carpeta cda dentro de el htdocs o el www, y el url de acceso a a través de localhost/cda) se debe indicar en el string vacio  al final HOST, el nombre de la subcarpeta iniciando con un /, por ejemplo "/subcarpeta1/subcarpeta2" y esto le inidica al sistema que se encuentra dentro de la subcarpeta2 que esta dentro de la subcarpeta1 que esta dentro de el directorio raiz, o local host (htdocs o www según el caso).
+*/
 
 //iniciamos / refrescamos la sesión, en caso de que exista
 session_start();
 
 //----------------------------------
 
-//Llamamos al iniciador de la aplicación, que fue requerido desde libs/ 
+//Llamamos al iniciador de la aplicación, que fue requerido desde libs/
 
-$app = new iniciador(); 
+$app = new iniciador();
