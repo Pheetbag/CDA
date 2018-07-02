@@ -1,24 +1,28 @@
 <?php
 
-global $consultar; 
+global $consultar;
 
 class facturar{
-    
-    public $vista = 'vistas/facturar/'; 
-    
+
+    public $vista = 'vistas/facturar/';
+
     public function index(){
-        
+
+		global $consultar;
+
+		$facturas = $consultar -> facturas_resumen();
+		$clientes = $consultar -> clientes_resumen();
+
         require $this->vista . 'index.php';
-    }  
+    }
 
-    public function factura($id){
+    public function f($id){
 
+		global $consultar;
 
-        if($id == '0000'){
+		$factura  = $consultar -> factura($id);
+		$detalles = $consultar -> detalles($id);
 
-            require $this->vista . 'factura.php';
-            return; 
-        }
-        require $this->vista . 'factura-creada.php';
+        require $this->vista . 'factura.php';
     }
 }

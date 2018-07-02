@@ -23,16 +23,16 @@
                 <div class="row">
                     <div class="form-group col">
                         <label for="cliente-nombre">Nombre</label>
-                        <input type="text" class="form-control" id="cliente-nombre" name="nombre" placeholder="Nombre">
+                        <input required type="text" class="form-control" id="cliente-nombre" name="nombre" placeholder="Nombre">
                     </div>
                     <div class="form-group col">
                         <label for="cliente-apellido">Apellido</label>
-                        <input type="text" class="form-control" id="cliente-apellido" name="apellido" placeholder="Apellido">
+                        <input required type="text" class="form-control" id="cliente-apellido" name="apellido" placeholder="Apellido">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="cliente-dir">Dirección</label>
-                    <input type="text" class="form-control" id="cliente-dir" name="dir" placeholder="Dirección">
+                    <input required type="text" class="form-control" id="cliente-dir" name="dir" placeholder="Dirección">
                 </div>
                 <div class="form-group">
                     <label for="cliente-tlf">Telefono</label>
@@ -61,7 +61,7 @@
                         <div class="card mb-3">
                             <h6 class="card-header">Fecha</h6>
                             <div class="card-body">
-                                <input type="date" class="form-control bg-light" name="fecha" value="<?php echo $datos['fecha'] ?>">
+                                <input required type="date" class="form-control bg-light" name="fecha" value="<?php echo $datos['fecha'] ?>">
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                             <h6 class="card-header">Seleccionar cliente</h6>
 
                             <div class="card-body">
-                                <input type="number" class="form-control" name="ci" placeholder="Cedula" value="<?php echo $datos['ci'] ?>">
+                                <input required type="number" class="form-control" name="ci" placeholder="Cedula" value="<?php echo $datos['ci'] ?>">
                             </div>
                         </div>
                     </div>
@@ -152,13 +152,13 @@
 								}else{
 
 									$cantidad_productos = count($datos['productos']);
+									$subtotal = 0;
 
 									for ($i=0; $i < $cantidad_productos; $i++) {
 
 										$producto = $consultar->get('producto', $datos['productos'][$i]);
 										$cantidad = $datos['cantidades'][$i];
-										$precio_total = $producto['precio_venta'] * $cantidad;
-										$datos['subtotal']  += $precio_total;
+										$subtotal = $datos['subtotales'][$i];
 
 									echo '
 									<li class="list-group-item list-group-item-action container-fluid">
@@ -168,7 +168,7 @@
 		                                        <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
 		                                    </div>
 		                                    <div class="col-sm-6 text-right">
-		                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. $precio_total .'</p>
+		                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. $subtotal .'</p>
 		                                        <p class="mb-0">x'. $cantidad .'</p>
 		                                    </div>
 		                                </div>
@@ -182,17 +182,22 @@
 
                         </ul>
 
-						<div class="card-footer text-muted text-right">
-                            SUBTOTAL Bs. <?php echo $datos['subtotal'] ?><!--
-                            --><br>
-							IVA: <?php echo (($datos['subtotal'] * 12) /100)  ?>
-                        </div>
+						<?php
+						$subtotal = 0;
 
-                        <div class="card-footer text-center font-weight-bold">
-                            TOTAL Bs. <?php echo($datos['subtotal'] * 1.12) ?>
-                        </div>
-                    </div>
+						for ($i=0; $i < count($datos['subtotales']); $i++) {
+							$subtotal += $datos['subtotales'][$i];
+						}
 
+						echo '<div class="card-footer text-muted text-right">';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $subtotal . '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . ($subtotal * 12) / 100 . '</div>';
+
+						echo '<div class="card-footer text-center font-weight-bold">';
+						echo 'TOTAL Bs. ' . $subtotal * 1.12 . '</div>';
+
+						 ?>
+					 </div>
                 </div>
             </div>
 

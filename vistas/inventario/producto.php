@@ -14,7 +14,7 @@
             </div>
             <div class="modal-body">
                 <p>
-                    Estás intentando eliminar el producto: 
+                    Estás intentando eliminar el producto:
                     <b>"<?php echo $resultado['nombre_producto'] ?>"</b> del inventario.
                 </p>
                 <p class="text-justify">
@@ -100,51 +100,63 @@
         </div>
         <div class="col-md-6 col-lg-4 container-fluid">
 
-                <h6 class="card-header">Ultimos movimientos</h6>
-                <div class="card-body">
-                    <div class="card text-white bg-danger mb-2">
-                        <h6 class="card-header">Ventas</h6>
-                        <div class="card-body">
-                            <div class="font-weight-bold">-10 Existencias</div>
-                        </div>
-                        <div class="card-footer text-center text-white-50">20/10/2018</div>
-                    </div>
-                    <div class="card text-white bg-danger mb-2">
-                        <h6 class="card-header">Ventas</h6>
-                        <div class="card-body">
-                            <div class="font-weight-bold">-10 Existencias</div>
-                        </div>
-                        <div class="card-footer text-center text-white-50">20/10/2018</div>
-                    </div>
-                    <div class="card text-white bg-success mb-2">
-                        <h6 class="card-header">Compra</h6>
-                        <div class="card-body">
-                            <div class="font-weight-bold">+10 Existencias</div>
-                        </div>
-                        <div class="card-footer text-center text-white-50">20/10/2018</div>
-                    </div>
-                    <div class="card text-white bg-success mb-2">
-                        <h6 class="card-header">Compra</h6>
-                        <div class="card-body">
-                            <div class="font-weight-bold">+10 Existencias</div>
-                        </div>
-                        <div class="card-footer text-center text-white-50">20/10/2018</div>
-                    </div>
-                    <div class="card text-white bg-danger mb-2">
-                        <h6 class="card-header">Ventas</h6>
-                        <div class="card-body">
-                            <div class="font-weight-bold">-10 Existencias</div>
-                        </div>
-                        <div class="card-footer text-center text-white-50">20/10/2018</div>
-                    </div>
-                    <div class="card text-white bg-success mb-2">
-                        <h6 class="card-header">Ventas</h6>
-                        <div class="card-body">
-                            <div class="font-weight-bold">-10 Existencias</div>
-                        </div>
-                        <div class="card-footer text-center text-white-50">20/10/2018</div>
-                    </div>
-                </div>
+                <h6 class="card-header mb-4">Ultimos movimientos</h6>
+
+				<?php
+
+				if($movimientos == null){
+
+					echo'
+
+						<div class="card-body center font-weight-bold text-center">
+							<div class="ico-no-resultados"></div>
+							No hay movimientos recientes.
+						</div>
+
+					';
+				}else{
+
+					$cantidad_movimientos = count($movimientos);
+
+					for ($i=0; $i < $cantidad_movimientos; $i++) {
+
+						$codigo   = $movimientos[$i]['codigo'];
+						$tipo     = $movimientos[$i]['tipo'];
+						$cantidad = $movimientos[$i]['cantidad'];
+						$subtotal = $movimientos[$i]['subtotal'];
+						$fecha    = $movimientos[$i]['fecha'];
+
+						if($tipo == 'venta'){
+
+							echo '
+							<div class="card text-white bg-danger mb-2">
+								<h6 class="card-header text-center">'. date('d/m/Y',strtotime($fecha)) .'</h6>
+								<div class="card-body text-right">
+									<div class="font-weight-bold">-'. $cantidad .' unidades en las existencias</div>
+									<div class="">SUBTOTAL Bs. '. $subtotal .'</div>
+								</div>
+								<div class="card-footer text-center">
+									<a class="px-5 btn btn-light text-danger" href="'. HTTP .'/facturar/f/'. $codigo .'" role="button">Ver factura</a>
+								</div>
+							</div>';
+						}else if($tipo == 'compra'){
+
+							echo '
+							<div class="card text-white bg-success mb-2">
+								<h6 class="card-header text-center">'. date('d/m/Y',strtotime($fecha)) .'</h6>
+								<div class="card-body text-right">
+									<div class="font-weight-bold">+'. $cantidad .' unidades en las existencias</div>
+									<div class="">SUBTOTAL Bs. '. $subtotal .'</div>
+								</div>
+								<div class="card-footer text-center">
+									<a class="px-5 btn btn-light text-success" href="'. HTTP .'/pedidos/p/'. $codigo .'" role="button">Ver pedido</a>
+								</div>
+							</div>';
+						}
+					}
+				}
+
+				?>
 
         </div>
     </div>

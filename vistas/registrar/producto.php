@@ -15,7 +15,7 @@
                 <div class="card bg-light">
                     <h6 class="card-header">Nombre</h6>
                     <div class="card-body">
-                        <input type="text" class="form-control bg-light" name="nombre" placeholder="Nombre">
+                        <input required type="text" class="form-control bg-light" name="nombre" placeholder="Nombre">
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     <div class="card bg-light">
                         <h6 class="card-header">Precio</h6>
                         <div class="card-body">
-                        <input type="number" class="form-control bg-light" min="0" name="precio" placeholder="Precio">
+                        <input required type="number" class="form-control bg-light" min="0" name="precio" placeholder="Precio">
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                     <div class="card bg-light">
                         <h6 class="card-header">Existencias</h6>
                         <div class="card-body">
-                        <input type="number" class="form-control bg-light" min="0" name="existencias" placeholder="Existencias">
+                        <input required type="number" class="form-control bg-light" min="0" name="existencias" placeholder="Existencias">
                         </div>
                     </div>
                 </div>

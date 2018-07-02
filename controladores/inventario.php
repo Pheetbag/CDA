@@ -1,35 +1,35 @@
 <?php
 
-global $consultar; 
+global $consultar;
 
 class inventario{
-    
-    public $vista = 'vistas/inventario/'; 
-    
+
+    public $vista = 'vistas/inventario/';
+
     public function index($pagina = 1){
 
         global $consultar;
 
-        $limite     = 16; 
+        $limite     = 16;
 
-        $resultado  = $consultar -> productos($limite, $pagina); 
-        $paginacion = $consultar -> productos_total(); 
+        $resultado  = $consultar -> productos($limite, $pagina);
+        $paginacion = $consultar -> productos_total();
 
         //Calculamos la cantidad de paginas que se necesitan.
-        $paginacion = ceil($paginacion['total'] / $limite); 
+        $paginacion = ceil($paginacion['total'] / $limite);
 
         $siguiente = null; $siguiente_link = $pagina + 1;
         $anterior  = null; $anterior_link  = $pagina - 1;
 
         if($pagina - 1 == 0){
 
-            $anterior      = 'disabled'; 
+            $anterior      = 'disabled';
             $anterior_link = '#';
         }
 
         if($pagina + 1 > $paginacion){
 
-            $siguiente      = 'disabled'; 
+            $siguiente      = 'disabled';
             $siguiente_link = '#';
         }
 
@@ -46,47 +46,49 @@ class inventario{
         }
     }
 
-    
+
     public function producto($id){
 
         global $consultar;
 
-        $resultado = $consultar -> producto($id);
-
+        $resultado   = $consultar -> producto($id);
+		$movimientos = $consultar -> producto_movimientos($id);
         //verificamos si se desea realizar alguna acción con este producto, de no ser asi mostramos la vista por defecto
         //sino, dependiendo de la accion mostramos la vista de esa accion
         if(isset($_GET['action'])){
 
             switch ($_GET['action']) {
-                
+
                 case 'editar':
                     require $this->vista . 'producto-editar.php';
                     break;
-                
+
                 case 'eliminar':
                     $consultar -> producto_eliminar($id);
-                    require $this->vista . 'producto-eliminado.php'; 
+                    require $this->vista . 'producto-eliminado.php';
                     break;
 
                 case 'guardar':
 
                     if(isset($_POST['nombre'])){
                         $consultar -> producto_actualizar($id, $_POST['nombre'], $_POST['tipo'], $_POST['marca'],$_POST['modelo'], $_POST['existencias'], $_POST['precio']);
-                        
+
                         $resultado = $consultar -> producto($id);
-                        require $this->vista . 'producto-actualizado.php'; 
+                        require $this->vista . 'producto-actualizado.php';
 
                     }else{
-                        
+
                         header('location:' . HTTP . '/inventario/producto/' . $id);
                     }
-                    break;  
-
-                    case 'creado':
-                    require $this->vista . 'producto-creado.php'; 
                     break;
 
+                case 'creado':
+
+	                require $this->vista . 'producto-creado.php';
+	                break;
+
                 default:
+
                     require $this->vista . 'producto.php';
                     break;
             }
@@ -97,7 +99,7 @@ class inventario{
         }
     }
 
-    public function buscar($id){ 
+    public function buscar($id){
 
         if($id == null){ $id = 1; }
         if(!isset($_GET['busqueda']) OR is_null($_GET['busqueda']) OR $_GET['busqueda'] == ''){ header('location:'. HTTP . '/inventario'); }
@@ -108,27 +110,27 @@ class inventario{
         $busqueda_url = urlencode($_GET['busqueda']);
         $query = transformar_regexp($_GET['busqueda']);
 
-        $pagina     = $id; 
-        $limite     = 25; 
+        $pagina     = $id;
+        $limite     = 25;
 
-        $resultado  = $consultar -> buscar($query,$limite, $pagina); 
-        $paginacion = $consultar -> buscar_total($query); 
+        $resultado  = $consultar -> buscar($query,$limite, $pagina);
+        $paginacion = $consultar -> buscar_total($query);
 
         //Calculamos la cantidad de paginas que se necesitan.
-        $paginacion = ceil($paginacion['total'] / $limite); 
+        $paginacion = ceil($paginacion['total'] / $limite);
 
         $siguiente = null; $siguiente_link = $pagina + 1;
         $anterior  = null; $anterior_link  = $pagina - 1;
 
         if($pagina - 1 == 0){
 
-            $anterior      = 'disabled'; 
+            $anterior      = 'disabled';
             $anterior_link = '#';
         }
 
         if($pagina + 1 > $paginacion){
 
-            $siguiente      = 'disabled'; 
+            $siguiente      = 'disabled';
             $siguiente_link = '#';
         }
 
@@ -137,4 +139,4 @@ class inventario{
 
         require $this->vista . 'buscar.php';
     }
-}       
+}

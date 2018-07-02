@@ -56,17 +56,40 @@
             <div>
                 <div class="form-group">
                 <label for="agregar-id">Selecciona un producto</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>Producto 1</option>
-                        <option>Producto 2</option>
-                        <option>Producto 3</option>
-                        <option>Producto 4</option>
-                        <option>Producto 5</option>
-                    </select>
-					<input type="number" name="codigo" placeholder="Codigo" value="<?php if(isset($_GET['datacodigo'])){ echo $_GET['datacodigo'];} ?>">
+				<select name="codigo" required class="form-control" id="exampleFormControlSelect1">
+					<option value='' selected disabled>Selecciona un producto</option>
+					<?php
+
+					if($select_productos == null){
+
+						echo '';
+					}else{
+
+						$cantidad_options = count($select_productos);
+
+						for ($i=0; $i < $cantidad_options; $i++) {
+
+							$nombre   = $select_productos[$i]['nombre'];
+							$codigo   = $select_productos[$i]['codigo'];
+							$selected = null;
+
+							if(isset($_GET['datacodigo']) AND $_GET['datacodigo'] == $codigo){
+								$selected = 'selected';
+							}
+
+							echo '
+							<option '. $selected .' value="'. $codigo .'">'. $nombre .'</option>
+							';
+
+						}
+					}
+
+					?>
+				</select>
+
                 </div>
                 <div class="form-group">
-                    <label for="agregar-cantidad">Cantidad</label>
+                    <label required for="agregar-cantidad">Cantidad</label>
                     <input type="number" class="form-control" name="cantidad" min="1" value="<?php
 					if(isset($_GET['dataext'])){
 						 echo $_GET['dataext'];
@@ -77,7 +100,7 @@
                 </div>
                 <div class="form-group">
                     <label for="agregar-cantidad">Precio de compra</label>
-                    <input type="number" class="form-control" name="costo" min="1" value="<?php
+                    <input required type="number" class="form-control" name="costo" min="1" value="<?php
 					if(isset($_GET['datacost'])){
 						 echo $_GET['datacost'];
 
@@ -85,6 +108,16 @@
 						 echo '1';
 					 }?>">
                 </div>
+
+				<div class="form-group form-check">
+					<input type="checkbox" class="form-check-input" name="iva" <?php
+					if(isset($_GET['dataiva']) AND $_GET['dataiva'] == 'on'){
+						echo 'checked';
+					 }?>>
+				     <label class="form-check-label">IVA (12%) incluido.</label>
+				</div>
+				<small class="text-muted">El IVA es calculado automaticamente. Si el monto lo incluye se debe indicar, para que el mismo sea ignorado.</small>
+
             </div>
         </div>
         <div class="modal-footer">
@@ -169,19 +202,24 @@
 													<br><hr>
 
 													<div class="form-group row mt-3">
-														<input type="number" name="id" class="d-none" value="' . $i .'">
+														<input required type="number" name="id" class="d-none" value="' . $i .'">
 												      	<label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Cantidad</label>
 													      <div class="col-sm-6">
-													        <input type="number" min="0" value="'. $cantidad .'" class="form-control" name="cantidad">
+													        <input required type="number" min="0" value="'. $cantidad .'" class="form-control" name="cantidad">
 													      </div>
 												    </div>
 
 													<div class="form-group row mt-3">
 												      	<label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Precio de compra</label>
 													      <div class="col-sm-6">
-													        <input type="number" min="0" value="'. $costo .'" class="form-control" name="costo">
+													        <input required type="number" min="0" value="'. $costo .'" class="form-control" name="costo">
 													      </div>
 												    </div>
+
+													<div class="form-group form-check">
+														<input type="checkbox" class="form-check-input" name="iva_costo">
+													     <label class="form-check-label">IVA (12%) incluido.</label>
+													</div>
 
 													<hr>
 
@@ -189,8 +227,13 @@
 														<small class="text-muted mb-3">Puedes modificar el precio de venta de un producto al momento de generar un pedido, o puedes hacerlo más tarde desde el inventario.</small>
 														<label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Precio de venta</label>
 														<div class="col-sm-6">
-															<input type="number" min="0" value="'. $precio .'" class="form-control" name="precio">
+															<input required type="number" min="0" value="'. $precio .'" class="form-control" name="precio">
 														</div>
+													</div>
+
+													<div class="form-group form-check">
+														<input type="checkbox" class="form-check-input" name="iva_precio">
+													     <label class="form-check-label">IVA (12%) incluido.</label>
 													</div>
 
 													</div>
@@ -327,8 +370,7 @@
 									$producto    = $consultar->get('producto', $datos['productos'][$i]);
 									$cantidad    = $datos['cantidades'][$i];
 									$costo       = $datos['costos'][$i];
-									$costo_total = $costo * $cantidad;
-									$datos['subtotal']  += $costo_total;
+									$subtotal    = $costo * $cantidad;
 
 								echo '
 								<li class="list-group-item list-group-item-action container-fluid">
@@ -338,7 +380,7 @@
 	                                        <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
 	                                    </div>
 	                                    <div class="col-sm-6 text-right">
-	                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. $costo_total .'</p>
+	                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. $subtotal .'</p>
 	                                        <p class="mb-0">x'. $cantidad .'</p>
 	                                    </div>
 	                                </div>
@@ -369,15 +411,22 @@
 -->
                         </ul>
 
-                        <div class="card-footer text-muted text-right">
-                            SUBTOTAL Bs. <?php echo $datos['subtotal'] ?><!--
-                            --><br>
-                            IVA: <?php echo(($datos['subtotal'] * 12) /100)  ?>
-                        </div>
+						<?php
 
-                        <div class="card-footer text-center font-weight-bold">
-                            TOTAL Bs. <?php echo($datos['subtotal'] * 1.12) ?>
-                        </div>
+						$subtotal = 0;
+
+						for ($i=0; $i < count($datos['productos']); $i++) {
+							$subtotal += $datos['costos'][$i] * $datos['cantidades'][$i];
+						}
+
+						echo '<div class="card-footer text-muted text-right">';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $subtotal . '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . ($subtotal * 12) / 100 . '</div>';
+
+						echo '<div class="card-footer text-center font-weight-bold">';
+						echo 'TOTAL Bs. ' . $subtotal * 1.12 . '</div>';
+
+						 ?>
                     </div>
 
                 </div>
@@ -392,9 +441,9 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <button type="submit" name="nuevo-producto" class="btn btn-primary btn-block py-2">
+                    <a href="/registrar/pedido/paso-3?<?php echo datos_url($datos); ?>" class="btn btn-primary btn-block py-2">
                         Generar pedido
-                    </button>
+                    </a>
                 </div>
             </div>
 

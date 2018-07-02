@@ -58,19 +58,42 @@
                 <div class="form-group">
 
                     <label for="agregar-id">Selecciona un producto</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>Producto 1</option>
-                        <option>Producto 2</option>
-                        <option>Producto 3</option>
-                        <option>Producto 4</option>
-                        <option>Producto 5</option>
+                    <select name="codigo" required class="form-control" id="exampleFormControlSelect1">
+                        <option value='' selected disabled>Selecciona un producto</option>
+						<?php
+
+						if($select_productos == null){
+
+							echo '';
+						}else{
+
+							$cantidad_options = count($select_productos);
+
+							for ($i=0; $i < $cantidad_options; $i++) {
+
+								$nombre   = $select_productos[$i]['nombre'];
+								$codigo   = $select_productos[$i]['codigo'];
+								$selected = null;
+
+								if(isset($_GET['datacodigo']) AND $_GET['datacodigo'] == $codigo){
+									$selected = 'selected';
+								}
+
+								echo '
+								<option '. $selected .' value="'. $codigo .'">'. $nombre .'</option>
+								';
+
+							}
+						}
+
+						?>
                     </select>
 
-					<input type="number" name="codigo" placeholder="Codigo" value="<?php if(isset($_GET['datacodigo'])){ echo $_GET['datacodigo'];} ?>">
+
                 </div>
                 <div class="form-group">
                     <label for="agregar-cantidad">Cantidad</label>
-                    <input type="number" name="cantidad" min="1" value="<?php
+                    <input class="form-control" required type="number" name="cantidad" min="1" value="<?php
 					if(isset($_GET['dataext'])){
 						 echo $_GET['dataext'];
 
@@ -159,10 +182,10 @@
 														<br><hr>
 
 														<div class="form-group row mt-3">
-															<input type="number" name="id" class="d-none" value="' . $i .'">
+															<input required type="number" name="id" class="d-none" value="' . $i .'">
 													      <label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Cantidad</label>
 													      <div class="col-sm-6">
-													        <input type="number" min="0" value="'. $cantidad .'" class="form-control" name="editar">
+													        <input required type="number" min="0" value="'. $cantidad .'" class="form-control" name="editar">
 													      </div>
 													    </div>
 
@@ -275,13 +298,13 @@
 								}else{
 
 									$cantidad_productos = count($datos['productos']);
+									$subtotal = 0;
 
 									for ($i=0; $i < $cantidad_productos; $i++) {
 
 										$producto = $consultar->get('producto', $datos['productos'][$i]);
 										$cantidad = $datos['cantidades'][$i];
-										$precio_total = $producto['precio_venta'] * $cantidad;
-										$datos['subtotal']  += $precio_total;
+										$subtotal = $datos['subtotales'][$i];
 
 									echo '
 									<li class="list-group-item list-group-item-action container-fluid">
@@ -291,7 +314,7 @@
 		                                        <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
 		                                    </div>
 		                                    <div class="col-sm-6 text-right">
-		                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. $precio_total .'</p>
+		                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. $subtotal .'</p>
 		                                        <p class="mb-0">x'. $cantidad .'</p>
 		                                    </div>
 		                                </div>
@@ -319,28 +342,34 @@
 
                         </ul>
 
-						<div class="card-footer text-muted text-right">
-                            SUBTOTAL Bs. <?php echo $datos['subtotal'] ?><!--
-                            --><br>
-							IVA: <?php echo (($datos['subtotal'] * 12) /100)  ?>
-                        </div>
+						<?php
 
-                        <div class="card-footer text-center font-weight-bold">
-                            TOTAL Bs. <?php echo($datos['subtotal'] * 1.12) ?>
-                        </div>
-                    </div>
+						$subtotal = 0;
 
+						for ($i=0; $i < count($datos['subtotales']); $i++) {
+							$subtotal += $datos['subtotales'][$i];
+						}
+
+						echo '<div class="card-footer text-muted text-right">';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $subtotal . '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . ($subtotal * 12) / 100 . '</div>';
+
+						echo '<div class="card-footer text-center font-weight-bold">';
+						echo 'TOTAL Bs. ' . $subtotal * 1.12 . '</div>';
+
+						 ?>
+					</div>
                 </div>
             </div>
 
 
-            <div class="row">
+			<div class="row">
                 <div class="col-sm-12">
-                    <button type="submit" name="nuevo-producto" class="btn btn-primary btn-block py-2">
+                    <a href="/registrar/factura/paso-3?<?php echo datos_url($datos); ?>" class="btn btn-primary btn-block py-2">
                         Facturar
-                    </button>
+                    </a>
                 </div>
-            </div>
+			</div>
 
 
         </div>

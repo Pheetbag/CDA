@@ -59,7 +59,17 @@ class registrar{
 
     public function usuario(){
 
-        require $this->vista . 'usuario.php';
+		global $consultar;
+
+        if(isset($_POST['nuevo-proveedor'])){
+
+            $resultado = $consultar -> usuario($_POST['nombre'], $_POST['contraseña'], $_POST['rango']);
+
+            header('location:' . HTTP);
+        }else{
+
+            require $this->vista . 'usuario.php';
+        }
     }
 
     public function factura($id){
@@ -74,7 +84,7 @@ class registrar{
 			'cliente'    => null,
 			'productos'  => null,
 			'cantidades' => null,
-			'subtotal'   => 0
+			'subtotales' => null
         ];
 
         if(isset($_GET['ci']))       {  $datos['ci']           = $_GET['ci']; }
@@ -82,6 +92,7 @@ class registrar{
         if(isset($_GET['err']))      {  $datos['error']        = $_GET['err']; }
 		if(isset($_GET['producto'])) {  $datos['productos']    = $_GET['producto']; }
 		if(isset($_GET['cantidad'])) {  $datos['cantidades']   = $_GET['cantidad']; }
+		if(isset($_GET['subtotal'])) {  $datos['subtotales']   = $_GET['subtotal']; }
 
         function datos_url($datos){
 
@@ -113,6 +124,14 @@ class registrar{
 				for ($i=0; $i < count($datos['cantidades']); $i++) {
 
 					$url .= '&cantidad[]=' . urlencode($datos['cantidades'][$i]);
+				}
+			}
+
+			if($datos['subtotales'] != null){
+
+				for ($i=0; $i < count($datos['subtotales']); $i++) {
+
+					$url .= '&subtotal[]=' . urlencode($datos['subtotales'][$i]);
 				}
 			}
 			return $url;
@@ -177,6 +196,9 @@ class registrar{
 					header('location:' . HTTP . '/registrar/factura/paso-1?'. datos_url($datos));
 				}
 				$datos['cliente'] = $consultar->get('cliente', $datos['ci']);
+
+				$select_productos = $consultar->get('select', null);
+
 				require $this->vista . 'factura-2.php';
 				break;
 
@@ -193,12 +215,11 @@ class registrar{
 
 					if($datos['productos'][$i] == $_POST['codigo']){
 
-						$producto_repetido = true;
+						$producto_repetido  = true;
 						header('location:' . HTTP . '/registrar/factura/paso-2?err=repetido&datacodigo='. $_POST['codigo'] .'&dataext='. $_POST['cantidad'] .'&'. datos_url($datos));
 						break;
 					}
 				}
-
 
 				if($producto_repetido == false){
 
@@ -214,14 +235,13 @@ class registrar{
 						header('location:' . HTTP . '/registrar/factura/paso-2?err=existencia&errext='. $resultado['existencias'] . '&datacodigo='. $_POST['codigo'] .'&dataext='. $_POST['cantidad'] .'&'. datos_url($datos));
 					}else{
 
-						$datos['productos'][] = $_POST['codigo'];
+						$datos['productos'][]  = $_POST['codigo'];
 						$datos['cantidades'][] = $_POST['cantidad'];
-
+						$datos['subtotales'][] = $resultado['precio_venta'] * $_POST['cantidad'];
 						header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
 					}
 
 				}
-
 				break;
 
 			case 'eliminar-producto':
@@ -233,10 +253,11 @@ class registrar{
 
 				unset($datos['productos'][$_GET['eliminar']]);
 				unset($datos['cantidades'][$_GET['eliminar']]);
+				unset($datos['subtotales'][$_GET['eliminar']]);
 
 				$datos['productos']  = array_values($datos['productos']);
 				$datos['cantidades'] = array_values($datos['cantidades']);
-
+				$datos['subtotales'] = array_values($datos['subtotales']);
 				header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
 				break;
 
@@ -247,9 +268,40 @@ class registrar{
 					header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
 				}
 
-				$datos['cantidades'][$_POST['id']] = $_POST['editar'];
+				//Divimos el subtotal actual entre la cantidad actual para obtener el precio de venta, y asi ahorrarnos una consulta a la base de datos.
 
+				$precio = $datos['subtotales'][$_POST['id']] / $datos['cantidades'][$_POST['id']];
+
+				$datos['cantidades'][$_POST['id']] = $_POST['editar'];
+				$datos['subtotales'][$_POST['id']] = $precio * $_POST['editar'];
 				header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
+				break;
+
+			case 'paso-3':
+
+				if(!isset($_GET['ci']) OR !isset($_GET['fecha'])){
+
+					header('location:' . HTTP . '/registrar/factura/paso-1?'. datos_url($datos));
+				}
+
+				if(!isset($_GET['producto']) OR !isset($_GET['cantidad'])){
+
+					header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
+				}
+
+				$subtotal = 0;
+
+				for ($i=0; $i < count($datos['subtotales']); $i++) {
+
+					$subtotal += $datos['subtotales'][$i];
+				}
+
+				$iva   = ($subtotal * 12) /100;
+				$total =  $subtotal * 1.12;
+
+				$resultado = $consultar->factura($datos['ci'], $datos['fecha'], $datos['productos'], $datos['cantidades'], $datos['subtotales'], $subtotal, $iva, $total);
+
+				header('location:' . HTTP . '/facturar/f/'. $resultado . '?creada');
 				break;
 		}
 
@@ -268,8 +320,7 @@ class registrar{
 			'productos'    => null,
 			'cantidades'   => null,
 			'costos'       => null,
-			'precios'      => null,
-			'subtotal'     => 0
+			'precios'      => null
         ];
 
         if(isset($_GET['rif']))      {  $datos['rif']          = $_GET['rif']; }
@@ -401,7 +452,11 @@ class registrar{
 				if($datos['rif'] == null){
 					header('location:' . HTTP . '/registrar/pedido/paso-1?'. datos_url($datos));
 				}
+
+
+				$select_productos = $consultar->get('select', null);
 				$datos['proveedor'] = $consultar->get('proveedor', $datos['rif']);
+				
 				require $this->vista . 'pedido-2.php';
 				break;
 
@@ -411,6 +466,10 @@ class registrar{
 					header('location:' . HTTP . '/registrar/pedido/paso-2?'. datos_url($datos));
 				}
 
+
+				if(!isset($_POST['iva'])){ $_POST['iva'] = 'false'; }
+
+
 				$productos_cantidad = count($datos['productos']);
 				$producto_repetido  = false;
 
@@ -419,8 +478,9 @@ class registrar{
 					if($datos['productos'][$i] == $_POST['codigo']){
 
 						$producto_repetido = true;
-						header('location:' . HTTP . '/registrar/pedido/paso-2?err=repetido&datacodigo='. $_POST['codigo'] .'&dataext='. $_POST['cantidad'] .'&datacost='. $_POST['costo'] .'&'. datos_url($datos));
+						header('location:' . HTTP . '/registrar/pedido/paso-2?err=repetido&datacodigo='. $_POST['codigo'] .'&dataext='. $_POST['cantidad'] .'&datacost='. $_POST['costo'] .'&dataiva='. $_POST['iva'] .'&'. datos_url($datos));
 						break;
+
 					}
 				}
 
@@ -431,9 +491,12 @@ class registrar{
 
 					if($resultado == null){
 
-						header('location:' . HTTP . '/registrar/pedido/paso-2?err=producto&datacodigo='. $_POST['codigo'] .'&dataext='. $_POST['cantidad'] .'&datacost='. $_POST['costo'] .'&'. datos_url($datos));
+						header('location:' . HTTP . '/registrar/pedido/paso-2?err=producto&datacodigo='. $_POST['codigo'] .'&dataext='. $_POST['cantidad'] .'&datacost='. $_POST['costo'] . $_POST['iva'] .'&'. datos_url($datos));
 
 					}else{
+
+						//Eliminamos el IVA de "costo" en caso de que lo incluya
+						if($_POST['iva'] != 'false'){ $_POST['costo'] = $_POST['costo'] / 1.12; }
 
 						$datos['productos'][]  = $_POST['codigo'];
 						$datos['cantidades'][] = $_POST['cantidad'];
@@ -473,11 +536,46 @@ class registrar{
 					header('location:' . HTTP . '/registrar/pedido/paso-2?'. datos_url($datos));
 				}
 
+				//Eliminamos el IVA de "costo" en caso de que lo incluya
+				if(isset($_POST['iva_costo'])) { $_POST['costo']  = $_POST['costo']  / 1.12; }
+
+				//Eliminamos el IVA de "precio" en caso de que lo incluya
+				if(isset($_POST['iva_precio'])){ $_POST['precio'] = $_POST['precio'] / 1.12; }
+
 				$datos['cantidades'][$_POST['id']] = $_POST['cantidad'];
 				$datos['costos'][$_POST['id']]     = $_POST['costo'];
 				$datos['precios'][$_POST['id']]    = $_POST['precio'];
-				
+
 				header('location:' . HTTP . '/registrar/pedido/paso-2?'. datos_url($datos));
+				break;
+
+			case 'paso-3':
+
+				if(!isset($_GET['rif']) OR !isset($_GET['fecha']) OR !isset($_GET['llegada'])){
+
+					header('location:' . HTTP . '/registrar/factura/paso-1?'. datos_url($datos));
+				}
+
+				if(!isset($_GET['producto']) OR !isset($_GET['cantidad']) OR !isset($_GET['costo']) OR !isset($_GET['precio'])){
+
+					header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
+				}
+
+				$subtotales = [];
+				$subtotal   = 0;
+
+				for ($i=0; $i < count($datos['productos']); $i++) {
+
+					$subtotales[]  = $datos['costos'][$i] * $datos['cantidades'][$i];
+					$subtotal     += ($datos['costos'][$i] * $datos['cantidades'][$i]);
+				}
+
+				$iva   = ($subtotal * 12) /100;
+				$total =  $subtotal * 1.12;
+
+				$resultado = $consultar->pedido($datos['rif'], $datos['fecha'], $datos['llegada'], $datos['productos'], $datos['cantidades'], $datos['costos'], $datos['precios'], $subtotales, $subtotal, $iva, $total);
+
+				header('location:' . HTTP . '/pedidos/p/'. $resultado . '?creado');
 				break;
 		}
 

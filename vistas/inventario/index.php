@@ -12,7 +12,7 @@
 
             <div class="card mb-4">
                 <h6 class="card-header">Buscar</h6>
-                <form class="card-body" action="/inventario/buscar" method="GET">
+                <form class="card-body" action="<?php echo HTTP ?>/inventario/buscar" method="GET">
                     <div class="form-group mb-0">
                         <input type="text" name="busqueda" id="" class="form-control" placeholder="Buscar en el inventario">
                         <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
@@ -41,7 +41,7 @@
                         foreach($resultado as $item){
 
                             echo '
-                            <a href="/inventario/producto/'. $item['codigo_producto'] .'" class="list-group-item list-group-item-action container-fluid">
+                            <a href="'. HTTP .'/inventario/producto/'. $item['codigo_producto'] .'" class="list-group-item list-group-item-action container-fluid">
                                 <div class="row">
                                     <div class="col-12 col-sm-4 left align-items-center align-items-sm-start">
                                         <div class="font-weight-bold">'   . $item['nombre_producto'] . '</div>
@@ -76,7 +76,7 @@
                 <div class="card-footer text-muted text-center">
                     <ul class="pagination justify-content-center m-0">
                         <li class="page-item <?php echo $anterior; ?>">
-                        <a class="page-link" href="/inventario/pag/<?php echo $anterior_link; ?>">Anterior</a>
+                        <a class="page-link" href="<?php echo HTTP ?>/inventario/pag/<?php echo $anterior_link; ?>">Anterior</a>
                         </li>
 
                         <?php
@@ -87,14 +87,14 @@
                             if($i + 1 == $pagina){ $pagina_activa = 'active'; }
 
                             echo '
-                                <li class="page-item '. $pagina_activa .'"><a class="page-link" href="/inventario/pag/'. ($i + 1) .'">'. ($i + 1) .'</a></li>
+                                <li class="page-item '. $pagina_activa .'"><a class="page-link" href="'. HTTP .'/inventario/pag/'. ($i + 1) .'">'. ($i + 1) .'</a></li>
                             ';
                         }
 
                         ?>
 
                         <li class="page-item <?php echo $siguiente; ?>">
-                        <a class="page-link" href="/inventario/pag/<?php echo $siguiente_link; ?>">Siguiente</a>
+                        <a class="page-link" href="<?php echo HTTP ?>/inventario/pag/<?php echo $siguiente_link; ?>">Siguiente</a>
                         </li>
                     </ul>
                 </div>

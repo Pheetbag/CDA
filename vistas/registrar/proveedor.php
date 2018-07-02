@@ -13,7 +13,7 @@
                 <div class="card bg-light">
                     <h6 class="card-header">Nombre de proveedor</h6>
                     <div class="card-body">
-                        <input type="text" class="form-control bg-light" name="nombre" placeholder="Nombre">
+                        <input required type="text" class="form-control bg-light" name="nombre" placeholder="Nombre">
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
             <div class="card bg-light">
                 <h6 class="card-header">Rif</h6>
                 <div class="card-body">
-                    <input type="text" class="form-control bg-light" min="0" name="rif" placeholder="Rif">
+                    <input required type="text" class="form-control bg-light" min="0" name="rif" placeholder="Rif">
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
                     <div class="card bg-light">
                         <h6 class="card-header">Dirección</h6>
                         <div class="card-body">
-                        <input type="text" class="form-control bg-light" name="direccion" placeholder="Dirección">
+                        <input required type="text" class="form-control bg-light" name="direccion" placeholder="Dirección">
                         </div>
                     </div>
                 </div>

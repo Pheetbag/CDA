@@ -1,23 +1,27 @@
 <?php
 
-global $consultar; 
+global $consultar;
 
 class pedidos{
-    
-    public $vista = 'vistas/pedidos/'; 
-    
+
+    public $vista = 'vistas/pedidos/';
+
     public function index(){
-        
+
+		global $consultar;
+
+		$pedidos     = $consultar -> pedidos_resumen();
+		$proveedores = $consultar -> proveedores_resumen();
         require $this->vista . 'index.php';
-    }  
+    }
 
-    public function pedido($id){
+    public function p($id){
 
-        if($id == '0000'){
-            require $this->vista . 'pedido.php';   
-            return;
-        }
+		global $consultar;
 
-        require $this->vista . 'pedido-creado.php';
+		$pedido  = $consultar -> pedido($id);
+		$detalles = $consultar -> detalles($id);
+
+        require $this->vista . 'pedido.php';
     }
 }

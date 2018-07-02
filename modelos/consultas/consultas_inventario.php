@@ -3,30 +3,30 @@
 class consultas_inventario{
 
     private $conexion;
-    
+
     public function __construct(){
-        
+
         require 'libs/conexion.php';
-        $this-> conexion = new conexion; 
+        $this-> conexion = new conexion;
     }
 
     public function productos($limite, $pagina){
 
         $sql_values     = null;
-        $limite_inicial = 0 + ($limite * ($pagina - 1)); 
+        $limite_inicial = 0 + ($limite * ($pagina - 1));
 
         $sql = "SELECT * FROM `productos` ORDER BY `codigo_producto` DESC LIMIT " . $limite_inicial . ',' . $limite;
 
         $consulta = $this->conexion->get_consulta($sql, $sql_values);
 
         if($consulta->rowCount() > 0){
-            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC); 
+            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
         }else{
-            $datos = null; 
+            $datos = null;
         }
 
         return $datos;
-        $conexion -> desconectar(); 
+        $conexion -> desconectar();
     }
 
     public function productos_total(){
@@ -36,13 +36,13 @@ class consultas_inventario{
         $consulta = $this->conexion->get_consulta($sql, $sql_values);
 
         if($consulta->rowCount() > 0){
-            $datos = $consulta->fetch(PDO::FETCH_ASSOC); 
+            $datos = $consulta->fetch(PDO::FETCH_ASSOC);
         }else{
-            $datos = null; 
+            $datos = null;
         }
 
         return $datos;
-        $conexion -> desconectar(); 
+        $conexion -> desconectar();
 
     }
 
@@ -54,14 +54,43 @@ class consultas_inventario{
         $consulta = $this->conexion->get_consulta($sql, $sql_values);
 
         if($consulta->rowCount() > 0){
-            $datos = $consulta->fetch(PDO::FETCH_ASSOC); 
+            $datos = $consulta->fetch(PDO::FETCH_ASSOC);
         }else{
-            $datos = null; 
+            $datos = null;
         }
 
         return $datos;
-        $conexion -> desconectar(); 
+        $conexion -> desconectar();
     }
+
+	public function producto_movimientos($id){
+
+
+		$sql = "SELECT dp.`codigo_pedido` as `codigo`, 'compra' as `tipo`, dp.`cantidad`, dp.`subtotal`, p.`fecha`
+		FROM `detalles_pedido` dp INNER JOIN `pedidos` p ON dp.`codigo_pedido` = p.`codigo_pedido` WHERE dp.`codigo_producto` = :id
+
+		UNION ALL
+
+		SELECT df.`codigo_factura` as `codigo`, 'venta' as `tipo` , df.`cantidad`, df.`subtotal`, f.`fecha_venta` AS `fecha` FROM `detalles_facturacion` df INNER JOIN `facturacion` f ON df.`codigo_factura` = f.`codigo_factura` WHERE df.`codigo_producto` = :id
+
+		ORDER BY `fecha` DESC
+
+		LIMIT 15";
+
+		$sql_values = [':id' => $id];
+
+		$consulta = $this->conexion->get_consulta($sql, $sql_values);
+
+		if($consulta->rowCount() > 0){
+			$datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+		}else{
+			$datos = null;
+		}
+
+		return $datos;
+		$conexion -> desconectar();
+
+	}
 
     public function producto_eliminar($id){
 
@@ -90,24 +119,24 @@ class consultas_inventario{
 
     public function buscar($busqueda, $limite, $pagina){
 
-        $limite_inicial = 0 + ($limite * ($pagina - 1)); 
+        $limite_inicial = 0 + ($limite * ($pagina - 1));
 
         $sql = 'SELECT * FROM `productos` WHERE `nombre_producto` RLIKE :buscar OR `tipo_producto` RLIKE :otros OR `marca_producto` RLIKE :otros OR `modelo_producto` RLIKE :otros LIMIT ' . $limite_inicial . ',' . $limite ;
         $sql_values = [
             ':buscar' => $busqueda[1],
             ':otros'  => $busqueda[0]
         ];
-        
+
         $consulta = $this->conexion->get_consulta($sql, $sql_values);
 
         if($consulta->rowCount() > 0){
-            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC); 
+            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
         }else{
-            $datos = null; 
+            $datos = null;
         }
 
         return $datos;
-        $conexion -> desconectar(); 
+        $conexion -> desconectar();
     }
 
     public function buscar_total($busqueda){
@@ -117,16 +146,16 @@ class consultas_inventario{
             ':buscar' => $busqueda[1],
             ':otros'  => $busqueda[0]
         ];
-        
+
         $consulta = $this->conexion->get_consulta($sql, $sql_values);
 
         if($consulta->rowCount() > 0){
-            $datos = $consulta->fetch(PDO::FETCH_ASSOC); 
+            $datos = $consulta->fetch(PDO::FETCH_ASSOC);
         }else{
-            $datos = null; 
+            $datos = null;
         }
 
         return $datos;
-        $conexion -> desconectar(); 
+        $conexion -> desconectar();
     }
 }

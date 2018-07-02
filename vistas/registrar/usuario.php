@@ -13,7 +13,7 @@
                     <div class="card bg-light ">
                         <h6 class="card-header">Nombre</h6>
                         <div class="card-body">
-                    <input type="text" class="form-control bg-light" name="nombre" placeholder="Nombre">
+                    <input required type="text" class="form-control bg-light" name="nombre" placeholder="Nombre">
                     </div>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     <div class="card bg-light ">
                         <h6 class="card-header">Contraseña</h6>
                         <div class="card-body">
-                        <input type="number" class="form-control bg-light" min="0" name="ci" placeholder="Contraseña">
+                        <input required type="password" class="form-control bg-light" min="0" name="contraseña" placeholder="Contraseña">
                         </div>
                     </div>
                 </div>
@@ -33,12 +33,10 @@
                     <div class="card bg-light ">
                         <h6 class="card-header">Rango</h6>
                         <div class="card-body">
-                        <select class="form-control bg-light" id="exampleFormControlSelect1">
-                            <option>Administrador</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                        <select name="rango" required class="form-control bg-light">
+                            <option value="1">Administrador</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
                         </select>
                         </div>
                     </div>
@@ -46,7 +44,7 @@
             </div>
             <div class="row mb-0">
                 <div class="col-6">
-                    <button type="submit" name="nuevo-cliente" class="btn btn-primary btn-block py-2">Registrar usuario</button>
+                    <button type="submit" name="nuevo-usuario" class="btn btn-primary btn-block py-2">Registrar usuario</button>
                 </div>
             </div>
     </form>

@@ -2,83 +2,92 @@
 </head>
 <body>
 
-<?php include_header(2, 'Pedidos', '#0000'); ?>
+<?php include_header(2, 'Pedidos', '#' . $pedido['codigo_pedido']); ?>
 
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
     <div class="row">
-        
+
         <div class="col-lg-4 col-md-8 container-fluid">
+
+			<?php
+
+				if(isset($_GET['creado'])){
+
+					echo '
+					<div class="row mb-4">
+		                <div class="col-sm-12">
+		                    <div class="progress" style="height: 25px;">
+		                    <div class="progress-bar progress-bar-striped progress-bar-animated
+		                    bg-success font-weight-bold" style="width:100%;">¡Completado!</div>
+		                    </div>
+		                </div>
+		            </div>
+					';
+				}
+
+			?>
 
             <div class="row mb-2">
                 <div class="col-sm-12">
-                
+
                     <div class="card">
                         <h6 class="card-header text-center px-5">
-                            Nombre empresa
+                            <?php echo $pedido['nombre_empresa'] ?>
                             |
-                            J-00000000 
+                            J-<?php echo $pedido['rif'] ?>
                             <br><br>
-                            Valle de la pascua
+                            <?php echo $pedido['direccion'] ?>
                             <br>
-                            0412-000-00-00
+                            <?php echo $pedido['telefono'] ?>
                         </h6>
                         <h6 class="card-header text-muted text-center">
-                        11/06/2018 | Pedido #0000
+                        <?php echo(date('d/m/Y',strtotime($pedido['fecha']))) ?> | Pedido #<?php echo $pedido['codigo_pedido'] ?>
                         </h6>
                         <ul class="list-group list-group-flush">
 
-                            <li class="list-group-item list-group-item-action container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-6 text-left">
-                                        <p class="mb-0 font-weight-bold">Producto 1</p>
-                                        <p class="mb-0">Codigo: 209</p>
-                                    </div>
-                                    <div class="col-sm-6 text-right">
-                                        <p class="font-weight-bold mb-0 text-success ">Bs. 2.000.500</p>
-                                        <p class="mb-0">x2</p>
-                                    </div>
-                                </div>
-                            </li>
+						<?php
 
-                            <li class="list-group-item list-group-item-action container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-6 text-left">
-                                        <p class="mb-0 font-weight-bold">Producto 2</p>
-                                        <p class="mb-0">Codigo: 12300</p>
-                                    </div>
-                                    <div class="col-sm-6 text-right">
-                                        <p class="font-weight-bold mb-0 text-success ">Bs. 1.350.299</p>
-                                        <p class="mb-0">x1</p>
-                                    </div>
-                                </div>
-                            </li>
+						$cantidad_detalles = count($detalles);
 
-                            <li class="list-group-item list-group-item-action container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-6 text-left">
-                                        <p class="mb-0 font-weight-bold">Producto 3</p>
-                                        <p class="mb-0">Codigo: 509</p>
-                                    </div>
-                                    <div class="col-sm-6 text-right">
-                                        <p class="font-weight-bold mb-0 text-success ">Bs. 999.700</p>
-                                        <p class="mb-0">x4</p>
-                                    </div>
+						for ($i=0; $i < $cantidad_detalles; $i++) {
+
+							$codigo   = $detalles[$i]['codigo_producto'];
+							$producto = $detalles[$i]['nombre_producto'];
+							$cantidad = $detalles[$i]['cantidad'];
+							$subtotal = $detalles[$i]['subtotal'];
+
+						echo '
+						<a href="'. HTTP .'/inventario/producto/'. $codigo .'" class="list-group-item list-group-item-action container-fluid">
+                            <div class="row">
+                                <div class="col-sm-6 text-left">
+                                    <p class="mb-0 font-weight-bold">'. $producto .'</p>
+                                    <p class="mb-0">Codigo: '. $codigo .'</p>
                                 </div>
-                            </li>
+                                <div class="col-sm-6 text-right">
+                                    <p class="font-weight-bold mb-0 text-success ">Bs. '. $subtotal .'</p>
+                                    <p class="mb-0">x'. $cantidad .'</p>
+                                </div>
+                            </div>
+                        </a>
+						';
+
+						}
+						?>
 
                         </ul>
 
-                        <div class="card-footer text-muted text-right">
-                            SUBTOTAL Bs. 9.350.099<!--
-                            --><br>
-                            IVA: 1.122.011,88
-                        </div>
+						<?php
 
-                        <div class="card-footer text-center font-weight-bold">
-                            TOTAL Bs. 10.472.110,88
-                        </div>
+						echo '<div class="card-footer text-muted text-right">';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $pedido['subtotal'] . '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . $pedido['iva'] . '</div>';
+
+						echo '<div class="card-footer text-center font-weight-bold">';
+						echo 'TOTAL Bs. ' . $pedido['total'] . '</div>';
+
+						 ?>
                     </div>
 
                 </div>
@@ -87,7 +96,7 @@
             <div class="row mb-4">
                 <div class="col-sm-12">
                     <div class="card bg-light sp">
-                        <h6 class="card-header text-center text-muted">Fecha de llegada: 11/06/2018</h6>
+                        <h6 class="card-header text-center text-muted">Fecha de llegada: <?php echo(date('d/m/Y',strtotime($pedido['fecha_llegada']))) ?></h6>
                     </div>
                 </div>
             </div>
