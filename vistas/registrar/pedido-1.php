@@ -17,7 +17,7 @@
         </div>
         <div class="modal-body">
             <div class="alert alert-warning" role="alert">
-                El rif <b>J-<?php  echo $datos['rif'] ?></b> no pertenece a ningún proveedor registrado. Inserta los datos del proveedor para continuar.
+                El rif <b><?php  echo $datos['rif'] ?></b> no pertenece a ningún proveedor registrado. Inserta los datos del proveedor para continuar.
             </div>
                 <div class="row">
                     <div class="form-group col">
@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group col">
                         <label for="proveedor-tlf">Teléfono</label>
-                        <input type="text" class="form-control" id="proveedor-tlf" name="tlf" placeholder="Teléfono">
+                        <input type="number" class="form-control" id="proveedor-tlf" name="tlf" placeholder="Teléfono">
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,7 +46,7 @@
 
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
 
             <form class="container-fluid" method="POST" action="/registrar/pedido/validar-proveedor?<?php echo datos_url($datos); ?>" >
 
@@ -75,8 +75,11 @@
                         <div class="card mb-3">
                             <h6 class="card-header">Seleccionar proveedor</h6>
 
-                            <div class="card-body">
-                                <input required type="number" class="form-control" name="rif" placeholder="Rif" value="<?php echo $datos['rif'] ?>">
+                            <div class="card-body input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">J-</span>
+								</div>
+                                <input required type="number" class="form-control" name="rif" placeholder="Rif" value="<?php echo $datos['rif-numero'] ?>">
                             </div>
                         </div>
                     </div>
@@ -93,7 +96,7 @@
             </form>
 
         </div>
-        <div class="col-md-6 col-lg-5 container-fluid">
+        <div class="col-sm-6 col-lg-5 container-fluid">
 
             <div class="row mb-4">
                 <div class="col-sm-12">
@@ -110,13 +113,12 @@
                         <h6 class="card-header text-center px-5">
 							<?php
 
-							if($datos['rif'] != null){
+							if($datos['proveedor'] != null){
 
 								echo
 
 								$datos['proveedor']['nombre_empresa'] .
-								' | ' . '
-								J-' . $datos['proveedor']['rif'] . '
+								' | ' . $datos['proveedor']['rif'] . '
 								<br><br>' .
 								$datos['proveedor']['direccion'] .
 								' <br>' .

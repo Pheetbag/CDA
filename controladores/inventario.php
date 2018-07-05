@@ -52,6 +52,15 @@ class inventario{
         global $consultar;
 
         $resultado   = $consultar -> producto($id);
+
+		if($resultado == null){
+
+			require 'controladores/error.php';
+			$controlador = new error;
+			$controlador->id_inexistente();
+			exit();
+		}
+
 		$movimientos = $consultar -> producto_movimientos($id);
         //verificamos si se desea realizar alguna acción con este producto, de no ser asi mostramos la vista por defecto
         //sino, dependiendo de la accion mostramos la vista de esa accion

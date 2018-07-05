@@ -8,7 +8,7 @@
 
     <div class="row">
 
-        <div class="col-sm-4">
+        <div class="col-sm-6 col-md-5 col-lg-4">
 
             <div class="card border-primary mb-4">
                 <h6 class="card-header text-center">Usuario</h6>
@@ -21,7 +21,7 @@
         </div>
 
 
-        <div class="col-sm-4">
+        <div class="col-sm-6 col-md-5 col-lg-4">
 
             <div class="card border-primary mb-4">
                 <h6 class="card-header text-center">Cliente</h6>
@@ -39,7 +39,7 @@
 
     <div class="row">
 
-        <div class="col-sm-4">
+        <div class="col-sm-6 col-md-5 col-lg-4">
 
             <div class="card border-primary mb-4">
                 <h6 class="card-header text-center">Proveedor</h6>
@@ -52,7 +52,7 @@
         </div>
 
 
-        <div class="col-sm-4">
+        <div class="col-sm-6 col-md-5 col-lg-4">
 
             <div class="card border-primary mb-4">
                 <h6 class="card-header text-center">Producto</h6>
@@ -67,7 +67,7 @@
 
     <div class="row">
 
-        <div class="col-sm-4">
+        <div class="col-sm-6 col-md-5 col-lg-4">
 
             <div class="card border-primary mb-4">
                 <h6 class="card-header text-center">Factura</h6>
@@ -80,7 +80,7 @@
         </div>
 
 
-        <div class="col-sm-4">
+        <div class="col-sm-6 col-md-5 col-lg-4">
 
             <div class="card border-primary mb-4">
                 <h6 class="card-header text-center">Pedido</h6>

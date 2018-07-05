@@ -17,6 +17,11 @@ class registrar{
 
         if(isset($_POST['nuevo-producto'])){
 
+			$_POST['tipo']        = strtolower($_POST['tipo']);
+			$_POST['marca']       = strtolower($_POST['tipo']);
+			$_POST['modelo']      = strtolower($_POST['tipo']);
+			$_POST['existencias'] = str_replace([',', '.', '-', '+', 'e'], '',$_POST['tipo']);
+
             $resultado = $consultar -> producto($_POST['nombre'], $_POST['tipo'], $_POST['marca'], $_POST['modelo'], $_POST['existencias'], $_POST['precio']);
 
             header('location:' . HTTP . '/inventario/producto/' . $resultado[0] . '?action=creado');
@@ -33,9 +38,26 @@ class registrar{
 
         if(isset($_POST['nuevo-cliente'])){
 
-            $resultado = $consultar -> cliente($_POST['nombre'], $_POST['apellido'], $_POST['ci'], $_POST['direccion'], $_POST['telefono']);
+			$filtrado          = str_replace([',', '.', '-', '+', 'e'], '', [$_POST['ci'], $_POST['telefono']]);
+			$_POST['ci']       = $_POST['ci-prefijo'] . '-' . $filtrado[0];
+			$_POST['telefono'] = $filtrado[1];
+			$_POST['nombre']   = strtolower($POST['nombre']);
+			$_POST['apellido'] = strtolower($POST['apellido']);
 
-            header('location:' . HTTP . '/facturar/cliente/' . $_POST['ci'] . '?action=creado');
+			$resultado = $consultar -> get('cliente', $_POST['ci']);
+
+			if($resultado != null){
+
+				$err = 'cliente_existe';
+				require $this->vista . 'cliente.php';
+
+			}else{
+
+				$resultado = $consultar -> cliente($_POST['nombre'], $_POST['apellido'], $_POST['ci'], $_POST['direccion'], $_POST['telefono']);
+	            header('location:' . HTTP . '/facturar/cliente/' . $_POST['ci'] . '?action=creado');
+
+			}
+
         }else{
 
             require $this->vista . 'cliente.php';
@@ -48,9 +70,22 @@ class registrar{
 
         if(isset($_POST['nuevo-proveedor'])){
 
-            $resultado = $consultar -> proveedor($_POST['nombre'], $_POST['telefono'], $_POST['rif'], $_POST['direccion']);
+			$filtrado          = str_replace([',', '.', '-', '+', 'e'], '', [$_POST['rif'], $_POST['telefono']]);
+			$_POST['rif']      = 'J-' . $filtrado[0];
+			$_POST['telefono'] = $filtrado[1];
 
-            header('location:' . HTTP . '/pedidos/proveedor/' . $resultado[0] . '?action=creado');
+			$resultado = $consultar -> get('proveedor', $_POST['rif']);
+
+			if($resultado != null){
+
+				$err = 'proveedor_existe';
+				require $this->vista . 'proveedor.php';
+
+			}else{
+
+	            $resultado = $consultar -> proveedor($_POST['nombre'], $_POST['telefono'], $_POST['rif'], $_POST['direccion']);
+	            header('location:' . HTTP . '/pedidos/proveedor/' . $resultado[0] . '?action=creado');
+			}
         }else{
 
             require $this->vista . 'proveedor.php';
@@ -80,6 +115,8 @@ class registrar{
         $datos = [
 			'error'      => null,
             'ci'         => null,
+			'ci-numero'  => null,
+			'ci-prefijo' => null,
             'fecha'      => date('Y-m-d'),
 			'cliente'    => null,
 			'productos'  => null,
@@ -87,7 +124,9 @@ class registrar{
 			'subtotales' => null
         ];
 
-        if(isset($_GET['ci']))       {  $datos['ci']           = $_GET['ci']; }
+        if(isset($_GET['ci']))       {  $datos['ci']           = $_GET['ci'];
+                                        $datos['ci-numero']    = explode('-',$_GET['ci'])[1];
+                                        $datos['ci-prefijo']   = explode('-',$_GET['ci'])[0]; }
         if(isset($_GET['fecha']))    {  $datos['fecha']        = $_GET['fecha']; }
         if(isset($_GET['err']))      {  $datos['error']        = $_GET['err']; }
 		if(isset($_GET['producto'])) {  $datos['productos']    = $_GET['producto']; }
@@ -164,7 +203,9 @@ class registrar{
 				}
 				else if(isset($_POST['ci'])){
 
-					$datos['ci'] = $_POST['ci'];
+					$_POST['ci']    = str_replace([',', '.', '-', '+', 'e'], '', $_POST['ci']);
+
+					$datos['ci']    = $_POST['ci-prefijo'] . '-' . $_POST['ci'];
 					$datos['fecha'] = $_POST['fecha'];
 				}
 
@@ -172,8 +213,6 @@ class registrar{
 
 					header('location:' . HTTP . '/registrar/factura/paso-2?' . datos_url($datos));
 				}else{
-
-					//print_r(datos_url($datos));
 
 					header('location:' . HTTP . '/registrar/factura/paso-1?err=cliente&' . datos_url($datos));
 				}
@@ -314,6 +353,8 @@ class registrar{
 		//Aqui guardamos todos los datos de el proceso de facturación para ser recuperados luego y agregarse como datos get en la consulta (este trabajo será realizado por la función datos_url)
         $datos = [
             'rif'          => null,
+			'rif_prefijo'  => null,
+			'rif_numero'   => null,
             'fecha'        => date('Y-m-d'),
             'llegada'      => date('Y-m-d'),
 			'proveedor'    => null,
@@ -323,7 +364,9 @@ class registrar{
 			'precios'      => null
         ];
 
-        if(isset($_GET['rif']))      {  $datos['rif']          = $_GET['rif']; }
+        if(isset($_GET['rif']))      {  $datos['rif']          = $_GET['rif'];
+										$datos['rif-numero']   = explode('-',$_GET['rif'])[1];
+										$datos['rif-prefijo']  = explode('-',$_GET['rif'])[0]; }
         if(isset($_GET['fecha']))    {  $datos['fecha']        = $_GET['fecha']; }
 		if(isset($_GET['llegada']))  {  $datos['llegada']      = $_GET['llegada']; }
 		if(isset($_GET['producto'])) {  $datos['productos']    = $_GET['producto']; }
@@ -413,14 +456,14 @@ class registrar{
 
 			case 'validar-proveedor':
 
-
 				if(!isset($_POST['rif']) AND $datos['rif'] == null){
 					header('location:' . HTTP . '/registrar/proveedor/');
 
 				}
 				else if(isset($_POST['rif'])){
 
-					$datos['rif']     = $_POST['rif'];
+					$_POST['rif']    = str_replace([',', '.', '-', '+', 'e'], '', $_POST['rif']);
+					$datos['rif']    = 'J-' . $_POST['rif'];
 					$datos['fecha']   = $_POST['fecha'];
 					$datos['llegada'] = $_POST['llegada'];
 
@@ -456,7 +499,7 @@ class registrar{
 
 				$select_productos = $consultar->get('select', null);
 				$datos['proveedor'] = $consultar->get('proveedor', $datos['rif']);
-				
+
 				require $this->vista . 'pedido-2.php';
 				break;
 

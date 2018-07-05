@@ -2,8 +2,7 @@
 </head>
 <body>
 
-<?php include_header(2, 'Pedidos', '#' . $pedido['codigo_pedido']); ?>
-
+<?php include_header(2, 'Pedidos', 'Pedido'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -36,7 +35,7 @@
                         <h6 class="card-header text-center px-5">
                             <?php echo $pedido['nombre_empresa'] ?>
                             |
-                            J-<?php echo $pedido['rif'] ?>
+                            <?php echo $pedido['rif'] ?>
                             <br><br>
                             <?php echo $pedido['direccion'] ?>
                             <br>

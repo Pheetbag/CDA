@@ -76,7 +76,7 @@
                     <div class="card bg-dark text-white">
                         <h6 class="card-header">Precio</h6>
                         <div class="card-body">
-                        <input type="number" class="form-control bg-light" name="precio" placeholder="Precio" value="<?php echo $resultado['precio_venta'] ?>">
+                        <input type="number" class="form-control bg-light" step="0.01" name="precio" placeholder="Precio" value="<?php echo $resultado['precio_venta'] ?>">
                         </div>
                     </div>
                 </div>

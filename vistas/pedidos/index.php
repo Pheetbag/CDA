@@ -44,7 +44,7 @@
 							<div class="row">
 								<div class="col-12 col-sm-4 left align-items-center align-items-sm-start">
 									<div class="font-weight-bold">'. $nombre .'</div>
-									<div>J-'. $rif .'</div>
+									<div>'. $rif .'</div>
 									<div>Pedido #'. $codigo .'</div>
 								</div>
 								<div class="col-6 col-sm-4 d-flex flex-column justify-content-around">
@@ -70,7 +70,7 @@
                 <div class="card-footer text-muted text-center">
 					<ul class="pagination justify-content-center m-0">
                         <li class="page-item">
-                        <a class="page-link" href="#">Ver todos</a>
+                        <a class="page-link" href="<?php echo HTTP ?>/pedidos/todos">Ver todos</a>
                         </li>
                     </ul>
                 </div>
@@ -106,11 +106,11 @@
 
 
 						echo'
-						<a href="'. HTTP .'/pedido/proveedor/'. $codigo .'" class="list-group-item list-group-item-action container-fluid">
+						<a href="'. HTTP .'/pedidos/proveedor/'. $codigo .'" class="list-group-item list-group-item-action container-fluid">
                             <div class="row">
                                 <div class="col-12 col-sm-4 left align-items-center align-items-sm-start">
                                     <div class="font-weight-bold">'. $nombre .'</div>
-                                    <div>J-'. $rif .'</div>
+                                    <div>'. $rif .'</div>
                                 </div>
                                 <div class="col-6 col-sm-4 d-flex align-items-center flex-column justify-content-around align-items-end">
                                     <div class="text-muted">'. $direccion .'</div>
@@ -134,7 +134,7 @@
                 <div class="card-footer text-muted text-center">
 					<ul class="pagination justify-content-center m-0">
                         <li class="page-item">
-                        <a class="page-link" href="#">Ver todos</a>
+                        <a class="page-link" href="<?php echo HTTP ?>/pedidos/proveedores">Ver todos</a>
                         </li>
                     </ul>
                 </div>
@@ -151,31 +151,35 @@
                     <a class="btn btn-primary mt-3 d-block" href="<?php echo HTTP ?>/registrar/pedido">Nuevo pedido</a>
                 </div>
             </div>
-<!--
 
-ELIMINADO TEMPORALMENTE EN VISTA DE QUE NO ME DARÁ TIEMPO DE PONERLO A FUNCIONAR
-
-            <div class="card mb-4">
+			<div class="card mb-4">
                 <h6 class="card-header">Buscar pedido</h6>
-                <form class="card-body">
-                    <div class="form-group">
-                        <input type="text" name="" id="" class="form-control" placeholder="Codigo">
+                <form  method="post" action="<?php echo HTTP ?>/pedidos/buscar/pedido" class="card-body">
+                    <div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">#</span>
+						</div>
+                        <input type="text" name="busqueda" class="form-control" placeholder="Codigo">
                     </div>
-                    <a class="btn btn-primary mt-3 d-block" href="#">Buscar</a>
+                    <button type="submit" class="btn btn-primary mt-3 btn-block" href="#">Buscar</button>
                 </form>
             </div>
 
             <div class="card">
                 <h6 class="card-header">Buscar proveedor</h6>
-                <form class="card-body">
-                    <div class="form-group">
-                        <input type="text" name="" id="" class="form-control" placeholder="Rif">
+                <form  method="post" action="<?php echo HTTP ?>/pedidos/buscar/proveedor" class="card-body">
+                    <div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">J-</span>
+						</div>
+                        <input type="text" name="busqueda" class="form-control" placeholder="Rif">
                     </div>
-                    <a class="btn btn-primary mt-3 d-block" href="#">Buscar</a>
+                    <button type="submit" class="btn btn-primary mt-3 btn-block" href="#">Buscar</button>
                 </form>
             </div>
         </div>
--->
+
+
     </div>
 </main>
 

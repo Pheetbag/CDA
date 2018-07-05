@@ -17,7 +17,7 @@
         </div>
         <div class="modal-body">
             <div class="alert alert-warning" role="alert">
-                La cedula <b>V-<?php  echo $datos['ci'] ?></b> no pertenece a ningún cliente registrado. Inserta sus datos para continuar.
+                La cedula <b><?php  echo $datos['ci'] ?></b> no pertenece a ningún cliente registrado. Inserta sus datos para continuar.
             </div>
             <div>
                 <div class="row">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label for="cliente-tlf">Telefono</label>
-                    <input type="text" class="form-control" id="cliente-tlf" name="tlf" placeholder="Teléfono">
+                    <input type="number" class="form-control" id="cliente-tlf" name="tlf" placeholder="Teléfono">
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
 
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
 
             <form class="container-fluid" method="POST" action="/registrar/factura/validar-cliente?<?php echo datos_url($datos); ?>">
 
@@ -71,8 +71,34 @@
                         <div class="card mb-3">
                             <h6 class="card-header">Seleccionar cliente</h6>
 
-                            <div class="card-body">
-                                <input required type="number" class="form-control" name="ci" placeholder="Cedula" value="<?php echo $datos['ci'] ?>">
+                            <div class="card-body row">
+
+								<select required class="form-control col-3 col-sm-4 col-md-3 col-xl-2 ml-3 mr-1" name="ci-prefijo">
+									<?php
+
+
+										$selected_v = null;
+										$selected_e = null;
+
+										switch ($datos['ci-prefijo']) {
+											case 'E':
+												$selected_e = 'selected';
+												break;
+
+											default:
+												$selected_v = 'selected';
+												break;
+										}
+
+										echo '
+										<option '. $selected_v .' value="V">V</option>
+										<option '. $selected_e .' value="E">E</option>
+										';
+
+									?>
+								</select>
+
+                                <input required type="number" class="form-control col mr-3" name="ci" placeholder="Cedula" value="<?php echo $datos['ci-numero'] ?>">
                             </div>
                         </div>
                     </div>
@@ -89,7 +115,7 @@
             </form>
 
         </div>
-        <div class="col-md-6 col-lg-5 container-fluid">
+        <div class="col-sm-6 col-lg-5 container-fluid">
 
             <div class="row mb-4">
                 <div class="col-sm-12">
@@ -107,13 +133,12 @@
 
 							<?php
 
-							if($datos['ci'] != null){
+							if($datos['cliente'] != null){
 
 								echo
 
 								$datos['cliente']['nombre_cliente'] . ' ' . $datos['cliente']['apellido_cliente'] .
-								' | ' . '
-								V-' . $datos['cliente']['ci_cliente'] . '
+								' | ' . $datos['cliente']['ci_cliente'] . '
 								<br><br>' .
 								$datos['cliente']['direccion_cliente'] .
 								' <br>' .

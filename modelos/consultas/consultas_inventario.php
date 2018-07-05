@@ -73,7 +73,7 @@ class consultas_inventario{
 
 		SELECT df.`codigo_factura` as `codigo`, 'venta' as `tipo` , df.`cantidad`, df.`subtotal`, f.`fecha_venta` AS `fecha` FROM `detalles_facturacion` df INNER JOIN `facturacion` f ON df.`codigo_factura` = f.`codigo_factura` WHERE df.`codigo_producto` = :id
 
-		ORDER BY `fecha` DESC
+		ORDER BY `fecha` DESC, `subtotal` DESC, `codigo` DESC
 
 		LIMIT 15";
 

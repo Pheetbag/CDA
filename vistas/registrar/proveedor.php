@@ -7,9 +7,26 @@
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
 <div class="row">
-    <form class="col-md-8 container-fluid" method="POST" action="#">
-        <div class="row mb-3">
-            <div class="col-sm-8">
+    <form class="col-md-8 col-lg-7 col-xl-6 container-fluid" method="POST" action="#">
+
+		<?php
+
+		if(isset($err)){
+
+			echo '
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Error al registrar</strong> Este proveedor ya se encuentra registrado en el sistema.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			';
+		}
+
+		?>
+
+        <div class="row">
+            <div class="col-sm-10 mb-3">
                 <div class="card bg-light">
                     <h6 class="card-header">Nombre de proveedor</h6>
                     <div class="card-body">
@@ -20,18 +37,21 @@
 
         </div>
 
-        <div class="row mb-3">
+        <div class="row">
 
-        <div class="col-sm-4">
+        <div class="col-sm-5 mb-3">
             <div class="card bg-light">
                 <h6 class="card-header">Rif</h6>
-                <div class="card-body">
+                <div class="card-body input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">J-</span>
+					</div>
                     <input required type="text" class="form-control bg-light" min="0" name="rif" placeholder="Rif">
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-5 mb-3">
             <div class="card bg-light">
                 <h6 class="card-header">Teléfono</h6>
                 <div class="card-body">
@@ -41,8 +61,8 @@
         </div>
 
         </div>
-            <div class="row mb-3">
-                <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-10 mb-3">
                     <div class="card bg-light">
                         <h6 class="card-header">Dirección</h6>
                         <div class="card-body">
@@ -51,8 +71,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-0">
-                <div class="col-8">
+            <div class="row">
+                <div class="col-sm-10">
                     <button type="submit" name="nuevo-proveedor" class="btn btn-primary btn-block py-2">Registrar proveedor</button>
                 </div>
             </div>

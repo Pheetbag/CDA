@@ -114,7 +114,7 @@
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
 
             <div class="container-fluid">
 
@@ -257,7 +257,7 @@
             </div>
 
         </div>
-        <div class="col-md-6 col-lg-5 container-fluid">
+        <div class="col-sm-6 col-lg-5 container-fluid">
 
             <div class="row mb-4">
                 <div class="col-sm-12">
@@ -274,7 +274,7 @@
                         <h6 class="card-header text-center px-5">
                             <?php echo($datos['cliente']['nombre_cliente'] . ' ' . $datos['cliente']['apellido_cliente']) ?>
                             |
-                            V-<?php echo $datos['cliente']['ci_cliente'] ?>
+                            <?php echo $datos['cliente']['ci_cliente'] ?>
                             <br><br>
                             <?php echo $datos['cliente']['direccion_cliente'] ?>
                             <br>

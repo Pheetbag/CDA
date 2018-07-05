@@ -41,7 +41,7 @@
 	                        <div class="row">
 	                            <div class="col-12 col-sm-4 left align-items-center align-items-sm-start">
 	                                <div class="font-weight-bold">'. $nombre .'</div>
-	                                <div>V-'. $ci .'</div>
+	                                <div>'. $ci .'</div>
 	                            </div>
 	                            <div class="col-6 col-sm-4 left align-items-center align-items-sm-end">
 	                                <div class="text-muted">Factura #'. $codigo .'</div>
@@ -67,7 +67,7 @@
                 <div class="card-footer text-muted text-center">
                     <ul class="pagination justify-content-center m-0">
                         <li class="page-item">
-                        <a class="page-link" href="#">Ver todos</a>
+                        <a class="page-link" href="<?php echo HTTP ?>/facturar/todas">Ver todos</a>
                         </li>
                     </ul>
                 </div>
@@ -106,7 +106,7 @@
                             <div class="row">
                                 <div class="col-12 col-sm-4 left align-items-center align-items-sm-start">
                                     <div class="font-weight-bold">'. $nombre .'</div>
-                                    <div>V-00.000.000</div>
+                                    <div>'. $ci .'</div>
                                 </div>
                                 <div class="col-6 col-sm-4 d-flex align-items-center flex-column justify-content-around align-items-end">
                                     <div class="text-muted">'. $direccion .'</div>
@@ -130,7 +130,7 @@
                 <div class="card-footer text-muted text-center">
                     <ul class="pagination justify-content-center m-0">
                         <li class="page-item">
-                        <a class="page-link" href="#">Ver todos</a>
+                        <a class="page-link" href="<?php echo HTTP ?>/facturar/clientes">Ver todos</a>
                         </li>
                     </ul>
                 </div>
@@ -146,31 +146,37 @@
                     <a class="btn btn-primary mt-3 d-block" href="<?php echo HTTP ?>/registrar/factura">Nueva factura</a>
                 </div>
             </div>
-<!--
-
-ELIMINADO TEMPORALMENTE EN VISTA DE QUE NO LO PODRÉ TERMINAR
 
             <div class="card mb-4">
                 <h6 class="card-header">Buscar factura</h6>
-                <form class="card-body">
-                    <div class="form-group">
-                        <input type="text" name="" id="" class="form-control" placeholder="Codigo">
+                <form method="POST" action="<?php echo HTTP ?>/facturar/buscar/factura" class="card-body">
+                    <div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">#</span>
+						</div>
+                        <input type="text" name="busqueda" class="form-control" placeholder="Codigo">
                     </div>
-                    <a class="btn btn-primary mt-3 d-block" href="#">Buscar</a>
+                    <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
                 </form>
             </div>
 
-            <div class="card">
+			<div class="card mb-4">
                 <h6 class="card-header">Buscar cliente</h6>
-                <form class="card-body">
-                    <div class="form-group">
-                        <input type="text" name="" id="" class="form-control" placeholder="Cédula">
+                <form method="POST" action="<?php echo HTTP ?>/facturar/buscar/cliente" class="card-body">
+                    <div class="form-group row">
+
+						<select required class="form-control col-3 col-sm-2 col-md-4 col-xl-3 ml-3 mr-1" name="ci-prefijo">
+							<option selected value="V">V</option>
+							<option value="E">E</option>
+						</select>
+
+                        <input type="text" name="busqueda" id="" class="form-control col mr-3" placeholder="Cédula">
                     </div>
-                    <a class="btn btn-primary mt-3 d-block" href="#">Buscar</a>
+                    <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
                 </form>
             </div>
         </div>
--->
+
     </div>
 </main>
 

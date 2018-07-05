@@ -10,6 +10,81 @@ class consultas_pedidos{
         $this-> conexion = new conexion;
     }
 
+	public function proveedores($limite, $pagina){
+
+		$limite_inicial = 0 + ($limite * ($pagina - 1));
+
+        $sql = "SELECT * FROM `proveedores` ORDER BY `nombre_empresa` LIMIT " . $limite_inicial . ',' . $limite;
+		$sql_values     = null;
+
+        $consulta = $this->conexion->get_consulta($sql, $sql_values);
+
+        if($consulta->rowCount() > 0){
+            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            $datos = null;
+        }
+
+        return $datos;
+        $conexion -> desconectar();
+
+	}
+
+	public function proveedores_total(){
+
+		$sql_values = null;
+		$sql = "SELECT COUNT(`codigo_proveedor`) AS `total` FROM `proveedores` ORDER BY `nombre_empresa`";
+
+		$consulta = $this->conexion->get_consulta($sql, $sql_values);
+
+		if($consulta->rowCount() > 0){
+			$datos = $consulta->fetch(PDO::FETCH_ASSOC);
+		}else{
+			$datos = null;
+		}
+
+		return $datos;
+		$conexion -> desconectar();
+	}
+
+	public function pedidos($limite, $pagina){
+
+        $limite_inicial = 0 + ($limite * ($pagina - 1));
+
+        $sql = "SELECT pd.`codigo_pedido`, pd.`fecha`, pd.`fecha_llegada`, pd.`codigo_proveedor`, pd.`total`, p.`nombre_empresa`, (SELECT COUNT(`codigo_producto`) FROM `detalles_pedido` WHERE `codigo_pedido` = pd.`codigo_pedido`) AS `cantidad_productos` FROM `pedidos` pd INNER JOIN `proveedores` p ON p.`rif` = pd.`codigo_proveedor` ORDER BY `fecha` DESC LIMIT " . $limite_inicial . ',' . $limite;
+
+		$sql_values     = null;
+
+        $consulta = $this->conexion->get_consulta($sql, $sql_values);
+
+        if($consulta->rowCount() > 0){
+            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            $datos = null;
+        }
+
+        return $datos;
+        $conexion -> desconectar();
+    }
+
+	public function pedidos_total(){
+
+		$sql_values = null;
+
+        $sql = "SELECT COUNT(pd.`codigo_pedido`) AS `total` FROM `pedidos` pd INNER JOIN `proveedores` p ON p.`rif` = pd.`codigo_proveedor` ORDER BY `fecha` DESC";
+
+		$consulta = $this->conexion->get_consulta($sql, $sql_values);
+
+		if($consulta->rowCount() > 0){
+			$datos = $consulta->fetch(PDO::FETCH_ASSOC);
+		}else{
+			$datos = null;
+		}
+
+		return $datos;
+		$conexion -> desconectar();
+	}
+
     public function pedidos_resumen(){
 
         $sql_values     = null;
@@ -80,6 +155,46 @@ class consultas_pedidos{
         return $datos;
         $conexion -> desconectar();
 
+	}
+
+	public function proveedor($id, $rif = false){
+
+		if($rif == false){
+			$sql = "SELECT * FROM `proveedores` WHERE `codigo_proveedor` = :id";
+		}else{
+			$sql = "SELECT * FROM `proveedores` WHERE `rif` = :id";	
+		}
+
+		$sql_values = [':id' => $id];
+
+		$consulta = $this->conexion->get_consulta($sql, $sql_values);
+
+		if($consulta->rowCount() > 0){
+			$datos = $consulta->fetch(PDO::FETCH_ASSOC);
+		}else{
+			$datos = null;
+		}
+
+		return $datos;
+		$conexion -> desconectar();
+	}
+
+	public function movimientos($id){
+
+		$sql = "SELECT `codigo_pedido`, `fecha`, `fecha_llegada`, `subtotal`, `iva`, `total` FROM `pedidos` WHERE `codigo_proveedor`= :id ORDER BY `fecha` DESC, `subtotal` DESC, `fecha_llegada` DESC LIMIT 15";
+
+		$sql_values = [':id' => $id];
+
+		$consulta = $this->conexion->get_consulta($sql, $sql_values);
+
+		if($consulta->rowCount() > 0){
+			$datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+		}else{
+			$datos = null;
+		}
+
+		return $datos;
+		$conexion -> desconectar();
 	}
 
 }

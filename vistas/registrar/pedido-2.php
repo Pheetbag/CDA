@@ -100,7 +100,7 @@
                 </div>
                 <div class="form-group">
                     <label for="agregar-cantidad">Precio de compra</label>
-                    <input required type="number" class="form-control" name="costo" min="1" value="<?php
+                    <input required type="number" class="form-control" step="0.01" name="costo" min="1" value="<?php
 					if(isset($_GET['datacost'])){
 						 echo $_GET['datacost'];
 
@@ -131,7 +131,7 @@
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
 
             <div class="container-fluid">
 
@@ -302,7 +302,7 @@
             </div>
 
         </div>
-        <div class="col-md-6 col-lg-5 container-fluid">
+        <div class="col-sm-6 col-lg-5 container-fluid">
 
             <div class="row mb-4">
                 <div class="col-sm-12">
@@ -324,8 +324,7 @@
 								echo
 
 								$datos['proveedor']['nombre_empresa'] .
-								' | ' . '
-								J-' . $datos['proveedor']['rif'] . '
+								' | ' . $datos['proveedor']['rif'] . '
 								<br><br>' .
 								$datos['proveedor']['direccion'] .
 								' <br>' .

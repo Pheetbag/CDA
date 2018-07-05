@@ -15,11 +15,11 @@ class consultas_registrar{
         $sql = "INSERT INTO `productos` (`nombre_producto`,`tipo_producto`,`marca_producto`,`modelo_producto`,`existencias`, `precio_venta`) VALUES (:nombre, :tipo, :marca, :modelo, :existencias, :precio);";
         $sql_values = [
             ':nombre'      => $nombre,
-            ':tipo'        => strtolower($tipo),
-            ':marca'       => strtolower($marca),
-            ':modelo'      => strtolower($modelo),
-            ':existencias' => str_replace('.', '',$existencias),
-            ':precio'      => str_replace('.', '',$precio)
+            ':tipo'        => $tipo,
+            ':marca'       => $marca,
+            ':modelo'      => $modelo,
+            ':existencias' => $existencias,
+            ':precio'      => $precio
         ];
 
         $consulta = $this->conexion->get_consulta($sql, $sql_values);
@@ -43,11 +43,11 @@ class consultas_registrar{
 
         $sql = "INSERT INTO `clientes` (`nombre_cliente`,`apellido_cliente`,`ci_cliente`,`direccion_cliente`, `telefono`) VALUES (:nombre, :apellido, :ci, :direccion, :telefono);";
         $sql_values = [
-            ':nombre'    => strtolower($nombre),
-            ':apellido'  => strtolower($apellido),
-            ':ci'        => intval(str_replace('.', '', $ci)),
+            ':nombre'    => $nombre,
+            ':apellido'  => $apellido,
+            ':ci'        => $ci,
             ':direccion' => $direccion,
-            ':telefono'  => intval(str_replace('-', '', $telefono))
+            ':telefono'  => $telefono
         ];
 
         $consulta = $this->conexion->get_consulta($sql, $sql_values);
@@ -74,9 +74,9 @@ class consultas_registrar{
         $sql = "INSERT INTO `proveedores` (`nombre_empresa`,`telefono`,`rif`, `direccion`) VALUES (:nombre, :telefono, :rif, :direccion)";
 
         $sql_values = [
-            ':nombre'    => strtolower($nombre),
-            ':telefono'  => intval(str_replace('-', '',$telefono)),
-            ':rif'        => intval($rif),
+            ':nombre'    => $nombre,
+            ':telefono'  => $telefono,
+            ':rif'        => $rif,
             ':direccion' => $direccion
         ];
 

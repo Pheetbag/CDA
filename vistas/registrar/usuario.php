@@ -7,9 +7,9 @@
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
 <div class="row">
-    <form class="col-md-8 container-fluid" method="POST" action="#">
-        <div class="row mb-3">
-            <div class="col-sm-6">
+    <form class="col-md-8 col-lg-7 col-xl-6 container-fluid" method="POST" action="#">
+        <div class="row">
+            <div class="col-sm-8 mb-3">
                     <div class="card bg-light ">
                         <h6 class="card-header">Nombre</h6>
                         <div class="card-body">
@@ -18,8 +18,8 @@
                     </div>
                 </div>
         </div>
-        <div class="row mb-3">
-                <div class="col-sm-6">
+        <div class="row">
+                <div class="col-sm-8 mb-3">
                     <div class="card bg-light ">
                         <h6 class="card-header">Contraseña</h6>
                         <div class="card-body">
@@ -28,8 +28,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-8 mb-3">
                     <div class="card bg-light ">
                         <h6 class="card-header">Rango</h6>
                         <div class="card-body">
@@ -42,8 +42,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-0">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-sm-8">
                     <button type="submit" name="nuevo-usuario" class="btn btn-primary btn-block py-2">Registrar usuario</button>
                 </div>
             </div>

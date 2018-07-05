@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<?php include_header(1, 'Facturación', '#'. $factura['codigo_factura']); ?>
+<?php include_header(1, 'Facturación', 'Factura'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -35,7 +35,7 @@
                         <h6 class="card-header text-center px-5">
 							<?php echo ucwords($factura['nombre_cliente'] . ' ' . $factura['apellido_cliente']) ?>
                             |
-                            V-<?php echo $factura['ci_cliente'] ?>
+                            <?php echo $factura['ci_cliente'] ?>
                             <br><br>
                             <?php echo $factura['direccion_cliente'] ?>
                             <br>
