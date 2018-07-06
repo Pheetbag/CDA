@@ -34,7 +34,7 @@ CREATE TABLE `detalles_pedido` (
   `codigo_producto` int(11) NOT NULL,
   `precio_compra` DECIMAL(15,2) NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `subtotal` DECIMAL(15,2) NOT NULL,
+  `subtotal` DECIMAL(15,2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `facturacion` (
