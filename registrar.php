@@ -18,9 +18,9 @@ class registrar{
         if(isset($_POST['nuevo-producto'])){
 
 			$_POST['tipo']        = strtolower($_POST['tipo']);
-			$_POST['marca']       = strtolower($_POST['tipo']);
-			$_POST['modelo']      = strtolower($_POST['tipo']);
-			$_POST['existencias'] = str_replace([',', '.', '-', '+', 'e'], '',$_POST['tipo']);
+			$_POST['marca']       = strtolower($_POST['marca']);
+			$_POST['modelo']      = strtolower($_POST['modelo']);
+			$_POST['existencias'] = str_replace([',', '.', '-', '+', 'e'], '',$_POST['existencias']);
 
             $resultado = $consultar -> producto($_POST['nombre'], $_POST['tipo'], $_POST['marca'], $_POST['modelo'], $_POST['existencias'], $_POST['precio']);
 
@@ -96,7 +96,7 @@ class registrar{
 
 		global $consultar;
 
-        if(isset($_POST['nuevo-proveedor'])){
+        if(isset($_POST['nuevo-usuario'])){
 
             $resultado = $consultar -> usuario($_POST['nombre'], $_POST['contraseña'], $_POST['rango']);
 
