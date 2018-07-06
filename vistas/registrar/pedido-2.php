@@ -8,7 +8,7 @@
 
 <div class="modal fade" tabindex="-1" id="agregar-producto">
     <div class="modal-dialog modal-dialog-centered">
-        <form method="post" action="/registrar/pedido/agregar-producto?<?php echo datos_url($datos); ?>" class="modal-content">
+        <form method="post" action="<?php echo HTTP ?>/registrar/pedido/agregar-producto?<?php echo datos_url($datos); ?>" class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Agregar producto al pedido</h5>
         </div>
@@ -178,7 +178,7 @@
 
 										<div class="modal fade" tabindex="-1" id="editar-producto-' . $i . '">
 										    <div class="modal-dialog modal-dialog-centered">
-										        <form method="POST" action="/registrar/pedido/editar-producto?' .  datos_url($datos) .'" class="modal-content">
+										        <form method="POST" action="'. HTTP .'/registrar/pedido/editar-producto?' .  datos_url($datos) .'" class="modal-content">
 										        <div class="modal-header">
 										            <h5 class="modal-title">Editando producto</h5>
 										        </div>
@@ -440,7 +440,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="/registrar/pedido/paso-3?<?php echo datos_url($datos); ?>" class="btn btn-primary btn-block py-2">
+                    <a href="<?php echo HTTP ?>/registrar/pedido/paso-3?<?php echo datos_url($datos); ?>" class="btn btn-primary btn-block py-2">
                         Generar pedido
                     </a>
                 </div>

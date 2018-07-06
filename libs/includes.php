@@ -2,7 +2,7 @@
 
 function include_head($title = 'Sistema CDA'){
     echo '
-    
+
     <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -20,6 +20,12 @@ function include_head($title = 'Sistema CDA'){
 
 function include_header($activo = null, $title = 'Titulo', $subtitle = ''){
 
+	$usuario = null;
+
+	if(isset($_SESSION['usuario']['usuario'])){
+
+		$usuario = $_SESSION['usuario']['usuario'] ;
+	}
 
     $inventario = '';
     $factura    = '';
@@ -94,7 +100,7 @@ function include_header($activo = null, $title = 'Titulo', $subtitle = ''){
             <div class="usuario">
                 <div class="menu">
                     <div class="title">
-                        <div class="nombre"> '. $_SESSION['usuario']['usuario'] .'</div>
+                        <div class="nombre"> '. $usuario .'</div>
                         <div class="cerrar"></div>
                     </div>
                     <div class="contenido">
@@ -126,5 +132,5 @@ function include_footer($extra = ''){
     ' . $extra . '
     </body>
     </html>
-    '; 
+    ';
 }

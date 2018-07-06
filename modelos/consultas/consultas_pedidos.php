@@ -6,7 +6,7 @@ class consultas_pedidos{
 
     public function __construct(){
 
-        require 'libs/conexion.php';
+        require_once 'libs/conexion.php';
         $this-> conexion = new conexion;
     }
 
@@ -162,7 +162,7 @@ class consultas_pedidos{
 		if($rif == false){
 			$sql = "SELECT * FROM `proveedores` WHERE `codigo_proveedor` = :id";
 		}else{
-			$sql = "SELECT * FROM `proveedores` WHERE `rif` = :id";	
+			$sql = "SELECT * FROM `proveedores` WHERE `rif` = :id";
 		}
 
 		$sql_values = [':id' => $id];

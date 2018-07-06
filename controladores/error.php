@@ -23,4 +23,14 @@ class error{
 
         require $this->vista . 'id_inexistente.php';
 	}
+
+	public function db_conexion($m){
+
+		require $this->vista . 'db_conexion.php';
+	}
+
+	public function db_consulta($m){
+
+		require $this->vista . 'db_consulta.php'; 
+	}
 }

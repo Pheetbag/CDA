@@ -96,7 +96,7 @@ class registrar{
 
 		global $consultar;
 
-        if(isset($_POST['nuevo-proveedor'])){
+        if(isset($_POST['nuevo-usuario'])){
 
             $resultado = $consultar -> usuario($_POST['nombre'], $_POST['contraseña'], $_POST['rango']);
 

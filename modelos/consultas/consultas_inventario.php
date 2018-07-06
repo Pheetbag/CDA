@@ -6,7 +6,7 @@ class consultas_inventario{
 
     public function __construct(){
 
-        require 'libs/conexion.php';
+        require_once 'libs/conexion.php';
         $this-> conexion = new conexion;
     }
 

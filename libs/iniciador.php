@@ -9,7 +9,7 @@ Su constructor (debido a que el objeto se instancia cada vez que se accede a una
 class iniciador{
 
     public function __construct(){
-
+		
         $url = get_url();
 
 

@@ -11,7 +11,7 @@
 
 <div class="modal fade" tabindex="-1" id="agregar-proveedor">
     <div class="modal-dialog modal-dialog-centered">
-        <form method="POST" action="/registrar/pedido/registrar-proveedor?<?php echo datos_url($datos); ?>" class="modal-content">
+        <form method="POST" action="<?php echo HTTP ?>/registrar/pedido/registrar-proveedor?<?php echo datos_url($datos); ?>" class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Proveedor nuevo</h5>
         </div>

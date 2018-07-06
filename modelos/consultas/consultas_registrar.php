@@ -6,7 +6,7 @@ class consultas_registrar{
 
     public function __construct(){
 
-        require 'libs/conexion.php';
+        require_once 'libs/conexion.php';
         $this-> conexion = new conexion;
     }
 
@@ -285,6 +285,19 @@ class consultas_registrar{
 
 
 		return $id_pedido;
+	}
+
+	public function usuario($nombre, $contra, $rango){
+
+		$sql = "INSERT INTO `usuarios` ( `usuario`, `clave`, `rango`) VALUES (:nombre, :contra, :rango)";
+		$sql_values = [
+			':nombre' => $nombre,
+			':contra' => $contra,
+			':rango'  => 1
+		];
+
+		$consulta = $this->conexion->get_consulta($sql, $sql_values);
+
 	}
 
 }

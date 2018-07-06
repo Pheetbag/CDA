@@ -7,6 +7,8 @@ require 'libs/path.php';
 require 'libs/iniciador.php';
 require 'libs/includes.php';
 require 'libs/regexp.php';
+require 'libs/control_db.php';
+
 // ---------------------------------
 
 /*
@@ -35,6 +37,13 @@ Si el sistema en cambio se esta ejecutando desde una subcarpeta de el servidor, 
 session_start();
 
 //----------------------------------
+
+//Constantes para conexiones a bases de datos
+require 'modelos/config.php';
+
+//Llamamos a la función de verificación de estado de la base de datos. Esta función se asegura de que la base de datos exista, en caso de que la misma no exista
+
+estado_db();
 
 //Llamamos al iniciador de la aplicación, que fue requerido desde libs/
 

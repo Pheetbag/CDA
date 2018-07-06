@@ -11,7 +11,7 @@
 
 <div class="modal fade" tabindex="-1" id="agregar-cliente">
     <div class="modal-dialog modal-dialog-centered">
-        <form method="POST" action="/registrar/factura/registrar-cliente?<?php echo datos_url($datos); ?>" class="modal-content">
+        <form method="POST" action="<?php echo HTTP ?>/registrar/factura/registrar-cliente?<?php echo datos_url($datos); ?>" class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Cliente nuevo</h5>
         </div>
