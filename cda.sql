@@ -69,7 +69,7 @@ CREATE TABLE `productos` (
 CREATE TABLE `proveedores` (
   `nombre_empresa` varchar(100) NOT NULL,
   `codigo_proveedor` int(11) NOT NULL,
-  `telefono` int(15) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
   `direccion` varchar(100) NOT NULL,
   `rif` varchar(20) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;

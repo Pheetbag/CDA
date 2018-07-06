@@ -18,9 +18,9 @@ class registrar{
         if(isset($_POST['nuevo-producto'])){
 
 			$_POST['tipo']        = strtolower($_POST['tipo']);
-			$_POST['marca']       = strtolower($_POST['tipo']);
-			$_POST['modelo']      = strtolower($_POST['tipo']);
-			$_POST['existencias'] = str_replace([',', '.', '-', '+', 'e'], '',$_POST['tipo']);
+			$_POST['marca']       = strtolower($_POST['marca']);
+			$_POST['modelo']      = strtolower($_POST['modelo']);
+			$_POST['existencias'] = str_replace([',', '.', '-', '+', 'e'], '',$_POST['existencias']);
 
             $resultado = $consultar -> producto($_POST['nombre'], $_POST['tipo'], $_POST['marca'], $_POST['modelo'], $_POST['existencias'], $_POST['precio']);
 
@@ -41,8 +41,8 @@ class registrar{
 			$filtrado          = str_replace([',', '.', '-', '+', 'e'], '', [$_POST['ci'], $_POST['telefono']]);
 			$_POST['ci']       = $_POST['ci-prefijo'] . '-' . $filtrado[0];
 			$_POST['telefono'] = $filtrado[1];
-			$_POST['nombre']   = strtolower($POST['nombre']);
-			$_POST['apellido'] = strtolower($POST['apellido']);
+			$_POST['nombre']   = strtolower($_POST['nombre']);
+			$_POST['apellido'] = strtolower($_POST['apellido']);
 
 			$resultado = $consultar -> get('cliente', $_POST['ci']);
 
