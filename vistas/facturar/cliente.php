@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<?php include_header(0, 'Facturación', 'Cliente'); ?>
+<?php include_header(1, 'Facturación', 'Cliente'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 

@@ -217,6 +217,28 @@ class consultas_registrar{
 	        $consulta = $this->conexion->get_consulta($sql, $sql_values);
 		}
 
+		//Actualizamos las existencias de todos los productos comprados
+
+		for ($i=0; $i < $cantidad_productos; $i++) {
+
+			//Obtenemos los valores previos de el producto en la base de datos.
+			$sql = "SELECT (`existencias`) FROM `productos` WHERE `codigo_producto` = :id";
+			$sql_values = [
+				':id' => $productos[$i]
+			];
+
+			$resultado    = $this->conexion->get_consulta($sql, $sql_values);
+			$existencias  = $resultado->fetch(PDO::FETCH_BOTH)[0];
+
+			$sql = "UPDATE `productos` SET `existencias` = :existencias WHERE `codigo_producto` = :id";
+			$sql_values = [
+				':existencias' => $existencias - $cantidades[$i],
+				':id'          => $productos[$i]
+			];
+
+			$consulta = $this->conexion->get_consulta($sql, $sql_values);
+		}
+
 		return $id_factura;
 	}
 
@@ -246,7 +268,7 @@ class consultas_registrar{
 
 		$cantidad_productos = count($productos);
 
-		//creamos todos los detalles de facturación necesarios.
+		//creamos todos los detalles de pedido necesarios.
 		for ($i=0; $i < $cantidad_productos; $i++) {
 
 			$sql = "INSERT INTO `detalles_pedido` (`codigo_pedido`, `codigo_producto`, `precio_compra`, `cantidad`, `subtotal`) VALUES (:pedido, :producto, :costo, :cantidad, :subtotal)";

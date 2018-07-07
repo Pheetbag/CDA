@@ -353,8 +353,8 @@ class registrar{
 		//Aqui guardamos todos los datos de el proceso de facturación para ser recuperados luego y agregarse como datos get en la consulta (este trabajo será realizado por la función datos_url)
         $datos = [
             'rif'          => null,
-			'rif_prefijo'  => null,
-			'rif_numero'   => null,
+			'rif-prefijo'  => null,
+			'rif-numero'   => null,
             'fecha'        => date('Y-m-d'),
             'llegada'      => date('Y-m-d'),
 			'proveedor'    => null,

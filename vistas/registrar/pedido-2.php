@@ -138,7 +138,7 @@
                 <div class="row">
                     <div class="col-sm-12">
 
-						<a href="/registrar/pedido/paso-1?<?php echo datos_url($datos); ?>" class="btn btn-primary mb-2">Paso anterior</a>
+						<a href="<?php echo HTTP ?>/registrar/pedido/paso-1?<?php echo datos_url($datos); ?>" class="btn btn-primary mb-2">Paso anterior</a>
 
                         <div class="card mb-3">
                             <h6 class="card-header d-flex align-items-center justify-content-between">
@@ -263,8 +263,8 @@
 			                                        </div>
 													<div class="col-sm-12 col-md-3 d-flex flex-column align-items-center justify-content-around">
 
-														<a href="/registrar/pedido/eliminar-producto?eliminar='. $i .'&'. datos_url($datos) .'" class="btn btn-danger btn-block btn-sm"><img  src="/recursos/cancel-white.svg" height="15px" width="15px" /></a>
-														<button type="button" class="btn btn-secondary btn-block btn-sm" data-toggle="modal" data-target="#editar-producto-' . $i . '"><img  src="/recursos/edit.svg" height="15px" width="15px"/></button>
+														<a href="'. HTTP .'/registrar/pedido/eliminar-producto?eliminar='. $i .'&'. datos_url($datos) .'" class="btn btn-danger btn-block btn-sm"><img  src="'. HTTP .'/recursos/cancel-white.svg" height="15px" width="15px" /></a>
+														<button type="button" class="btn btn-secondary btn-block btn-sm" data-toggle="modal" data-target="#editar-producto-' . $i . '"><img  src="'. HTTP .'/recursos/edit.svg" height="15px" width="15px"/></button>
 													</div>
 			                                    </div>
 			                                </li>

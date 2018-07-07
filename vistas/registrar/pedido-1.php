@@ -48,7 +48,7 @@
     <div class="row">
         <div class="col-sm-6">
 
-            <form class="container-fluid" method="POST" action="/registrar/pedido/validar-proveedor?<?php echo datos_url($datos); ?>" >
+            <form class="container-fluid" method="POST" action="<?php echo HTTP ?>/registrar/pedido/validar-proveedor?<?php echo datos_url($datos); ?>" >
 
                 <div class="row">
                     <div class="col-md-12 col-lg-8">
