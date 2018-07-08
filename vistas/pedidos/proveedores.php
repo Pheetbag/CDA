@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<?php include_header(2,'Pedidos', 'Proveedores'); ?>
+<?php include_header('pedidos','Pedidos', 'Proveedores'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -11,9 +11,12 @@
 
 	if(isset($_GET['err']) AND $_GET['err'] == 'busqueda'){
 
+		$rif_div   = explode('-', $_GET['busqueda']);
+		$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
+
 		echo '
 		<div class="alert alert-danger alert-dismissible fade show" role="alert">
-			<strong>El proveedor '. $_GET['busqueda'] .' no existe.</strong> El proveedor que ha consultado no se encuentra registrado en el sistema.
+			<strong>El proveedor '. $rif .' no existe.</strong> El proveedor que ha consultado no se encuentra registrado en el sistema.
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
@@ -36,12 +39,15 @@
 
 			<div class="card">
                 <h6 class="card-header">Buscar proveedor</h6>
-                <form class="card-body" method="POST" action="<?php echo HTTP ?>/pedidos/buscar/proveedor">
+                <form novalidate class="card-body validar" method="POST" action="<?php echo HTTP ?>/pedidos/buscar/proveedor">
                     <div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">J-</span>
 						</div>
-                        <input type="text" name="busqueda" class="form-control" <?php if(isset($_GET['busqueda'])){ echo 'value="'. explode('-', $_GET['busqueda'])[1] .'"'; } ?> placeholder="Rif">
+                        <input required type="text" name="busqueda" class="form-control" <?php if(isset($_GET['busqueda'])){ echo 'value="'. explode('-', $_GET['busqueda'])[1] .'"'; } ?> placeholder="Rif">
+						<div class="invalid-feedback">
+						  Ingrese el rif del proveedor a buscar.
+						</div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
                 </form>
@@ -73,8 +79,9 @@
 					for ($i=0; $i < $cantidad_proveedores; $i++) {
 
 						$nombre    = $proveedores[$i]['nombre_empresa'];
-						$codigo    = $proveedores[$i]['codigo_proveedor'];
-						$rif       = $proveedores[$i]['rif'];
+						$codigo    = $proveedores[$i]['rif'];
+						$rif_div   = explode('-', $proveedores[$i]['rif']);
+						$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
 						$direccion = $proveedores[$i]['direccion'];
 						$telefono  = $proveedores[$i]['telefono'];
 

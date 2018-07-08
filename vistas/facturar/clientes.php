@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<?php include_header(1,'Facturación', 'Facturas'); ?>
+<?php include_header('facturar','Facturación', 'Facturas'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -11,9 +11,12 @@
 
 		if(isset($_GET['err']) AND $_GET['err'] == 'busqueda'){
 
+			$ci_div    = explode('-', $_GET['busqueda']);
+			$ci        = $ci_div[0] . '-' . number_format( $ci_div[1] ,0, ',','.');
+
 			echo '
 			<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				<strong>El cliente '. $_GET['busqueda'] .' no existe.</strong> La cédula que ha consultado no se encuentra registrada.
+				<strong>El cliente '. $ci .' no existe.</strong> La cédula que ha consultado no se encuentra registrada.
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -36,7 +39,7 @@
 
             <div class="card mb-4">
                 <h6 class="card-header">Buscar cliente</h6>
-                <form method="POST" action="<?php echo HTTP?>/facturar/buscar/cliente" class="card-body">
+                <form novalidate method="POST" action="<?php echo HTTP?>/facturar/buscar/cliente" class="validar card-body">
                     <div class="form-group row">
 
 						<select required class="form-control col-3 col-sm-2 col-md-4 col-xl-3 ml-3 mr-1" name="ci-prefijo">
@@ -67,9 +70,14 @@
 							?>
 						</select>
 
-                        <input type="text" name="busqueda" class="form-control col mr-3" <?php if(isset($_GET['busqueda'])){
-							echo 'value="'. explode('-',$_GET['busqueda'])[1] .'"';
-						}?> placeholder="Cédula">
+						<div class="col mr-3 px-0">
+							<input required type="number" name="busqueda" class="form-control" <?php if(isset($_GET['busqueda'])){
+								echo 'value="'. explode('-',$_GET['busqueda'])[1] .'"';
+							}?> placeholder="Cédula">
+							<div class="invalid-feedback">
+							  Ingrese la cédula del cliente a buscar.
+							</div>
+						</div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
                 </form>
@@ -101,13 +109,17 @@
 					for ($i=0; $i < $cantidad_clientes; $i++) {
 
 						$nombre    = ucwords($clientes[$i]['nombre_cliente'] . ' ' . $clientes[$i]['apellido_cliente']);
-						$ci        = $clientes[$i]['ci_cliente'];
+
+						$ci_div    = explode('-', $clientes[$i]['ci_cliente']);
+						$ci        = $ci_div[0] . '-' . number_format( $ci_div[1] ,0, ',','.');
+
 						$direccion = $clientes[$i]['direccion_cliente'];
 						$telefono  = $clientes[$i]['telefono'];
 
+						$codigo    = $clientes[$i]['ci_cliente'];
 
 						echo'
-						<a href="'. HTTP .'/facturar/cliente/'. $ci .'" class="list-group-item list-group-item-action container-fluid">
+						<a href="'. HTTP .'/facturar/cliente/'. $codigo .'" class="list-group-item list-group-item-action container-fluid">
 							<div class="row">
 								<div class="col-12 col-sm-4 left align-items-center align-items-sm-start">
 									<div class="font-weight-bold">'. $nombre .'</div>

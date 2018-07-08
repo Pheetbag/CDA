@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<?php include_header(1, 'Facturación', 'Cliente'); ?>
+<?php include_header('facturar', 'Facturación', 'Cliente'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -35,7 +35,12 @@
 				<div class="col-sm-5">
 					<div class="card">
 						<h6 class="card-header">Cédula</h6>
-						<div class="card-body"><?php echo $resultado['ci_cliente'] ?></div>
+						<div class="card-body"><?php
+
+						$ci_div   = explode('-', $resultado['ci_cliente']);
+						$ci       = $ci_div[0] . '-' . number_format( $ci_div[1] ,0, ',','.');
+
+						echo $ci ?></div>
 					</div>
 				</div>
                 <div class="col-sm-5">
@@ -78,8 +83,8 @@
 
 						$codigo   = $movimientos[$i]['codigo_factura'];
 
-						$subtotal = $movimientos[$i]['subtotal'];
-						$total    = $movimientos[$i]['total'];
+						$subtotal = number_format( $movimientos[$i]['subtotal'] ,2,',', '.');
+						$total    = number_format( $movimientos[$i]['total'] ,2,',', '.');
 						$fecha    = $movimientos[$i]['fecha_venta'];
 
 						echo '

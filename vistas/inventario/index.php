@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<?php include_header(0,'Inventario'); ?>
+<?php include_header('inventario','Inventario'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
     <div class="row">
@@ -12,9 +12,12 @@
 
             <div class="card mb-4">
                 <h6 class="card-header">Buscar</h6>
-                <form class="card-body" action="<?php echo HTTP ?>/inventario/buscar" method="GET">
+                <form novalidate class="card-body validar" action="<?php echo HTTP ?>/inventario/buscar" method="GET">
                     <div class="form-group mb-0">
-                        <input type="text" name="busqueda" id="" class="form-control" placeholder="Buscar en el inventario">
+                        <input required type="text" name="busqueda" id="" class="form-control" placeholder="Buscar en el inventario">
+						<div class="invalid-feedback">
+						  Ingrese un término de búsqueda.
+						</div>
                         <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
                     </div>
                 </form>
@@ -52,8 +55,8 @@
                                         <div class="text-muted">Marca: '  . $item['marca_producto']  . '</div>
                                     </div>
                                     <div class="col-6 col-sm-4 right align-items-center">
-                                        <div class="producto-precio text-success font-weight-bold">Bs. '. $item['precio_venta'] .'</div>
-                                        <div class="producto-existencias text-muted">'. $item['existencias'] .' en stock</div>
+                                        <div class="producto-precio text-success font-weight-bold">Bs. '. number_format( $item['precio_venta'] ,2,',', '.') .'</div>
+                                        <div class="producto-existencias text-muted">'. number_format( $item['existencias'] ,0,',', ' ') .' en stock</div>
                                     </div>
                                 </div>
                             </a>';

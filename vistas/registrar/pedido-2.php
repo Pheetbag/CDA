@@ -3,12 +3,12 @@
 </head>
 <body>
 
-<?php include_header(4, 'Registrar', 'Pedido'); ?>
+<?php include_header('registrar', 'Registrar', 'Pedido'); ?>
 
 
 <div class="modal fade" tabindex="-1" id="agregar-producto">
     <div class="modal-dialog modal-dialog-centered">
-        <form method="post" action="<?php echo HTTP ?>/registrar/pedido/agregar-producto?<?php echo datos_url($datos); ?>" class="modal-content">
+        <form method="post" action="<?php echo HTTP ?>/registrar/pedido/agregar-producto?<?php echo datos_url($datos); ?>" class="modal-content validar" novalidate>
         <div class="modal-header">
             <h5 class="modal-title">Agregar producto al pedido</h5>
         </div>
@@ -41,7 +41,7 @@
 
 						echo
 						'<div class="alert alert-warning">
-							Este producto no tiene las existencias suficientes. Restan <b>' . $_GET['errext'] . '</b> en el inventario.
+							Este producto no tiene las existencias suficientes. Restan <b>' . number_format( $_GET['errext'] ,0,',', ' ') . '</b> en el inventario.
 						</div>'
 						;
 						break;
@@ -56,7 +56,7 @@
             <div>
                 <div class="form-group">
                 <label for="agregar-id">Selecciona un producto</label>
-				<select name="codigo" required class="form-control" id="exampleFormControlSelect1">
+				<select name="codigo" required class="form-control" >
 					<option value='' selected disabled>Selecciona un producto</option>
 					<?php
 
@@ -86,27 +86,44 @@
 
 					?>
 				</select>
-
+				<div class="invalid-feedback">
+				  Selecciona un producto.
+				</div>
+				<div class="valid-feedback">
+				  ¡Perfecto!
+				</div>
                 </div>
                 <div class="form-group">
                     <label required for="agregar-cantidad">Cantidad</label>
-                    <input type="number" class="form-control" name="cantidad" min="1" value="<?php
+                    <input required type="number" class="form-control" name="cantidad" min="1" value="<?php
 					if(isset($_GET['dataext'])){
 						 echo $_GET['dataext'];
 
 					 }else{
 						 echo '1';
 					 }?>">
+					 <div class="invalid-feedback">
+					   Ingrese una cantidad a comprar válida.
+					 </div>
+					 <div class="valid-feedback">
+					   ¡Perfecto!
+					 </div>
                 </div>
                 <div class="form-group">
                     <label for="agregar-cantidad">Precio de compra</label>
                     <input required type="number" class="form-control" step="0.01" name="costo" min="1" value="<?php
 					if(isset($_GET['datacost'])){
-						 echo $_GET['datacost'];
+						 echo number_format( $_GET['datacost'] ,2,'.', '');
 
 					 }else{
 						 echo '1';
 					 }?>">
+					 <div class="invalid-feedback">
+					   Ingrese un precio de compra válido.
+					 </div>
+					 <div class="valid-feedback">
+					   ¡Perfecto!
+					 </div>
                 </div>
 
 				<div class="form-group form-check">
@@ -170,15 +187,15 @@
 									for ($i=0; $i < $cantidad_productos; $i++) {
 
 										$producto = $consultar->get('producto', $datos['productos'][$i]);
-										$cantidad = $datos['cantidades'][$i];
-										$costo    = $datos['costos'][$i];
-										$precio   = $datos['precios'][$i];
+										$cantidad = number_format( $datos['cantidades'][$i] ,0,',', ' ');
+										$costo    = number_format( $datos['costos'][$i] ,2,',', '.');
+										$precio   = number_format( $datos['precios'][$i] ,2,',', '.');
 
 										echo '
 
 										<div class="modal fade" tabindex="-1" id="editar-producto-' . $i . '">
 										    <div class="modal-dialog modal-dialog-centered">
-										        <form method="POST" action="'. HTTP .'/registrar/pedido/editar-producto?' .  datos_url($datos) .'" class="modal-content">
+										        <form novalidate method="POST" action="'. HTTP .'/registrar/pedido/editar-producto?' .  datos_url($datos) .'" class="validar modal-content">
 										        <div class="modal-header">
 										            <h5 class="modal-title">Editando producto</h5>
 										        </div>
@@ -205,14 +222,27 @@
 														<input required type="number" name="id" class="d-none" value="' . $i .'">
 												      	<label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Cantidad</label>
 													      <div class="col-sm-6">
-													        <input required type="number" min="0" value="'. $cantidad .'" class="form-control" name="cantidad">
+													        <input required type="number" step="0.01" min="0" value="'. $datos['cantidades'][$i] .'" class="form-control" name="cantidad">
+															<div class="invalid-feedback">
+															  Ingrese una cantidad a comprar válida.
+															</div>
+															<div class="valid-feedback">
+															  ¡Perfecto!
+															</div>
 													      </div>
+
 												    </div>
 
 													<div class="form-group row mt-3">
 												      	<label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Precio de compra</label>
 													      <div class="col-sm-6">
-													        <input required type="number" min="0" value="'. $costo .'" class="form-control" name="costo">
+													        <input required type="number" step="0.01" min="0" value="'. number_format( $datos['costos'][$i] ,2,'.', '').'" class="form-control" name="costo">
+															<div class="invalid-feedback">
+															  Ingrese un precio de compra válida.
+															</div>
+															<div class="valid-feedback">
+															  ¡Perfecto!
+															</div>
 													      </div>
 												    </div>
 
@@ -227,7 +257,13 @@
 														<small class="text-muted mb-3">Puedes modificar el precio de venta de un producto al momento de generar un pedido, o puedes hacerlo más tarde desde el inventario.</small>
 														<label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Precio de venta</label>
 														<div class="col-sm-6">
-															<input required type="number" min="0" value="'. $precio .'" class="form-control" name="precio">
+															<input required type="number" step="0.01" min="0" value="'. number_format( $datos['precios'][$i] ,2,'.', '') .'" class="form-control" name="precio">
+															<div class="invalid-feedback">
+															  Ingrese un precio de venta válido.
+															</div>
+															<div class="valid-feedback">
+															  ¡Perfecto!
+															</div>
 														</div>
 													</div>
 
@@ -321,10 +357,13 @@
 
 							if($datos['rif'] != null){
 
+								$rif_div   = explode('-', $datos['proveedor']['rif']);
+								$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
+
 								echo
 
 								$datos['proveedor']['nombre_empresa'] .
-								' | ' . $datos['proveedor']['rif'] . '
+								' | ' . $rif . '
 								<br><br>' .
 								$datos['proveedor']['direccion'] .
 								' <br>' .
@@ -367,9 +406,9 @@
 								for ($i=0; $i < $cantidad_productos; $i++) {
 
 									$producto    = $consultar->get('producto', $datos['productos'][$i]);
-									$cantidad    = $datos['cantidades'][$i];
+									$cantidad    = number_format( $datos['cantidades'][$i] ,0,',', ' ');
 									$costo       = $datos['costos'][$i];
-									$subtotal    = $costo * $cantidad;
+									$subtotal    = number_format( $costo * $cantidad ,2,',', '.');
 
 								echo '
 								<li class="list-group-item list-group-item-action container-fluid">
@@ -419,11 +458,11 @@
 						}
 
 						echo '<div class="card-footer text-muted text-right">';
-						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $subtotal . '<br>';
-						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . ($subtotal * 12) / 100 . '</div>';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . number_format( $subtotal ,2,',', '.'). '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . number_format( ($subtotal * 12) / 100  ,2,',', '.'). '</div>';
 
 						echo '<div class="card-footer text-center font-weight-bold">';
-						echo 'TOTAL Bs. ' . $subtotal * 1.12 . '</div>';
+						echo 'TOTAL Bs. ' . number_format( $subtotal * 1.12 ,2,',', '.') . '</div>';
 
 						 ?>
                     </div>
@@ -454,6 +493,9 @@
 <?php
 
 if(isset($_GET['err'])){
+
+
+
     include_footer("
     <script type='    text/javascript'    >
     $(window).on('load',function(){

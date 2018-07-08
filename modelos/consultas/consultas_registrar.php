@@ -315,10 +315,17 @@ class consultas_registrar{
 		$sql_values = [
 			':nombre' => $nombre,
 			':contra' => $contra,
-			':rango'  => 1
+			':rango'  => $rango
 		];
 
 		$consulta = $this->conexion->get_consulta($sql, $sql_values);
+
+		$sql = "SELECT LAST_INSERT_ID();";
+		$sql_values = null;
+
+		$resultado = $this->conexion->get_consulta($sql, $sql_values);
+
+		return 	$resultado->fetch(PDO::FETCH_BOTH)[0];;
 
 	}
 

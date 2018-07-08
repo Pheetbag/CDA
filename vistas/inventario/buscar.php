@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<?php include_header(0,'Inventario', 'Buscar'); ?>
+<?php include_header('inventario','Inventario', 'Buscar'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
     <div class="row">
@@ -12,9 +12,9 @@
         <div class="col-md-9 col-sm-12">
 
             <div class="card mb-3">
-                <form class="card-body mb-0" action="<?php echo HTTP ?>/inventario/buscar" method="GET">
+                <form novalidate class="validar card-body mb-0" action="<?php echo HTTP ?>/inventario/buscar" method="GET">
                     <div class="form-group mb-0 d-sm-flex justify-content-around">
-                        <input type="text" name="busqueda" id="" class="form-control col-sm-9 col-12" placeholder="Buscar producto" value="<?php echo $busqueda ?>">
+                        <input required type="text" name="busqueda" id="" class="form-control col-sm-9 col-12" placeholder="Buscar producto" value="<?php echo $busqueda ?>">
                         <button type="submit" class="btn btn-primary btn-sm col-sm-2 col-12 mt-2 mt-sm-0">Buscar</button>
                     </div>
                 </form>
@@ -41,8 +41,8 @@
                                         <div class="text-muted">Marca: '  . $item['marca_producto']  . '</div>
                                     </div>
                                     <div class="col-6 col-sm-4 right align-items-center">
-                                        <div class="producto-precio text-success font-weight-bold">Bs. '. $item['precio_venta'] .'</div>
-                                        <div class="producto-existencias text-muted">'. $item['existencias'] .' en stock</div>
+                                        <div class="producto-precio text-success font-weight-bold">Bs. '. number_format( $item['precio_venta'] ,2,',', '.') .'</div>
+                                        <div class="producto-existencias text-muted">'. number_format( $item['existencias'] ,0,',', ' ') .' en stock</div>
                                     </div>
                                 </div>
                             </a>';

@@ -20,6 +20,74 @@ function include_head($title = 'Sistema CDA'){
 
 function include_header($activo = null, $title = 'Titulo', $subtitle = ''){
 
+	$alerta = null;
+
+	if(isset($_GET['err']) AND $_GET['err'] == 'contra'){
+
+		$alerta = '
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			<strong>Contraseña inválida.</strong> La contraseña actual que ha ingresado es inválida.
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>';
+	}
+
+	echo '
+	<div class="modal fade" tabindex="-1" id="ajustes-usuario">
+	    <div class="modal-dialog modal-dialog-centered">
+	        <form method="POST" action="'. HTTP .'/perfil/cambiar_contra" class="modal-content validar" novalidate>
+	        <div class="modal-header">
+	            <h5 class="modal-title">Ajustes de usuario</h5>
+	        </div>
+	        <div class="modal-body">
+
+			'. $alerta .'
+
+				<small class="text-muted mb-3">Esta es el área de ajustes de usuario, en esta ventana puedes cambiar tu contraseña.</small>
+
+				<div class="form-group row mt-3">
+					<label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Contraseña actual</label>
+
+					<div class="col-sm-6">
+						<input type="password" class="form-control" name="antigua">
+							<div class="invalid-feedback">
+							  Ingrese su contraseña actual.
+							</div>
+							<div class="valid-feedback">
+							  ¡Perfecto!
+							</div>
+					</div>
+
+				</div>
+					<hr>
+				<div class="form-group row mt-3">
+					<label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Nueva contraseña</label>
+
+					<div class="col-sm-6">
+						<input required type="password" class="form-control" name="nueva">
+							<div class="invalid-feedback">
+							  Ingrese la nueva contraseña.
+							</div>
+							<div class="valid-feedback">
+							  ¡Perfecto!
+							</div>
+					</div>
+
+				</div>
+
+	        </div>
+	        <div class="modal-footer">
+	            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	            <button type="submit" class="btn btn-primary">Guardar</button>
+	        </div>
+			</form>
+	    </div>
+	</div>
+	';
+
+
+
 	$usuario = null;
 
 	if(isset($_SESSION['usuario']['usuario'])){
@@ -46,35 +114,23 @@ function include_header($activo = null, $title = 'Titulo', $subtitle = ''){
             case 'inventario':
                 $inventario  = 'activo';
                break;
+
             case 'facturar':
                $factura      = 'activo';
                break;
+
             case 'pedidos':
                $pedidos      = 'activo';
                break;
+
             case 'reportes':
                $reportes     = 'activo';
                break;
-            case 'registrar':
-               $crear        = 'activo';
-               break;
 
-            case 0:
-                 $inventario  = 'activo';
-                break;
-            case 1:
-                $factura      = 'activo';
-                break;
-            case 2:
-                $pedidos      = 'activo';
-                break;
-            case 3:
-                $reportes     = 'activo';
-                break;
-            case 4:
-                $registrar    = 'activo';
-                break;
-        }
+            case 'registrar':
+               $registrar    = 'activo';
+               break;
+		}
     }
 
     echo '
@@ -104,11 +160,9 @@ function include_header($activo = null, $title = 'Titulo', $subtitle = ''){
                         <div class="cerrar"></div>
                     </div>
                     <div class="contenido">
-                        <div class="item">Opción 1</div>
-                        <div class="item">Opción 2</div>
-                        <div class="item">Opción 3</div>
-                        <div class="item">Opción 4</div>
-                        <div class="item">Opción 5</div>
+					<!--<div class="item">Administración</div>-->
+                        <a href="'. HTTP .'/perfil" class="item" >Mi perfil</a>
+                        <div class="item" data-toggle="modal" data-target="#ajustes-usuario">Ajustes</div>
                         <a href="'. HTTP . '/salir' .'"><div class="item salir">Desconectar</div></a>
                     </div>
                 </div>
@@ -128,7 +182,7 @@ function include_footer($extra = ''){
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-    <script src="' . HTTP . '/vistas/defaults/defaults.js?v=0.4"></script>
+    <script src="' . HTTP . '/vistas/defaults/defaults.js?v=0.5"></script>
     ' . $extra . '
     </body>
     </html>

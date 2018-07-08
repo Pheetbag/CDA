@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="<?php echo HTTP ?>/vistas/registrar/style.css?v=0.2">
 </head>
 <body>
-<?php include_header(4, 'Registrar'); ?>
+<?php include_header('registrar', 'Registrar'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 

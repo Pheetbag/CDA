@@ -52,7 +52,8 @@ class ingresar{
         //Guardamos los datos del usuario en la sesión y enviamos al usuario de vuelta a la pantalla de ingresar, que lo enviará al index de todo el sitio.
         $_SESSION['usuario'] = [
             'id'      =>  utf8_encode($resultado['id']),
-            'usuario' =>  utf8_encode($resultado['usuario'])
+            'usuario' =>  utf8_encode($resultado['usuario']),
+            'rango'   =>  utf8_encode($resultado['rango'])
         ];
 
         header('location:' . HTTP . '/ingresar');

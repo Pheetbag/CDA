@@ -33,7 +33,7 @@ class consultas_pedidos{
 	public function proveedores_total(){
 
 		$sql_values = null;
-		$sql = "SELECT COUNT(`codigo_proveedor`) AS `total` FROM `proveedores` ORDER BY `nombre_empresa`";
+		$sql = "SELECT COUNT(`rif`) AS `total` FROM `proveedores` ORDER BY `nombre_empresa`";
 
 		$consulta = $this->conexion->get_consulta($sql, $sql_values);
 
@@ -157,14 +157,9 @@ class consultas_pedidos{
 
 	}
 
-	public function proveedor($id, $rif = false){
+	public function proveedor($id){
 
-		if($rif == false){
-			$sql = "SELECT * FROM `proveedores` WHERE `codigo_proveedor` = :id";
-		}else{
-			$sql = "SELECT * FROM `proveedores` WHERE `rif` = :id";
-		}
-
+		$sql = "SELECT * FROM `proveedores` WHERE `rif` = :id";
 		$sql_values = [':id' => $id];
 
 		$consulta = $this->conexion->get_consulta($sql, $sql_values);

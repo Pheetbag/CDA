@@ -34,7 +34,7 @@
 
 <!-- FIN MODAL BORRAR -->
 
-<?php include_header(0, 'Inventario', 'Producto'); ?>
+<?php include_header('inventario', 'Inventario', 'Producto'); ?>
 
 <main class="container-fluid  nav-spaced full-screen" id="navPush">
 
@@ -92,7 +92,7 @@
                 <div class="col-sm-4">
                     <div class="card">
                         <h6 class="card-header">Existencias</h6>
-                        <div class="card-body"><?php echo $resultado['existencias'] ?></div>
+                        <div class="card-body"><?php echo number_format( $resultado['existencias'] ,0,',', ' ')  ?></div>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                 <div class="col-sm-6">
                     <div class="card">
                         <h6 class="card-header">Precio</h6>
-                        <div class="card-body"><?php echo $resultado['precio_venta'] ?></div>
+                        <div class="card-body"><?php echo number_format( $resultado['precio_venta'] ,2,',', '.') ?></div>
                     </div>
                 </div>
             </div>
@@ -129,8 +129,8 @@
 
 							$codigo   = $movimientos[$i]['codigo'];
 							$tipo     = $movimientos[$i]['tipo'];
-							$cantidad = $movimientos[$i]['cantidad'];
-							$subtotal = $movimientos[$i]['subtotal'];
+							$cantidad = number_format($movimientos[$i]['cantidad'],0,',', ' ');
+							$subtotal = number_format($movimientos[$i]['subtotal'],2,',', '.');
 							$fecha    = $movimientos[$i]['fecha'];
 
 							if($tipo == 'venta'){

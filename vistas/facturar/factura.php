@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<?php include_header(1, 'Facturación', 'Factura'); ?>
+<?php include_header('facturar', 'Facturación', 'Factura'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -35,7 +35,12 @@
                         <h6 class="card-header text-center px-5">
 							<?php echo ucwords($factura['nombre_cliente'] . ' ' . $factura['apellido_cliente']) ?>
                             |
-                            <?php echo $factura['ci_cliente'] ?>
+                            <?php
+
+							$ci_div   = explode('-', $factura['ci_cliente']);
+							$ci       = $ci_div[0] . '-' . number_format( $ci_div[1] ,0, ',','.');
+
+							echo $ci ?>
                             <br><br>
                             <?php echo $factura['direccion_cliente'] ?>
                             <br>
@@ -54,8 +59,8 @@
 
 							$codigo   = $detalles[$i]['codigo_producto'];
 							$producto = $detalles[$i]['nombre_producto'];
-							$cantidad = $detalles[$i]['cantidad'];
-							$subtotal = $detalles[$i]['subtotal'];
+							$cantidad = number_format($detalles[$i]['cantidad'],0,',', ' ');
+							$subtotal = number_format($detalles[$i]['subtotal'],2,',', '.');
 
 						echo '
 						<a href="'. HTTP .'/inventario/producto/'. $codigo .'" class="list-group-item list-group-item-action container-fluid">
@@ -80,11 +85,11 @@
 						<?php
 
 						echo '<div class="card-footer text-muted text-right">';
-						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $factura['subtotal'] . '<br>';
-						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . $factura['iva'] . '</div>';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . number_format( $factura['subtotal']  ,2,',', '.'). '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . number_format( $factura['iva'] ,2,',', '.') . '</div>';
 
 						echo '<div class="card-footer text-center font-weight-bold">';
-						echo 'TOTAL Bs. ' . $factura['total'] . '</div>';
+						echo 'TOTAL Bs. ' . number_format( $factura['total']  ,2,',', '.'). '</div>';
 
 						 ?>
                     </div>

@@ -12,7 +12,7 @@ class consultas_ingresar{
 
     public function log($usuario, $contraseña){
 
-        $sql = "SELECT id,usuario FROM `usuarios` WHERE usuario = :user AND clave = :contra";
+        $sql = "SELECT id,usuario,rango FROM `usuarios` WHERE usuario = :user AND clave = :contra";
 
         $sql_values = [':user'   => $usuario,
                        ':contra' => $contraseña];

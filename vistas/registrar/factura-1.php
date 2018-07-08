@@ -3,7 +3,7 @@
 </head>
 <body>
 
-<?php include_header(4, 'Registrar', 'Factura'); ?>
+<?php include_header('registrar', 'Registrar', 'Factura'); ?>
 
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar-cliente">
   Launch demo modal
@@ -11,32 +11,61 @@
 
 <div class="modal fade" tabindex="-1" id="agregar-cliente">
     <div class="modal-dialog modal-dialog-centered">
-        <form method="POST" action="<?php echo HTTP ?>/registrar/factura/registrar-cliente?<?php echo datos_url($datos); ?>" class="modal-content">
+        <form method="POST" action="<?php echo HTTP ?>/registrar/factura/registrar-cliente?<?php echo datos_url($datos); ?>" class="modal-content validar" novalidate>
         <div class="modal-header">
             <h5 class="modal-title">Cliente nuevo</h5>
         </div>
         <div class="modal-body">
             <div class="alert alert-warning" role="alert">
-                La cedula <b><?php  echo $datos['ci'] ?></b> no pertenece a ningún cliente registrado. Inserta sus datos para continuar.
+                La cedula <b><?php
+
+				$ci_div   = explode('-', $datos['ci']);
+				$ci       = $ci_div[0] . '-' . number_format( $ci_div[1] ,0, ',','.');
+
+				echo $ci ?></b> no pertenece a ningún cliente registrado. Inserta sus datos para continuar.
             </div>
             <div>
                 <div class="row">
                     <div class="form-group col">
                         <label for="cliente-nombre">Nombre</label>
                         <input required type="text" class="form-control" id="cliente-nombre" name="nombre" placeholder="Nombre">
+						<div class="invalid-feedback">
+						  Ingrese un nombre válido.
+						</div>
+						<div class="valid-feedback">
+						  ¡Perfecto!
+						</div>
                     </div>
                     <div class="form-group col">
                         <label for="cliente-apellido">Apellido</label>
                         <input required type="text" class="form-control" id="cliente-apellido" name="apellido" placeholder="Apellido">
+						<div class="invalid-feedback">
+						  Ingrese un apellido válido.
+						</div>
+						<div class="valid-feedback">
+						  ¡Perfecto!
+						</div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="cliente-dir">Dirección</label>
                     <input required type="text" class="form-control" id="cliente-dir" name="dir" placeholder="Dirección">
+					<div class="invalid-feedback">
+					  Ingrese una dirección válida.
+					</div>
+					<div class="valid-feedback">
+					  ¡Perfecto!
+					</div>
                 </div>
                 <div class="form-group">
-                    <label for="cliente-tlf">Telefono</label>
+                    <label for="cliente-tlf">Teléfono</label>
                     <input type="number" class="form-control" id="cliente-tlf" name="tlf" placeholder="Teléfono">
+					<div class="invalid-feedback">
+					  Ingrese un número de teléfono válido.
+					</div>
+					<div class="valid-feedback">
+					  ¡Perfecto!
+					</div>
                 </div>
             </div>
         </div>
@@ -54,7 +83,7 @@
     <div class="row">
         <div class="col-sm-6">
 
-            <form class="container-fluid" method="POST" action="<?php echo HTTP ?>/registrar/factura/validar-cliente?<?php echo datos_url($datos); ?>">
+            <form class="container-fluid validar" method="POST" action="<?php echo HTTP ?>/registrar/factura/validar-cliente?<?php echo datos_url($datos); ?>" novalidate>
 
                 <div class="row">
                     <div class="col-md-12 col-lg-8">
@@ -62,6 +91,9 @@
                             <h6 class="card-header">Fecha</h6>
                             <div class="card-body">
                                 <input required type="date" class="form-control bg-light" name="fecha" value="<?php echo $datos['fecha'] ?>">
+								<div class="invalid-feedback">
+								  Ingrese una fecha válida.
+								</div>
                             </div>
                         </div>
                     </div>
@@ -97,8 +129,15 @@
 
 									?>
 								</select>
-
-                                <input required type="number" class="form-control col mr-3" name="ci" placeholder="Cedula" value="<?php echo $datos['ci-numero'] ?>">
+								<div class="col mr-3 px-0">
+	                                <input required type="number" class="form-control" name="ci" placeholder="Cedula" value="<?php echo $datos['ci-numero'] ?>">
+									<div class="invalid-feedback">
+									  Ingrese un número de cédula válido.
+									</div>
+									<div class="valid-feedback">
+									  ¡Perfecto!
+									</div>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -135,10 +174,13 @@
 
 							if($datos['cliente'] != null){
 
+								$ci_div   = explode('-', $datos['cliente']['ci_cliente']);
+								$ci       = $ci_div[0] . '-' . number_format( $ci_div[1] ,0, ',','.');
+
 								echo
 
 								$datos['cliente']['nombre_cliente'] . ' ' . $datos['cliente']['apellido_cliente'] .
-								' | ' . $datos['cliente']['ci_cliente'] . '
+								' | ' . $ci . '
 								<br><br>' .
 								$datos['cliente']['direccion_cliente'] .
 								' <br>' .
@@ -193,8 +235,8 @@
 		                                        <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
 		                                    </div>
 		                                    <div class="col-sm-6 text-right">
-		                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. $subtotal .'</p>
-		                                        <p class="mb-0">x'. $cantidad .'</p>
+		                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. number_format( $subtotal ,2,',', '.') .'</p>
+		                                        <p class="mb-0">x'. number_format( $cantidad ,0,',', ' ') .'</p>
 		                                    </div>
 		                                </div>
 		                            </li>
@@ -215,11 +257,11 @@
 						}
 
 						echo '<div class="card-footer text-muted text-right">';
-						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $subtotal . '<br>';
-						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . ($subtotal * 12) / 100 . '</div>';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . number_format( $subtotal ,2,',', '.') . '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . number_format( ($subtotal * 12) / 100 ,2,',', '.') . '</div>';
 
 						echo '<div class="card-footer text-center font-weight-bold">';
-						echo 'TOTAL Bs. ' . $subtotal * 1.12 . '</div>';
+						echo 'TOTAL Bs. ' . number_format( $subtotal * 1.12  ,2,',', '.'). '</div>';
 
 						 ?>
 					 </div>

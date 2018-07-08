@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<?php include_header(1,'Facturación', 'Todas'); ?>
+<?php include_header('facturar','Facturación', 'Todas'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -35,14 +35,17 @@
 
 			<div class="card">
                 <h6 class="card-header">Buscar factura</h6>
-                <form class="card-body" method="POST" action="<?php echo HTTP ?>/facturar/buscar/factura" >
+                <form class="card-body validar" novalidate method="POST" action="<?php echo HTTP ?>/facturar/buscar/factura" >
                     <div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">#</span>
 						</div>
-                        <input type="text" name="busqueda"  class="form-control" placeholder="Codigo" <?php if(isset($_GET['busqueda'])){
+                        <input required type="number" name="busqueda"  class="form-control" placeholder="Codigo" <?php if(isset($_GET['busqueda'])){
 							echo 'value="'. $_GET['busqueda'] .'"';
 						}?>>
+						<div class="invalid-feedback">
+						  Ingrese el codigo de factura a buscar.
+						</div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
                 </form>
@@ -75,10 +78,13 @@
 
 						$codigo   = $facturas[$i]['codigo_factura'];
 						$fecha    = date('d/m/Y',strtotime($facturas[$i]['fecha_venta']));
-						$ci       = $facturas[$i]['ci_cliente'];
-						$total    = $facturas[$i]['total'];
+
+						$ci_div   = explode('-', $facturas[$i]['ci_cliente']);
+						$ci       = $ci_div[0] . '-' . number_format( $ci_div[1] ,0, ',','.');
+
+						$total    = number_format( $facturas[$i]['total'] ,2,',', '.');
 						$nombre   = ucwords($facturas[$i]['nombre_cliente'] . ' ' . $facturas[$i]['apellido_cliente']);
-						$cantidad = $facturas[$i]['cantidad_productos'];
+						$cantidad = number_format( $facturas[$i]['cantidad_productos'] ,0,',', ' ');
 
 						echo'
 						<a href="'. HTTP .'/facturar/f/'. $codigo .'" class="list-group-item list-group-item-action container-fluid">

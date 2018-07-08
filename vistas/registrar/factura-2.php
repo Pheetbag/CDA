@@ -3,12 +3,12 @@
 </head>
 <body>
 
-<?php include_header(4, 'Registrar', 'Factura'); ?>
+<?php include_header('registrar', 'Registrar', 'Factura'); ?>
 
 
 <div class="modal fade" tabindex="-1" id="agregar-producto">
     <div class="modal-dialog modal-dialog-centered">
-        <form class="modal-content"  action="<?php echo HTTP ?>/registrar/factura/agregar-producto?<?php echo datos_url($datos); ?>" method="POST">
+        <form class="modal-content validar"  action="<?php echo HTTP ?>/registrar/factura/agregar-producto?<?php echo datos_url($datos); ?>" method="POST" novalidate>
         <div class="modal-header">
             <h5 class="modal-title">Agregar producto a la factura</h5>
         </div>
@@ -41,7 +41,7 @@
 
 					echo
 					'<div class="alert alert-warning">
-						Este producto no tiene las existencias suficientes. Restan <b>' . $_GET['errext'] . '</b> en el inventario.
+						Este producto no tiene las existencias suficientes. Restan <b>' . number_format( $_GET['errext'] ,0,',', ' ') . '</b> en el inventario.
 					</div>'
 					;
 					break;
@@ -89,6 +89,12 @@
 						?>
                     </select>
 
+					<div class="invalid-feedback">
+					  Selecciona un producto.
+					</div>
+					<div class="valid-feedback">
+					  ¡Perfecto!
+					</div>
 
                 </div>
                 <div class="form-group">
@@ -100,6 +106,12 @@
 					 }else{
 						 echo '1';
 					 }?>">
+					 <div class="invalid-feedback">
+					   Ingrese una cantidad a facturar válida.
+					 </div>
+					 <div class="valid-feedback">
+					   ¡Perfecto!
+					 </div>
                 </div>
             </div>
         </div>
@@ -152,13 +164,26 @@
 
 										for ($i=0; $i < $cantidad_productos; $i++) {
 
+											if(isset($_GET['err']) AND $_GET['err'] == 'existencia-edit' AND $_GET['datacodigo'] == $i){
+
+												$cantidades = $_GET['dataext'];
+												$cantidades_err =
+												'<div class="alert alert-warning">
+													Este producto no tiene las existencias suficientes. Restan <b>' . number_format( $_GET['errext'] ,0,',', ' ') . '</b> en el inventario.
+												</div>';
+											}else {
+
+												$cantidades = $datos['cantidades'][$i];
+												$cantidades_err = '';
+											}
+
 											$producto = $consultar->get('producto', $datos['productos'][$i]);
-											$cantidad = $datos['cantidades'][$i];
+											$cantidad = number_format( $datos['cantidades'][$i] ,0,',', ' ');
 											echo '
 
 											<div class="modal fade" tabindex="-1" id="editar-producto-' . $i . '">
 											    <div class="modal-dialog modal-dialog-centered">
-											        <form method="POST" action="'. HTTP .'/registrar/factura/editar-producto?' .  datos_url($datos) .'" class="modal-content">
+											        <form method="POST" action="'. HTTP .'/registrar/factura/editar-producto?' .  datos_url($datos) .'" class="modal-content validar" novalidate>
 											        <div class="modal-header">
 											            <h5 class="modal-title">Editando producto</h5>
 											        </div>
@@ -168,7 +193,7 @@
 														<div class="row">
 					                                        <div class="col-6 d-flex flex-column justify-content-around align-items-start mb-md-0 mb-2">
 					                                            <p class="font-weight-bold mb-0">'. $producto['nombre_producto'] .'</p>
-					                                            <p class="font-weight-bold mb-0 text-success ">Bs. '. $producto['precio_venta'] .'</p>
+					                                            <p class="font-weight-bold mb-0 text-success ">Bs. '. number_format( $producto['precio_venta'] ,2,',', '.') .'</p>
 					                                            <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
 
 					                                        </div>
@@ -180,12 +205,18 @@
 					                                    </div>
 
 														<br><hr>
-
+														'. $cantidades_err .'
 														<div class="form-group row mt-3">
 															<input required type="number" name="id" class="d-none" value="' . $i .'">
 													      <label for="cantidad" class="font-weight-bold col-sm-6 col-form-label">Cantidad</label>
 													      <div class="col-sm-6">
-													        <input required type="number" min="0" value="'. $cantidad .'" class="form-control" name="editar">
+													        <input required type="number" min="0" value="'. $cantidades .'" class="form-control" name="editar">
+															<div class="invalid-feedback">
+															  Ingrese una cantidad a facturar válida.
+															</div>
+															<div class="valid-feedback">
+															  ¡Perfecto!
+															</div>
 													      </div>
 													    </div>
 
@@ -208,7 +239,7 @@
 				                                            <p class="mb-0">Cantidad: '. $cantidad .'</p>
 				                                        </div>
 				                                        <div class="col-sm-6 col-md-4 d-flex flex-column align-items-center justify-content-around mb-md-0 mb-2">
-				                                            <p class="font-weight-bold mb-0 text-success ">Bs. '. $producto['precio_venta'] .'</p>
+				                                            <p class="font-weight-bold mb-0 text-success ">Bs. '. number_format( $producto['precio_venta'] ,2,',', '.') .'</p>
 				                                            <p class="mb-0">Tipo: '.$producto['tipo_producto'].'</p>
 				                                            <p class="mb-0">Marca: '.$producto['marca_producto'].'</p>
 				                                            <p class="mb-0 ">Modelo: '.$producto['modelo_producto'].'</p>
@@ -274,7 +305,12 @@
                         <h6 class="card-header text-center px-5">
                             <?php echo($datos['cliente']['nombre_cliente'] . ' ' . $datos['cliente']['apellido_cliente']) ?>
                             |
-                            <?php echo $datos['cliente']['ci_cliente'] ?>
+                            <?php
+
+							$rif_div   = explode('-', $datos['cliente']['ci_cliente']);
+							$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
+
+							echo $rif ?>
                             <br><br>
                             <?php echo $datos['cliente']['direccion_cliente'] ?>
                             <br>
@@ -303,8 +339,8 @@
 									for ($i=0; $i < $cantidad_productos; $i++) {
 
 										$producto = $consultar->get('producto', $datos['productos'][$i]);
-										$cantidad = $datos['cantidades'][$i];
-										$subtotal = $datos['subtotales'][$i];
+										$cantidad = number_format( $datos['cantidades'][$i] ,0,',', ' ');
+										$subtotal = number_format( $datos['subtotales'][$i] ,2,',', '.');
 
 									echo '
 									<li class="list-group-item list-group-item-action container-fluid">
@@ -351,11 +387,11 @@
 						}
 
 						echo '<div class="card-footer text-muted text-right">';
-						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $subtotal . '<br>';
-						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . ($subtotal * 12) / 100 . '</div>';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . number_format( $subtotal ,2,',', '.') . '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . number_format( ($subtotal * 12) / 100 ,2,',', '.') . '</div>';
 
 						echo '<div class="card-footer text-center font-weight-bold">';
-						echo 'TOTAL Bs. ' . $subtotal * 1.12 . '</div>';
+						echo 'TOTAL Bs. ' . number_format( $subtotal * 1.12 ,2,',', '.') . '</div>';
 
 						 ?>
 					</div>
@@ -378,20 +414,52 @@
 
 
 <?php
-
 if(isset($_GET['err'])){
-    include_footer("
-    <script type='    text/javascript'    >
-    $(window).on('load',function(){
-        $('#agregar-producto').modal('show');
-    });
-    </script>");
 
+switch ($_GET['err']) {
+
+	case 'producto':
+		include_footer("
+		<script type='    text/javascript'    >
+		$(window).on('load',function(){
+		    $('#agregar-producto').modal('show');
+		});
+		</script>");
+		break;
+
+	case 'existencia':
+		include_footer("
+		<script type='    text/javascript'    >
+		$(window).on('load',function(){
+			$('#agregar-producto').modal('show');
+		});
+		</script>");
+		break;
+
+	case 'repetido':
+		include_footer("
+		<script type='    text/javascript'    >
+		$(window).on('load',function(){
+			$('#agregar-producto').modal('show');
+		});
+		</script>");
+		break;
+
+	case 'existencia-edit':
+		include_footer("
+		<script type='    text/javascript'    >
+		$(window).on('load',function(){
+			$('#editar-producto-". $_GET['datacodigo'] ."').modal('show');
+		});
+		</script>");
+		break;
+	}
 }else{
 
     include_footer();
 
 }
+
 
 
 ?>

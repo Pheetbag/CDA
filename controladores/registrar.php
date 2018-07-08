@@ -100,7 +100,7 @@ class registrar{
 
             $resultado = $consultar -> usuario($_POST['nombre'], $_POST['contraseña'], $_POST['rango']);
 
-            header('location:' . HTTP);
+            header('location:' . HTTP . '/perfil/id/' . $resultado);
         }else{
 
             require $this->vista . 'usuario.php';
@@ -268,7 +268,6 @@ class registrar{
 
 						header('location:' . HTTP . '/registrar/factura/paso-2?err=producto&datacodigo='. $_POST['codigo'] .'&dataext='. $_POST['cantidad'] .'&'. datos_url($datos));
 					}
-
 					else if($resultado['existencias'] < $_POST['cantidad']){
 
 						header('location:' . HTTP . '/registrar/factura/paso-2?err=existencia&errext='. $resultado['existencias'] . '&datacodigo='. $_POST['codigo'] .'&dataext='. $_POST['cantidad'] .'&'. datos_url($datos));
@@ -307,13 +306,24 @@ class registrar{
 					header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
 				}
 
-				//Divimos el subtotal actual entre la cantidad actual para obtener el precio de venta, y asi ahorrarnos una consulta a la base de datos.
+				//Consultamos el producto al que se va a editar para validar datos como las existencias y recalcular el monto con el precio_venta
 
-				$precio = $datos['subtotales'][$_POST['id']] / $datos['cantidades'][$_POST['id']];
+				$resultado = $consultar-> get('producto', $datos['productos'][$_POST['id']]);
 
-				$datos['cantidades'][$_POST['id']] = $_POST['editar'];
-				$datos['subtotales'][$_POST['id']] = $precio * $_POST['editar'];
-				header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
+				if($resultado == null){
+
+					header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
+				}
+				else if($resultado['existencias'] < $_POST['editar']){
+
+					header('location:' . HTTP . '/registrar/factura/paso-2?err=existencia-edit&errext='. $resultado['existencias'] . '&datacodigo='. $_POST['id'] .'&dataext='. $_POST['editar'] .'&'. datos_url($datos));
+				}else{
+
+					$datos['cantidades'][$_POST['id']] = $_POST['editar'];
+					$datos['subtotales'][$_POST['id']] = $resultado['precio_venta'] * $_POST['editar'];
+					header('location:' . HTTP . '/registrar/factura/paso-2?'. datos_url($datos));
+				}
+
 				break;
 
 			case 'paso-3':

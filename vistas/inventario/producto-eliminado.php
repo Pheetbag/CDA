@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<?php include_header(0, 'Producto', 'Eliminado'); ?>
+<?php include_header('inventario', 'Producto', 'Eliminado'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
     <div class="row">

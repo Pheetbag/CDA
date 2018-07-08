@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<?php include_header(2,'Pedidos', 'Todos'); ?>
+<?php include_header('pedidos','Pedidos', 'Todos'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -35,12 +35,15 @@
 
 			<div class="card mb-4">
                 <h6 class="card-header">Buscar pedido</h6>
-                <form class="card-body" method="POST" action="<?php echo HTTP ?>/pedidos/buscar/pedido">
+                <form novalidate class="card-body validar" method="POST" action="<?php echo HTTP ?>/pedidos/buscar/pedido">
                     <div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">#</span>
 						</div>
-                        <input type="text" name="busqueda" class="form-control" <?php if(isset($_GET['busqueda'])){ echo 'value="' . $_GET['busqueda'] . '"'; }?> placeholder="Codigo">
+                        <input required type="number" name="busqueda" class="form-control" <?php if(isset($_GET['busqueda'])){ echo 'value="' . $_GET['busqueda'] . '"'; }?> placeholder="Codigo">
+						<div class="invalid-feedback">
+						  Ingrese el codigo de pedido a buscar.
+						</div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
                 </form>
@@ -74,10 +77,13 @@
 						$codigo    = $pedidos[$i]['codigo_pedido'];
 						$fecha     = date('d/m/Y',strtotime($pedidos[$i]['fecha']));
 						$llegada   = date('d/m/Y',strtotime($pedidos[$i]['fecha_llegada']));
-						$rif       = $pedidos[$i]['codigo_proveedor'];
-						$total     = $pedidos[$i]['total'];
+
+						$rif_div   = explode('-', $pedidos[$i]['codigo_proveedor']);
+						$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
+
+						$total     = number_format( $pedidos[$i]['total'] ,2,',', '.');
 						$nombre    = $pedidos[$i]['nombre_empresa'];
-						$cantidad  = $pedidos[$i]['cantidad_productos'];
+						$cantidad  = number_format( $pedidos[$i]['cantidad_productos'] ,0,',', ' ');
 
 						echo '
 

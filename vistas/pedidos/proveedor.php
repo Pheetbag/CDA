@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<?php include_header(2, 'Pedidos', 'Proveedor'); ?>
+<?php include_header('pedidos', 'Pedidos', 'Proveedor'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -30,7 +30,10 @@
 				<div class="col-sm-5">
 					<div class="card">
 						<h6 class="card-header">Rif</h6>
-						<div class="card-body"><?php echo $resultado['rif'] ?></div>
+						<div class="card-body"><?php
+						$rif_div   = explode('-', $resultado['rif']);
+						$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
+						echo $rif ?></div>
 					</div>
 				</div>
                 <div class="col-sm-5">
@@ -73,8 +76,8 @@
 
 						$codigo   = $movimientos[$i]['codigo_pedido'];
 
-						$subtotal = $movimientos[$i]['subtotal'];
-						$total    = $movimientos[$i]['total'];
+						$subtotal = number_format( $movimientos[$i]['subtotal'] ,2,',', '.');
+						$total    = number_format( $movimientos[$i]['total'] ,2,',', '.');
 						$fecha    = $movimientos[$i]['fecha'];
 						$llegada  = $movimientos[$i]['fecha_llegada'];
 
@@ -82,7 +85,6 @@
 						<div class="card text-white bg-success mb-2">
 							<h6 class="card-header text-center">'. date('d/m/Y',strtotime($fecha)) .'</h6>
 							<div class="card-body text-right">
-								<h6 class="text-center">Llegada '. date('d/m/Y',strtotime($llegada)) .'</h6><br>
 								<div class="">SUBTOTAL Bs. '. $subtotal.'</div>
 								<div class="font-weight-bold">TOTAL Bs. '. $total .'</div>
 							</div>

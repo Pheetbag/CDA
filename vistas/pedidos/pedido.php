@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<?php include_header(2, 'Pedidos', 'Pedido'); ?>
+<?php include_header('pedidos', 'Pedidos', 'Pedido'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
 
@@ -35,7 +35,10 @@
                         <h6 class="card-header text-center px-5">
                             <?php echo $pedido['nombre_empresa'] ?>
                             |
-                            <?php echo $pedido['rif'] ?>
+                            <?php
+							$rif_div   = explode('-', $pedido['rif']);
+							$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
+							echo $rif ?>
                             <br><br>
                             <?php echo $pedido['direccion'] ?>
                             <br>
@@ -54,8 +57,8 @@
 
 							$codigo   = $detalles[$i]['codigo_producto'];
 							$producto = $detalles[$i]['nombre_producto'];
-							$cantidad = $detalles[$i]['cantidad'];
-							$subtotal = $detalles[$i]['subtotal'];
+							$cantidad = number_format( $detalles[$i]['cantidad'] ,0,',', ' ');
+							$subtotal = number_format( $detalles[$i]['subtotal'] ,2,',', '.');
 
 						echo '
 						<a href="'. HTTP .'/inventario/producto/'. $codigo .'" class="list-group-item list-group-item-action container-fluid">
@@ -80,11 +83,11 @@
 						<?php
 
 						echo '<div class="card-footer text-muted text-right">';
-						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $pedido['subtotal'] . '<br>';
-						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . $pedido['iva'] . '</div>';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . number_format( $pedido['subtotal'] ,2,',', '.') . '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . number_format( $pedido['iva'] ,2,',', '.') . '</div>';
 
 						echo '<div class="card-footer text-center font-weight-bold">';
-						echo 'TOTAL Bs. ' . $pedido['total'] . '</div>';
+						echo 'TOTAL Bs. ' . number_format( $pedido['total'] ,2,',', '.') . '</div>';
 
 						 ?>
                     </div>

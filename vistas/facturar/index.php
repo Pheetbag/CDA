@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<?php include_header(1,'Facturación'); ?>
+<?php include_header('facturar','Facturación'); ?>
 
 <main class="container-fluid nav-spaced full-screen" id="navPush">
     <div class="row">
@@ -31,10 +31,13 @@
 
 						$codigo   = $facturas[$i]['codigo_factura'];
 						$fecha    = date('d/m/Y',strtotime($facturas[$i]['fecha_venta']));
-						$ci       = $facturas[$i]['ci_cliente'];
-						$total    = $facturas[$i]['total'];
+
+						$ci_div   = explode('-', $facturas[$i]['ci_cliente']);
+						$ci       = $ci_div[0] . '-' . number_format( $ci_div[1] ,0, ',','.');
+
+						$total    = number_format( $facturas[$i]['total'] ,2,',', '.');
 						$nombre   = ucwords($facturas[$i]['nombre_cliente'] . ' ' . $facturas[$i]['apellido_cliente']);
-						$cantidad = $facturas[$i]['cantidad_productos'];
+						$cantidad = number_format( $facturas[$i]['cantidad_productos'] ,0,',', ' ');
 
 						echo'
 						<a href="'. HTTP .'/facturar/f/'. $codigo .'" class="list-group-item list-group-item-action container-fluid">
@@ -96,13 +99,18 @@
 					for ($i=0; $i < $cantidad_clientes; $i++) {
 
 						$nombre    = ucwords($clientes[$i]['nombre_cliente'] . ' ' . $clientes[$i]['apellido_cliente']);
-						$ci        = $clientes[$i]['ci_cliente'];
+
+						$ci_div   = explode('-', $clientes[$i]['ci_cliente']);
+						$ci       = $ci_div[0] . '-' . number_format( $ci_div[1] ,0, ',','.');
+
 						$direccion = $clientes[$i]['direccion_cliente'];
 						$telefono  = $clientes[$i]['telefono'];
 
+						$codigo = $clientes[$i]['ci_cliente'];
+
 
 						echo'
-						<a href="'. HTTP .'/facturar/cliente/'. $ci .'" class="list-group-item list-group-item-action container-fluid">
+						<a href="'. HTTP .'/facturar/cliente/'. $codigo .'" class="list-group-item list-group-item-action container-fluid">
                             <div class="row">
                                 <div class="col-12 col-sm-4 left align-items-center align-items-sm-start">
                                     <div class="font-weight-bold">'. $nombre .'</div>
@@ -149,12 +157,15 @@
 
             <div class="card mb-4">
                 <h6 class="card-header">Buscar factura</h6>
-                <form method="POST" action="<?php echo HTTP ?>/facturar/buscar/factura" class="card-body">
+                <form novalidate method="POST" action="<?php echo HTTP ?>/facturar/buscar/factura" class="card-body validar">
                     <div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">#</span>
 						</div>
-                        <input type="text" name="busqueda" class="form-control" placeholder="Codigo">
+                        <input required type="number" name="busqueda" class="form-control" placeholder="Codigo">
+						<div class="invalid-feedback">
+						  Ingrese el codigo de factura a buscar.
+						</div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
                 </form>
@@ -162,15 +173,19 @@
 
 			<div class="card mb-4">
                 <h6 class="card-header">Buscar cliente</h6>
-                <form method="POST" action="<?php echo HTTP ?>/facturar/buscar/cliente" class="card-body">
+                <form novalidate method="POST" action="<?php echo HTTP ?>/facturar/buscar/cliente" class="card-body validar">
                     <div class="form-group row">
 
 						<select required class="form-control col-3 col-sm-2 col-md-4 col-xl-3 ml-3 mr-1" name="ci-prefijo">
 							<option selected value="V">V</option>
 							<option value="E">E</option>
 						</select>
-
-                        <input type="text" name="busqueda" id="" class="form-control col mr-3" placeholder="Cédula">
+						<div class="col mr-3 px-0">
+							<input required type="number" name="busqueda" id="" class="form-control" placeholder="Cédula">
+							<div class="invalid-feedback">
+							  Ingrese la cédula del cliente a buscar.
+							</div>
+						</div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3 btn-block">Buscar</button>
                 </form>

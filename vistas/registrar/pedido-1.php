@@ -3,7 +3,7 @@
 </head>
 <body>
 
-<?php include_header(4, 'Registrar', 'Pedido'); ?>
+<?php include_header('registrar', 'Registrar', 'Pedido'); ?>
 
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar-proveedor">
   Launch demo modal
@@ -11,27 +11,50 @@
 
 <div class="modal fade" tabindex="-1" id="agregar-proveedor">
     <div class="modal-dialog modal-dialog-centered">
-        <form method="POST" action="<?php echo HTTP ?>/registrar/pedido/registrar-proveedor?<?php echo datos_url($datos); ?>" class="modal-content">
+        <form method="POST" action="<?php echo HTTP ?>/registrar/pedido/registrar-proveedor?<?php echo datos_url($datos); ?>" class="modal-content validar" novalidate>
         <div class="modal-header">
             <h5 class="modal-title">Proveedor nuevo</h5>
         </div>
         <div class="modal-body">
             <div class="alert alert-warning" role="alert">
-                El rif <b><?php  echo $datos['rif'] ?></b> no pertenece a ningún proveedor registrado. Inserta los datos del proveedor para continuar.
+                El rif <b><?php
+
+				$rif_div   = explode('-', $datos['rif']);
+				$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
+
+				echo $rif ?></b> no pertenece a ningún proveedor registrado. Inserta los datos del proveedor para continuar.
             </div>
                 <div class="row">
                     <div class="form-group col">
                         <label required for="proveedor-nombre">Nombre</label>
                         <input type="text" class="form-control" id="proveedor-nombre" name="nombre" placeholder="Nombre">
+						<div class="invalid-feedback">
+						  Ingrese un nombre válido.
+						</div>
+						<div class="valid-feedback">
+						  ¡Perfecto!
+						</div>
                     </div>
                     <div class="form-group col">
                         <label for="proveedor-tlf">Teléfono</label>
                         <input type="number" class="form-control" id="proveedor-tlf" name="tlf" placeholder="Teléfono">
+						<div class="invalid-feedback">
+						  Ingrese un número de teléfono válido.
+						</div>
+						<div class="valid-feedback">
+						  ¡Perfecto!
+						</div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label required for="cliente-dir">Dirección</label>
                     <input type="text" class="form-control" id="cliente-dir" name="dir" placeholder="Dirección">
+					<div class="invalid-feedback">
+					  Ingrese una dirección válida.
+					</div>
+					<div class="valid-feedback">
+					  ¡Perfecto!
+					</div>
                 </div>
         </div>
         <div class="modal-footer">
@@ -48,7 +71,7 @@
     <div class="row">
         <div class="col-sm-6">
 
-            <form class="container-fluid" method="POST" action="<?php echo HTTP ?>/registrar/pedido/validar-proveedor?<?php echo datos_url($datos); ?>" >
+            <form class="container-fluid validar" method="POST" action="<?php echo HTTP ?>/registrar/pedido/validar-proveedor?<?php echo datos_url($datos); ?>" novalidate>
 
                 <div class="row">
                     <div class="col-md-12 col-lg-8">
@@ -56,6 +79,9 @@
                             <h6 class="card-header">Fecha</h6>
                             <div class="card-body">
                                 <input required type="date" class="form-control bg-light" name="fecha" value="<?php echo $datos['fecha'] ?>">
+								<div class="invalid-feedback">
+								  Ingrese una fecha válida.
+								</div>
                             </div>
                         </div>
                     </div>
@@ -66,6 +92,10 @@
                             <h6 class="card-header">Fecha de llegada</h6>
                             <div class="card-body">
                                 <input required type="date" class="form-control bg-light" name="llegada" value="<?php echo $datos['llegada'] ?>">
+								<div class="invalid-feedback">
+								  Ingrese una fecha de llegada válida.
+								</div>
+
                             </div>
                         </div>
                     </div>
@@ -80,6 +110,12 @@
 									<span class="input-group-text">J-</span>
 								</div>
                                 <input required type="number" class="form-control" name="rif" placeholder="Rif" value="<?php echo $datos['rif-numero'] ?>">
+								<div class="invalid-feedback">
+								  Ingrese un rif válido.
+								</div>
+								<div class="valid-feedback">
+								  ¡Perfecto!
+								</div>
                             </div>
                         </div>
                     </div>
@@ -115,10 +151,13 @@
 
 							if($datos['proveedor'] != null){
 
+								$rif_div   = explode('-', $datos['proveedor']['rif']);
+								$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
+
 								echo
 
 								$datos['proveedor']['nombre_empresa'] .
-								' | ' . $datos['proveedor']['rif'] . '
+								' | ' . $rif . '
 								<br><br>' .
 								$datos['proveedor']['direccion'] .
 								' <br>' .
@@ -161,9 +200,9 @@
 									for ($i=0; $i < $cantidad_productos; $i++) {
 
 										$producto    = $consultar->get('producto', $datos['productos'][$i]);
-										$cantidad    = $datos['cantidades'][$i];
+										$cantidad    = number_format( $datos['cantidades'][$i] ,0,',', ' ');
 										$costo       = $datos['costos'][$i];
-										$subtotal    = $costo * $cantidad;
+										$subtotal    = number_format( $costo * $cantidad ,2,',', '.');
 
 									echo '
 									<li class="list-group-item list-group-item-action container-fluid">
@@ -195,11 +234,11 @@
 						}
 
 						echo '<div class="card-footer text-muted text-right">';
-						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . $subtotal . '<br>';
-						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . ($subtotal * 12) / 100 . '</div>';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . number_format( $subtotal ,2,',', '.') . '<br>';
+						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . number_format( ($subtotal * 12) / 100 ,2,',', '.'). '</div>';
 
 						echo '<div class="card-footer text-center font-weight-bold">';
-						echo 'TOTAL Bs. ' . $subtotal * 1.12 . '</div>';
+						echo 'TOTAL Bs. ' . number_format( $subtotal * 1.12 ,2,',', '.'). '</div>';
 
 						 ?>
                     </div>

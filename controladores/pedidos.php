@@ -143,13 +143,13 @@ class pedidos{
 				$_POST['busqueda'] = str_replace([',', '.', '-', '+', 'e'], '', $_POST['busqueda']);
 
 				$rif_proveedor = 'J-' . $_POST['busqueda'];
-				$resultado = $consultar -> proveedor($rif_proveedor, true);
+				$resultado = $consultar -> proveedor($rif_proveedor);
 
 				if($resultado == null){
 					header('location:' . HTTP . '/pedidos/proveedores?err=busqueda&busqueda=' . $rif_proveedor);
 				}else{
 
-					header('location:' . HTTP . '/pedidos/proveedor/' . $resultado['codigo_proveedor']);
+					header('location:' . HTTP . '/pedidos/proveedor/' . $resultado['rif']);
 				}
 
 				break;
