@@ -37,8 +37,9 @@ class perfil{
 				$usuario['rango_desc'] = 'Acceso a los sistemas de facturación, inventario y pedidos.';
 				break;
 
-			default:
-				# code...
+			case 3:
+				$usuario['rango_nombre'] = 'Vendedor';
+				$usuario['rango_desc'] = 'Acceso a las areas de facturación y registro de clientes.';
 				break;
 		}
 

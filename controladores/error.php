@@ -31,6 +31,11 @@ class error{
 
 	public function db_consulta($m){
 
-		require $this->vista . 'db_consulta.php'; 
+		require $this->vista . 'db_consulta.php';
+	}
+
+	public function sin_permisos($controlador, $tipo){
+
+		require $this->vista . 'sin_permisos.php';
 	}
 }

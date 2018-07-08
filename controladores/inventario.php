@@ -66,9 +66,21 @@ class inventario{
         //sino, dependiendo de la accion mostramos la vista de esa accion
         if(isset($_GET['action'])){
 
+			if($_GET['action'] == 'editar' OR $_GET['action'] == 'eliminar' OR $_GET['action'] == 'guardar'){
+
+				if($_SESSION['usuario']['rango'] > 1) {
+
+					require 'controladores/error.php';
+					$controlador = new error;
+					$controlador->sin_permisos('inventario', 'metodo/ID');
+					exit();
+				}
+			}
+
             switch ($_GET['action']) {
 
                 case 'editar':
+
                     require $this->vista . 'producto-editar.php';
                     break;
 

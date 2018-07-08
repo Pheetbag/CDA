@@ -148,13 +148,24 @@
         </div>
         <div class="col-md-3 col-sm-12 mb-4">
 
-            <div class="card mb-4">
-                <h6 class="card-header">Registrar</h6>
-                <div class="card-body">
-                    <a class="btn btn-primary mt-3 d-block" href="<?php echo HTTP ?>/registrar/proveedor">Nuevo proveedor</a>
-                    <a class="btn btn-primary mt-3 d-block" href="<?php echo HTTP ?>/registrar/pedido">Nuevo pedido</a>
-                </div>
-            </div>
+			<?php
+
+			if($_SESSION['usuario']['rango'] < 3) {
+
+				echo '
+
+				<div class="card mb-4">
+	                <h6 class="card-header">Registrar</h6>
+	                <div class="card-body">
+	                    <a class="btn btn-primary mt-3 d-block" href="'. HTTP .'/registrar/proveedor">Nuevo proveedor</a>
+	                    <a class="btn btn-primary mt-3 d-block" href="'. HTTP .'/registrar/pedido">Nuevo pedido</a>
+	                </div>
+	            </div>
+				';
+			}
+
+			?>
+
 
 			<div class="card mb-4">
                 <h6 class="card-header">Buscar pedido</h6>

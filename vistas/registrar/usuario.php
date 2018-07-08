@@ -49,6 +49,7 @@
                             <option value selected disabled>Selecciona un rango</option>
                             <option value="1">Administrador</option>
                             <option value="2">Operador</option>
+                            <option value="3">Vendedor</option>
                         </select>
 						<div class="invalid-feedback">
 						  Seleccione un rango válido.

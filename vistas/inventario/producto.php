@@ -43,7 +43,13 @@
 
             <div class="row mb-0">
                 <div class="col-12">
-                    <a href="?action=editar" class="btn btn-primary" role="button">Editar</a>
+
+					<?php
+
+						if ($_SESSION['usuario']['rango'] <= 1) {
+							 echo '<a href="?action=editar" class="btn btn-primary" role="button">Editar</a>';
+						}
+					?>
                     <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#alerta-borrar">Eliminar</button> -->
                 </div>
             </div>

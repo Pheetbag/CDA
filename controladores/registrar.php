@@ -4,7 +4,17 @@ global $consultar;
 
 class registrar{
 
-    public $vista = 'vistas/registrar/';
+    public $vista     = 'vistas/registrar/';
+
+	public $permisos  = [
+		'registrar' => '3',
+		'usuario'   => '1',
+		'producto'  => '1',
+		'proveedor' => '2',
+		'pedido'    => '2', 
+		'cliente'   => '3',
+		'factura'   => '3'
+	];
 
     public function index(){
 
@@ -84,7 +94,7 @@ class registrar{
 			}else{
 
 	            $resultado = $consultar -> proveedor($_POST['nombre'], $_POST['telefono'], $_POST['rif'], $_POST['direccion']);
-	            header('location:' . HTTP . '/pedidos/proveedor/' . $resultado[0] . '?action=creado');
+	            header('location:' . HTTP . '/pedidos/proveedor/' . $_POST['rif'] . '?action=creado');
 			}
         }else{
 

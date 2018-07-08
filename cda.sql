@@ -171,7 +171,10 @@ ALTER TABLE `facturacion`
   ;
 */
 INSERT INTO `usuarios` (`usuario`, `clave`, `rango`) VALUES
-('ADMIN', '', 1);
+('ADMIN', '', 1),
+('OPERADOR', '', 2),
+('VENDEDOR', '', 3)
+;
 
 COMMIT;
 
