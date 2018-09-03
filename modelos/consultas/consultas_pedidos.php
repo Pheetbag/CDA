@@ -51,7 +51,7 @@ class consultas_pedidos{
 
         $limite_inicial = 0 + ($limite * ($pagina - 1));
 
-        $sql = "SELECT pd.`codigo_pedido`, pd.`fecha`, pd.`fecha_llegada`, pd.`codigo_proveedor`, pd.`total`, p.`nombre_empresa`, (SELECT COUNT(`codigo_producto`) FROM `detalles_pedido` WHERE `codigo_pedido` = pd.`codigo_pedido`) AS `cantidad_productos` FROM `pedidos` pd INNER JOIN `proveedores` p ON p.`rif` = pd.`codigo_proveedor` ORDER BY `fecha` DESC LIMIT " . $limite_inicial . ',' . $limite;
+        $sql = "SELECT pd.`codigo_pedido`, pd.`fecha`, pd.`fecha_llegada`, pd.`codigo_proveedor`, pd.`subtotal`, p.`nombre_empresa`, (SELECT COUNT(`codigo_producto`) FROM `detalles_pedido` WHERE `codigo_pedido` = pd.`codigo_pedido`) AS `cantidad_productos` FROM `pedidos` pd INNER JOIN `proveedores` p ON p.`rif` = pd.`codigo_proveedor` ORDER BY `fecha` DESC LIMIT " . $limite_inicial . ',' . $limite;
 
 		$sql_values     = null;
 
@@ -89,7 +89,7 @@ class consultas_pedidos{
 
         $sql_values     = null;
 
-        $sql = "SELECT pd.`codigo_pedido`, pd.`fecha`, pd.`fecha_llegada`, pd.`codigo_proveedor`, pd.`total`, p.`nombre_empresa`, (SELECT COUNT(`codigo_producto`) FROM `detalles_pedido` WHERE `codigo_pedido` = pd.`codigo_pedido`) AS `cantidad_productos` FROM `pedidos` pd INNER JOIN `proveedores` p ON p.`rif` = pd.`codigo_proveedor` ORDER BY `fecha` DESC LIMIT 5";
+        $sql = "SELECT pd.`codigo_pedido`, pd.`fecha`, pd.`fecha_llegada`, pd.`codigo_proveedor`, pd.`subtotal`, p.`nombre_empresa`, (SELECT COUNT(`codigo_producto`) FROM `detalles_pedido` WHERE `codigo_pedido` = pd.`codigo_pedido`) AS `cantidad_productos` FROM `pedidos` pd INNER JOIN `proveedores` p ON p.`rif` = pd.`codigo_proveedor` ORDER BY `fecha` DESC LIMIT 5";
 
         $consulta = $this->conexion->get_consulta($sql, $sql_values);
 

@@ -37,7 +37,7 @@
 						$rif_div   = explode('-', $pedidos[$i]['codigo_proveedor']);
 						$rif       = $rif_div[0] . '-' . number_format( $rif_div[1] ,0, ',','.');
 
-						$total     = number_format( $pedidos[$i]['total'] ,2,',', '.');
+						$total     = number_format( $pedidos[$i]['subtotal'] ,2,',', '.');
 						$nombre    = $pedidos[$i]['nombre_empresa'];
 						$cantidad  = number_format( $pedidos[$i]['cantidad_productos'] ,0,',', ' ');
 
@@ -55,7 +55,7 @@
 									<div class="text-muted">Llegada: '. $llegada .'</div>
 								</div>
 								<div class="col-6 col-sm-4 d-flex flex-column justify-content-around">
-									<div class="producto-precio text-success font-weight-bold">Total Bs. '. $total .'</div>
+									<div class="producto-precio text-success font-weight-bold">Total Bs.S '. $total .'</div>
 									<div class="producto-existencias text-muted">Productos adquiridos: '. $cantidad .'</div>
 								</div>
 							</div>

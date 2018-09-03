@@ -133,6 +133,13 @@ function include_header($activo = null, $title = 'Titulo', $subtitle = ''){
 		}
     }
 
+    $admin = null;
+
+    if(isset($_SESSION['usuario']['rango']) AND $_SESSION['usuario']['rango'] == '1'){
+
+        $admin = '<a href="'. HTTP .'/administracion"  class="item">Administración</a>'; 
+    }
+
     echo '
         <nav>
             <div class="body cerrado">
@@ -160,7 +167,7 @@ function include_header($activo = null, $title = 'Titulo', $subtitle = ''){
                         <div class="cerrar"></div>
                     </div>
                     <div class="contenido">
-					<!--<div class="item">Administración</div>-->
+					    '. $admin .'
                         <a href="'. HTTP .'/perfil" class="item" >Mi perfil</a>
                         <div class="item" data-toggle="modal" data-target="#ajustes-usuario">Ajustes</div>
                         <a href="'. HTTP . '/salir' .'"><div class="item salir">Desconectar</div></a>

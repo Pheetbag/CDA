@@ -81,7 +81,7 @@ function crear_tablas(){
 	DROP TABLE IF EXISTS `facturacion`;
 	CREATE TABLE IF NOT EXISTS `facturacion` (
 	  `codigo_factura` int(11) NOT NULL AUTO_INCREMENT,
-	  `fecha_venta` date NOT NULL,
+	  `fecha_venta` datetime NOT NULL,
 	  `ci_cliente` varchar(12) DEFAULT NULL,
 	  `subtotal` decimal(17,2) NOT NULL,
 	  `iva` decimal(17,2) NOT NULL,
@@ -94,11 +94,9 @@ function crear_tablas(){
 	CREATE TABLE IF NOT EXISTS `pedidos` (
 	  `codigo_pedido` int(11) NOT NULL AUTO_INCREMENT,
 	  `codigo_proveedor` varchar(20) DEFAULT NULL,
-	  `fecha` date NOT NULL,
-	  `fecha_llegada` date NOT NULL,
+	  `fecha` datetime NOT NULL,
+	  `fecha_llegada` datetime NOT NULL,
 	  `subtotal` decimal(17,2) NOT NULL,
-	  `iva` decimal(17,2) NOT NULL,
-	  `total` decimal(17,2) NOT NULL,
 	  PRIMARY KEY (`codigo_pedido`),
 	  KEY `codigo_proveedor` (`codigo_proveedor`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;

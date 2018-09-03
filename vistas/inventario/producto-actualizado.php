@@ -145,7 +145,7 @@
 									<h6 class="card-header text-center">'. date('d/m/Y',strtotime($fecha)) .'</h6>
 									<div class="card-body text-right">
 										<div class="font-weight-bold">-'. $cantidad .' unidades en las existencias</div>
-										<div class="">SUBTOTAL Bs. '. $subtotal .'</div>
+										<div class="">SUBTOTAL Bs.S '. $subtotal .'</div>
 									</div>
 									<div class="card-footer text-center">
 										<a class="px-5 btn btn-light text-danger" href="'. HTTP .'/facturar/f/'. $codigo .'" role="button">Ver factura</a>
@@ -158,7 +158,7 @@
 									<h6 class="card-header text-center">'. date('d/m/Y',strtotime($fecha)) .'</h6>
 									<div class="card-body text-right">
 										<div class="font-weight-bold">+'. $cantidad .' unidades en las existencias</div>
-										<div class="">SUBTOTAL Bs. '. $subtotal .'</div>
+										<div class="">SUBTOTAL Bs.S '. $subtotal .'</div>
 									</div>
 									<div class="card-footer text-center">
 										<a class="px-5 btn btn-light text-success" href="'. HTTP .'/pedidos/p/'. $codigo .'" role="button">Ver pedido</a>

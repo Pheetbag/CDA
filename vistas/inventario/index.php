@@ -55,7 +55,7 @@
                                         <div class="text-muted">Marca: '  . $item['marca_producto']  . '</div>
                                     </div>
                                     <div class="col-6 col-sm-4 right align-items-center">
-                                        <div class="producto-precio text-success font-weight-bold">Bs. '. number_format( $item['precio_venta'] ,2,',', '.') .'</div>
+                                        <div class="producto-precio text-success font-weight-bold">Bs.S '. number_format( $item['precio_venta'] ,2,',', '.') .'</div>
                                         <div class="producto-existencias text-muted">'. number_format( $item['existencias'] ,0,',', ' ') .' en stock</div>
                                     </div>
                                 </div>

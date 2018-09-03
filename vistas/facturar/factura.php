@@ -70,7 +70,7 @@
                                     <p class="mb-0">Codigo: '. $codigo .'</p>
                                 </div>
                                 <div class="col-sm-6 text-right">
-                                    <p class="font-weight-bold mb-0 text-success ">Bs. '. $subtotal .'</p>
+                                    <p class="font-weight-bold mb-0 text-success ">Bs.S '. $subtotal .'</p>
                                     <p class="mb-0">x'. $cantidad .'</p>
                                 </div>
                             </div>
@@ -85,8 +85,8 @@
 						<?php
 
 						echo '<div class="card-footer text-muted text-right">';
-						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . number_format( $factura['subtotal']  ,2,',', '.'). '<br>';
-						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . number_format( $factura['iva'] ,2,',', '.') . '</div>';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs.S '  . number_format( $factura['subtotal']  ,2,',', '.'). '<br>';
+						echo 'IVA (16%) &nbsp;&nbsp;&nbsp; Bs.S ' . number_format( $factura['iva'] ,2,',', '.') . '</div>';
 
 						echo '<div class="card-footer text-center font-weight-bold">';
 						echo 'TOTAL Bs. ' . number_format( $factura['total']  ,2,',', '.'). '</div>';

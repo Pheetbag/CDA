@@ -193,7 +193,7 @@
 														<div class="row">
 					                                        <div class="col-6 d-flex flex-column justify-content-around align-items-start mb-md-0 mb-2">
 					                                            <p class="font-weight-bold mb-0">'. $producto['nombre_producto'] .'</p>
-					                                            <p class="font-weight-bold mb-0 text-success ">Bs. '. number_format( $producto['precio_venta'] ,2,',', '.') .'</p>
+					                                            <p class="font-weight-bold mb-0 text-success ">Bs.S '. number_format( $producto['precio_venta'] ,2,',', '.') .'</p>
 					                                            <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
 
 					                                        </div>
@@ -239,7 +239,7 @@
 				                                            <p class="mb-0">Cantidad: '. $cantidad .'</p>
 				                                        </div>
 				                                        <div class="col-sm-6 col-md-4 d-flex flex-column align-items-center justify-content-around mb-md-0 mb-2">
-				                                            <p class="font-weight-bold mb-0 text-success ">Bs. '. number_format( $producto['precio_venta'] ,2,',', '.') .'</p>
+				                                            <p class="font-weight-bold mb-0 text-success ">Bs.S '. number_format( $producto['precio_venta'] ,2,',', '.') .'</p>
 				                                            <p class="mb-0">Tipo: '.$producto['tipo_producto'].'</p>
 				                                            <p class="mb-0">Marca: '.$producto['marca_producto'].'</p>
 				                                            <p class="mb-0 ">Modelo: '.$producto['modelo_producto'].'</p>
@@ -350,7 +350,7 @@
 		                                        <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
 		                                    </div>
 		                                    <div class="col-sm-6 text-right">
-		                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. $subtotal .'</p>
+		                                        <p class="font-weight-bold mb-0 text-success ">Bs.S '. $subtotal .'</p>
 		                                        <p class="mb-0">x'. $cantidad .'</p>
 		                                    </div>
 		                                </div>
@@ -387,11 +387,11 @@
 						}
 
 						echo '<div class="card-footer text-muted text-right">';
-						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . number_format( $subtotal ,2,',', '.') . '<br>';
-						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . number_format( ($subtotal * 12) / 100 ,2,',', '.') . '</div>';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs.S '  . number_format( $subtotal ,2,',', '.') . '<br>';
+						echo 'IVA (16%) &nbsp;&nbsp;&nbsp; Bs.S ' . number_format( ($subtotal * 16) / 100 ,2,',', '.') . '</div>';
 
 						echo '<div class="card-footer text-center font-weight-bold">';
-						echo 'TOTAL Bs. ' . number_format( $subtotal * 1.12 ,2,',', '.') . '</div>';
+						echo 'TOTAL Bs.S ' . number_format( $subtotal * 1.16 ,2,',', '.') . '</div>';
 
 						 ?>
 					</div>

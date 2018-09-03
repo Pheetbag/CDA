@@ -98,7 +98,7 @@
 	                                <div class="text-muted">Emitido: '. $fecha .'</div>
 	                            </div>
 	                            <div class="col-6 col-sm-4 right align-items-center">
-	                                <div class="producto-precio text-success font-weight-bold">Total Bs. '. $total .'</div>
+	                                <div class="producto-precio text-success font-weight-bold">Total Bs.S '. $total .'</div>
 	                                <div class="producto-existencias text-muted">Productos vendidos: '. $cantidad .'</div>
 	                            </div>
 	                        </div>

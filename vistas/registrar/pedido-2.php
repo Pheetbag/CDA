@@ -126,15 +126,6 @@
 					 </div>
                 </div>
 
-				<div class="form-group form-check">
-					<input type="checkbox" class="form-check-input" name="iva" <?php
-					if(isset($_GET['dataiva']) AND $_GET['dataiva'] == 'on'){
-						echo 'checked';
-					 }?>>
-				     <label class="form-check-label">IVA (12%) incluido.</label>
-				</div>
-				<small class="text-muted">El IVA es calculado automaticamente. Si el monto lo incluye se debe indicar, para que el mismo sea ignorado.</small>
-
             </div>
         </div>
         <div class="modal-footer">
@@ -205,7 +196,7 @@
 													<div class="row">
 				                                        <div class="col-6 d-flex flex-column justify-content-around align-items-start mb-md-0 mb-2">
 				                                            <p class="font-weight-bold mb-0">'. $producto['nombre_producto'] .'</p>
-				                                            <p class="font-weight-bold mb-0 text-success ">Bs. '. $precio .'</p>
+				                                            <p class="font-weight-bold mb-0 text-success ">Bs.S '. $precio .'</p>
 				                                            <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
 
 				                                        </div>
@@ -246,11 +237,6 @@
 													      </div>
 												    </div>
 
-													<div class="form-group form-check">
-														<input type="checkbox" class="form-check-input" name="iva_costo">
-													     <label class="form-check-label">IVA (12%) incluido.</label>
-													</div>
-
 													<hr>
 
 													<div class="form-group row mt-3">
@@ -288,11 +274,11 @@
 			                                        <div class="col-sm-6 col-md-5 d-flex flex-column justify-content-around align-items-center align-items-md-start mb-md-0 mb-2">
 			                                            <p class="font-weight-bold mb-0">'. $producto['nombre_producto'] .'</p>
 			                                            <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
-														<p class="mb-0">Bs. '. $precio .'</p>
+														<p class="mb-0">Bs.S '. $precio .'</p>
 			                                            <p class="mb-0">Cantidad: '. $cantidad .'</p>
 			                                        </div>
 			                                        <div class="col-sm-6 col-md-4 d-flex flex-column align-items-center justify-content-around mb-md-0 mb-2">
-														<p class="font-weight-bold mb-0 text-danger">Bs. '. $costo .'</p>
+														<p class="font-weight-bold mb-0 text-danger">Bs.S '. $costo .'</p>
 			                                            <p class="mb-0">Tipo: '.$producto['tipo_producto'].'</p>
 			                                            <p class="mb-0">Marca: '.$producto['marca_producto'].'</p>
 			                                            <p class="mb-0 ">Modelo: '.$producto['modelo_producto'].'</p>
@@ -418,7 +404,7 @@
 	                                        <p class="mb-0">Codigo: '. $producto['codigo_producto'] .'</p>
 	                                    </div>
 	                                    <div class="col-sm-6 text-right">
-	                                        <p class="font-weight-bold mb-0 text-success ">Bs. '. $subtotal .'</p>
+	                                        <p class="font-weight-bold mb-0 text-success ">Bs.S '. $subtotal .'</p>
 	                                        <p class="mb-0">x'. $cantidad .'</p>
 	                                    </div>
 	                                </div>
@@ -458,11 +444,10 @@
 						}
 
 						echo '<div class="card-footer text-muted text-right">';
-						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs. '  . number_format( $subtotal ,2,',', '.'). '<br>';
-						echo 'IVA (12%) &nbsp;&nbsp;&nbsp; Bs. ' . number_format( ($subtotal * 12) / 100  ,2,',', '.'). '</div>';
+						echo 'SUBTOTAL  &nbsp;&nbsp;&nbsp; Bs.S '  . number_format( $subtotal ,2,',', '.'). '</div>';
 
 						echo '<div class="card-footer text-center font-weight-bold">';
-						echo 'TOTAL Bs. ' . number_format( $subtotal * 1.12 ,2,',', '.') . '</div>';
+						echo 'TOTAL Bs.S ' . number_format( $subtotal,2,',', '.') . '</div>';
 
 						 ?>
                     </div>

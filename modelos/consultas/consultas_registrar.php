@@ -186,7 +186,7 @@ class consultas_registrar{
 		$sql = "INSERT INTO `facturacion` (`ci_cliente`,`fecha_venta`,`subtotal`, `iva`, `total`) VALUES (:ci, :fecha, :subtotal, :iva, :total)";
 		$sql_values = [
 			':ci'       => $ci,
-			':fecha'    => $fecha,
+			':fecha'    => $fecha . date(' H:i:s'),
 			':subtotal' => $subtotal,
 			':iva'      => $iva,
 			':total'    => $total
@@ -246,14 +246,12 @@ class consultas_registrar{
 
 		//registramos primero el pedido
 
-		$sql = "INSERT INTO `pedidos` (`codigo_proveedor`,`fecha`,`fecha_llegada`,`subtotal` , `iva`, `total`) VALUES (:rif, :fecha, :llegada, :subtotal, :iva, :total)";
+		$sql = "INSERT INTO `pedidos` (`codigo_proveedor`,`fecha`,`fecha_llegada`,`subtotal`) VALUES (:rif, :fecha, :llegada, :subtotal)";
 		$sql_values = [
 			':rif'      => $rif,
-			':fecha'    => $fecha,
-			':llegada'  => $llegada,
-			':subtotal' => $subtotal,
-			':iva'      => $iva,
-			':total'    => $total
+			':fecha'    => $fecha . date(' H:i:s'),
+			':llegada'  => $llegada . date(' H:i:s'),
+			':subtotal' => $subtotal
 		];
 
 		$consulta = $this->conexion->get_consulta($sql, $sql_values);
