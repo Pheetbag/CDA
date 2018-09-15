@@ -176,7 +176,7 @@ class consultas_pedidos{
 
 	public function movimientos($id){
 
-		$sql = "SELECT `codigo_pedido`, `fecha`, `fecha_llegada`, `subtotal`, `iva`, `total` FROM `pedidos` WHERE `codigo_proveedor`= :id ORDER BY `fecha` DESC, `subtotal` DESC, `fecha_llegada` DESC LIMIT 15";
+		$sql = "SELECT `codigo_pedido`, `fecha`, `fecha_llegada`, `subtotal` FROM `pedidos` WHERE `codigo_proveedor`= :id ORDER BY `fecha` DESC, `subtotal` DESC, `fecha_llegada` DESC LIMIT 15";
 
 		$sql_values = [':id' => $id];
 
