@@ -154,6 +154,11 @@ nav > .body .item.crear > div{
     background-image: url(../../recursos/nuevos.svg); 
 }
 
+nav > .body .item.manual > div{
+    
+    background-image: url(../../recursos/manual.svg); 
+}
+
 /* 
 
 ITEM PRINCIPAL, LOGO, DIRIJE AL SITIO DE INICIO.
