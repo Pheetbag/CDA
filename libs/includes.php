@@ -13,7 +13,7 @@ function include_head($title = 'Sistema CDA'){
             <title>'. $title .'</title>
             <link rel="stylesheet" href="'    . HTTP . '/recursos/libs/bootstrap/css/bootstrap.min.css">
             <link rel="shortcut icon" href="' . HTTP . '/recursos/cda-logosmall.png" type="image/png" />
-            <link rel="stylesheet" href="'    . HTTP . '/vistas/defaults/defaults.css?v=0.15">
+            <link rel="stylesheet" href="'    . HTTP . '/vistas/defaults/defaults.css?v=0.16">
 
     ';
 }
@@ -149,6 +149,7 @@ function include_header($activo = null, $title = 'Titulo', $subtitle = ''){
                 <a '. $pedidos_link    .'><div class="item pedidos '    . $pedidos    .'"><div data-toggle="tooltip" data-placement="left" title="Pedidos"></div></div></a>
                 <a '. $reportes_link   .'><div class="item reportes '   . $reportes   .'"><div data-toggle="tooltip" data-placement="left" title="Reportes"></div></div></a>
                 <a '. $registrar_link  .'><div class="item crear '      . $registrar  .'"><div data-toggle="tooltip" data-placement="left" title="Registrar"></div></div></a>
+                <a href="/recursos/manual-de-usuario.pdf"><div class="item manual"><div data-toggle="tooltip" data-placement="left" title="manual"></div></div></a>
             </div>
         </nav>
 
