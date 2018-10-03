@@ -149,7 +149,7 @@ function include_header($activo = null, $title = 'Titulo', $subtitle = ''){
                 <a '. $pedidos_link    .'><div class="item pedidos '    . $pedidos    .'"><div data-toggle="tooltip" data-placement="left" title="Pedidos"></div></div></a>
                 <a '. $reportes_link   .'><div class="item reportes '   . $reportes   .'"><div data-toggle="tooltip" data-placement="left" title="Reportes"></div></div></a>
                 <a '. $registrar_link  .'><div class="item crear '      . $registrar  .'"><div data-toggle="tooltip" data-placement="left" title="Registrar"></div></div></a>
-                <a href="/recursos/manual-de-usuario.pdf"><div class="item manual"><div data-toggle="tooltip" data-placement="left" title="manual"></div></div></a>
+                <a href="' . HTTP . '/recursos/manual-de-usuario.pdf"><div class="item manual"><div data-toggle="tooltip" data-placement="left" title="Ayuda"></div></div></a>
             </div>
         </nav>
 
